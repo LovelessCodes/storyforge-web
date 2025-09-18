@@ -26,7 +26,7 @@ export function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div className="space-y-4">
                         <div className="flex items-center space-x-2">
-                            <img src="/StoryForge.png" alt="Story Forge Logo" className="w-6 h-6" />
+                            <img src="StoryForge.png" alt="Story Forge Logo" className="w-6 h-6" />
                             <span className="font-bold">Story Forge</span>
                         </div>
                         <p className="text-muted-foreground text-sm">

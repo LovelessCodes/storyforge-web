@@ -11,7 +11,7 @@ export function App() {
       <main className="container mx-auto px-4 py-12">
         <div className="text-center mb-16">
           <h1 className="text-6xl font-bold mb-6 text-balance">
-            <img src="/StoryForge.png" alt="Story Forge Logo" className="inline w-24 h-24 mr-4 mb-2" />
+            <img src="StoryForge.png" alt="Story Forge Logo" className="inline w-24 h-24 mr-4 mb-2" />
             <span className="text-foreground">
               Story Forge
             </span>

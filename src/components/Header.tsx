@@ -7,17 +7,17 @@ export function Header() {
       <div className="container mx-auto px-4 py-4">
         <nav className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <img src="/StoryForge.png" alt="Story Forge Logo" className="w-8 h-8" />
+            <img src="StoryForge.png" alt="Story Forge Logo" className="w-8 h-8" />
             <span className="text-xl text-foreground font-bold">Story Forge</span>
           </div>
 
           <div className="flex items-center space-x-6">
-            <Button variant="outline" size="sm" asChild>
-              <a href="https://github.com/lovelesscodes/storyforge" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/lovelesscodes/storyforge" target="_blank" rel="noopener noreferrer">
+              <Button variant="outline" size="sm">
                 <Github className="w-4 h-4 mr-2" />
                 View Source
-              </a>
-            </Button>
+              </Button>
+            </a>
           </div>
         </nav>
       </div>
