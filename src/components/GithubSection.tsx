@@ -35,7 +35,7 @@ export function GitHubSection() {
                         <CardDescription className="text-base">Join our community of developers and contributors</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div className="grid grid-cols-3 gap-6 mb-8">
                             <div className="text-center">
                                 <div className="flex items-center justify-center">
                                     <Star className="w-5 h-5 text-yellow-500 mr-2" />
@@ -60,23 +60,24 @@ export function GitHubSection() {
                         </div>
 
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <a href="https://github.com/lovelesscodes/storyforge" target="_blank" rel="noopener noreferrer">
-                                <Button size="lg">
+                            <a className="w-full md:w-auto" href="https://github.com/lovelesscodes/storyforge" target="_blank" rel="noopener noreferrer">
+                                <Button size="lg" className="w-full md:w-auto">
                                     <Github className="w-5 h-5 mr-2" />
                                     View Repository
                                 </Button>
                             </a>
-                            <a href="https://github.com/lovelesscodes/storyforge/issues" target="_blank" rel="noopener noreferrer">
-                                <Button variant="outline" size="lg">
+                            <a className="w-full md:w-auto" href="https://github.com/lovelesscodes/storyforge/issues" target="_blank" rel="noopener noreferrer">
+                                <Button variant="outline" size="lg" className="w-full md:w-auto">
                                     Report Issue
                                 </Button>
                             </a>
                             <a
+                                className="w-full md:w-auto"
                                 href="https://github.com/lovelesscodes/storyforge/blob/release/CONTRIBUTING.md"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <Button variant="outline" size="lg">
+                                <Button variant="outline" size="lg" className="w-full md:w-auto">
                                     Contribute
                                 </Button>
                             </a>
