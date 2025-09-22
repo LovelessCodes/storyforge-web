@@ -1,4 +1,4 @@
-import { Github, Star, GitFork, Eye } from "lucide-react"
+import { Github, Star, GitFork, Eye, DownloadIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { useQuery } from "@tanstack/react-query"
@@ -15,6 +15,17 @@ export function GitHubSection() {
                 watchers: data.watchers_count as number,
             })),
     });
+
+    const { data: downloads } = useQuery({
+        queryKey: ['github-downloads'],
+        queryFn: () => fetch('https://api.github.com/repos/LovelessCodes/StoryForge/releases')
+            .then(res => res.json())
+            .then(data => (data.reduce((acc: number, release: { assets: { download_count: number, name: string }[] }) => {
+                const releaseDownloads = release.assets.reduce((sum, asset) => sum + (asset.name !== "latest.json" ? asset.download_count : 0), 0);
+                return acc + releaseDownloads;
+            }, 0) as number)),
+        staleTime: 1000 * 60 * 60, // 1 hour
+    })
 
     return (
         <section id="github" className="mb-20">
@@ -35,7 +46,7 @@ export function GitHubSection() {
                         <CardDescription className="text-base">Join our community of developers and contributors</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <div className="grid grid-cols-3 gap-6 mb-8">
+                        <div className="grid grid-cols-4 gap-6 mb-8">
                             <div className="text-center">
                                 <div className="flex items-center justify-center">
                                     <Star className="w-5 h-5 text-yellow-500 mr-2" />
@@ -56,6 +67,13 @@ export function GitHubSection() {
                                     <span className="text-2xl font-bold"><NumberTicker value={githubData?.watchers ?? 0} /></span>
                                 </div>
                                 <p className="text-muted-foreground">Watchers</p>
+                            </div>
+                            <div className="text-center">
+                                <div className="flex items-center justify-center">
+                                    <DownloadIcon className="w-5 h-5 text-blue-500 mr-2" />
+                                    <span className="text-2xl font-bold"><NumberTicker value={downloads ?? 0} /></span>
+                                </div>
+                                <p className="text-muted-foreground">Downloads</p>
                             </div>
                         </div>
 
