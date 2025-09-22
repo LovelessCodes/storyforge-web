@@ -25,7 +25,7 @@ export function GitHubSection() {
                 return acc + releaseDownloads;
             }, 0) as number)),
         staleTime: 1000 * 60 * 60, // 1 hour
-    })
+    });
 
     return (
         <section id="github" className="mb-20">
