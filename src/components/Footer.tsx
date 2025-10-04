@@ -22,7 +22,7 @@ export function Footer() {
 
     const { data: redditStats } = useQuery({
         queryKey: ['reddit-stats'],
-        queryFn: () => fetch('https://www.reddit.com/r/vintagestory/comments/1nngt2b.json')
+        queryFn: () => fetch('https://www.reddit.com/r/VintageStory/comments/1ny3tvz.json')
             .then(res => res.json() as Promise<{data: {children: {data: {ups: number; upvote_ratio: number;}}[]}}[]>)
     })
 
