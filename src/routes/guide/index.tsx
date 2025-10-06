@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/guide/")({
 	component: RouteComponent,
@@ -9,9 +9,9 @@ function RouteComponent() {
 		<section className="py-32 px-8 flex flex-col md:px-0 flex text-foreground justify-center items-center">
 			<h1 className="text-4xl font-bold">Guides</h1>
 			<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 container mt-8">
-				<a
+				<Link
 					className="border border-border rounded-lg p-6 hover:bg-accent/50 transition"
-					href="/guide/migrate"
+					to="/guide/migrate"
 				>
 					<h2 className="text-2xl font-semibold mb-2">
 						Migrating from Vintage Story
@@ -20,7 +20,7 @@ function RouteComponent() {
 						A guide to help you migrate your projects from Vintage Story to
 						Story Forge.
 					</p>
-				</a>
+				</Link>
 				{/* Add some skeleton guides for now */}
 				<div className="border border-border rounded-lg p-6 opacity-50 cursor-not-allowed">
 					<h2 className="text-2xl font-semibold mb-2">Coming Soon</h2>
