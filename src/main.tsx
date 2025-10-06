@@ -1,14 +1,46 @@
-import { render } from 'preact'
-import './tailwind.css'
-import { App } from './app.tsx'
-import { QueryClientProvider } from '@tanstack/react-query'
-import { QueryClient } from '@tanstack/react-query'
+import ReactDOM from "react-dom/client";
+import "./tailwind.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { createRouter, RouterProvider } from "@tanstack/react-router";
+import { routeTree } from "./routeTree.gen";
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
-render(
-  <QueryClientProvider client={queryClient}>
-    <App />
-  </QueryClientProvider>,
-  document.getElementById('app')!
-)
+// Create a new router instance
+const router = createRouter({
+	context: { queryClient },
+	defaultPreload: "intent",
+	defaultStaleTime: 5000,
+	defaultViewTransition: {
+		types: ({ fromLocation, toLocation }) => {
+			let direction = "none";
+
+			if (fromLocation) {
+				const fromIndex = fromLocation.state.__TSR_index;
+				const toIndex = toLocation.state.__TSR_index;
+
+				direction = fromIndex > toIndex ? "right" : "left";
+			}
+
+			return [`slide-${direction}`];
+		},
+	},
+	routeTree,
+	scrollRestoration: true,
+});
+
+// Register the router instance for type safety
+declare module "@tanstack/react-router" {
+	interface Register {
+		router: typeof router;
+	}
+}
+
+// Render the app
+const rootElement = document.getElementById("app");
+if (!rootElement) throw new Error("No root element found");
+ReactDOM.createRoot(rootElement).render(
+	<QueryClientProvider client={queryClient}>
+		<RouterProvider router={router} />
+	</QueryClientProvider>,
+);
