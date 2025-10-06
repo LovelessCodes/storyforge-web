@@ -16,7 +16,7 @@ function RouteComponent() {
 	const dataPaths = {
 		linux: "~/.config/vintagestoryData",
 		mac: "~/Library/Application Support/VintagestoryData",
-		windows: "%APPDATA%\\VintageStory",
+		windows: "%APPDATA%\\VintagestoryData",
 	};
 
 	const { data: downloads } = useLatestDownloadsQuery();
