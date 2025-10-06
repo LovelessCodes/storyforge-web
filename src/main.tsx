@@ -1,7 +1,11 @@
 import ReactDOM from "react-dom/client";
 import "./tailwind.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { createRouter, RouterProvider } from "@tanstack/react-router";
+import {
+	createHashHistory,
+	createRouter,
+	RouterProvider,
+} from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
 
 const queryClient = new QueryClient();
@@ -25,6 +29,7 @@ const router = createRouter({
 			return [`slide-${direction}`];
 		},
 	},
+	history: createHashHistory(),
 	routeTree,
 	scrollRestoration: true,
 });
