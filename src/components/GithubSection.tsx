@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { DownloadIcon, Eye, GitFork, Github, Star } from "lucide-react";
+import { DownloadIcon, GitFork, Github, Star } from "lucide-react";
 import { useId } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -73,7 +73,7 @@ export function GitHubSection() {
 						</CardDescription>
 					</CardHeader>
 					<CardContent>
-						<div className="grid grid-cols-4 gap-6 mb-8">
+						<div className="grid grid-cols-3 gap-6 mb-8">
 							<div className="text-center">
 								<div className="flex items-center justify-center">
 									<Star className="w-5 h-5 text-yellow-500 mr-2" />
@@ -91,15 +91,6 @@ export function GitHubSection() {
 									</span>
 								</div>
 								<p className="text-muted-foreground">Forks</p>
-							</div>
-							<div className="text-center">
-								<div className="flex items-center justify-center">
-									<Eye className="w-5 h-5 text-emerald-500 mr-2" />
-									<span className="text-2xl font-bold">
-										<NumberTicker value={githubData?.watchers ?? 0} />
-									</span>
-								</div>
-								<p className="text-muted-foreground">Watchers</p>
 							</div>
 							<div className="text-center">
 								<div className="flex items-center justify-center">
