@@ -18,6 +18,7 @@ const navigationLinks = [
 	{ label: "Home", to: "/" },
 	{ label: "FAQ", to: "/faq" },
 	{ label: "Guides", to: "/guide" },
+	{ label: "Map Viewer", to: "/map" },
 ];
 
 export function Header() {
