@@ -374,6 +374,7 @@ export function WorldMapViewer() {
 		const rect = containerRef.current.getBoundingClientRect();
 		canvas.width = rect.width;
 		canvas.height = rect.height;
+		canvas.style.filter = "hue-rotate(180deg)";
 		const ctx = canvas.getContext("2d");
 		if (!ctx) return;
 		ctx.fillStyle = "#1a1a1a";
