@@ -33,16 +33,15 @@ export function pixelsToImageData(
 		const pixel = pixels[i];
 
 		// Decode ARGB from i32 (same as Rust)
-		const a = (pixel >> 24) & 0xff;
-		const r = (pixel >> 16) & 0xff;
+		const r = pixel & 0xff;
 		const g = (pixel >> 8) & 0xff;
-		const b = pixel & 0xff;
+		const b = (pixel >> 16) & 0xff;
 
 		const dataIdx = i * 4;
 		data[dataIdx] = r;
 		data[dataIdx + 1] = g;
 		data[dataIdx + 2] = b;
-		data[dataIdx + 3] = a;
+		data[dataIdx + 3] = 255;
 	}
 
 	return imageData;
