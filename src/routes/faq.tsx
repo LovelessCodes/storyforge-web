@@ -97,7 +97,7 @@ function Faq({
 						<h3 className="mb-4 text-xl font-semibold md:mb-11 md:text-2xl">
 							{category.title}
 						</h3>
-						<Accordion collapsible type="single">
+						<Accordion multiple={false}>
 							{category.items.map((item) => (
 								<FAQItem item={item} key={item.id} />
 							))}

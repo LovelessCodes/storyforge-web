@@ -9,7 +9,8 @@ import {
 } from "@/components/ui/navigation-menu";
 import {
 	Popover,
-	PopoverContent,
+	PopoverPopup,
+	PopoverPositioner,
 	PopoverTrigger,
 } from "@/components/ui/popover";
 
@@ -30,62 +31,69 @@ export function Header() {
 					<div className="flex items-center md:hidden">
 						{/* Mobile menu trigger */}
 						<Popover>
-							<PopoverTrigger asChild>
-								<Button
-									className="group size-8 text-white"
-									size="icon"
-									variant="ghost"
-								>
-									<svg
-										className="pointer-events-none"
-										fill="none"
-										height={16}
-										stroke="currentColor"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth="2"
-										viewBox="0 0 24 24"
-										width={16}
-										xmlns="http://www.w3.org/2000/svg"
+							<PopoverTrigger
+								render={(props) => (
+									<Button
+										className="group size-8 text-white"
+										size="icon"
+										variant="ghost"
+										{...props}
 									>
-										<title>Menu</title>
-										<path
-											className="origin-center -translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-x-0 group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[315deg]"
-											d="M4 12L20 12"
-										/>
-										<path
-											className="origin-center transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.8)] group-aria-expanded:rotate-45"
-											d="M4 12H20"
-										/>
-										<path
-											className="origin-center translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[135deg]"
-											d="M4 12H20"
-										/>
-									</svg>
-								</Button>
-							</PopoverTrigger>
-							<PopoverContent align="start" className="w-36 p-1 md:hidden">
-								<NavigationMenu className="max-w-none *:w-full">
-									<NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
-										{navigationLinks.map((link) => (
-											<NavigationMenuItem className="w-full" key={link.label}>
-												<NavigationMenuLink asChild>
-													<Link
-														activeProps={{
-															className:
-																"focus:bg-accent rounded-none hover:bg-accent bg-accent/50 text-accent-foreground",
-														}}
-														className="hover:bg-accent rounded-none hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-ring/50 [&_svg:not([class*='text-'])]:text-muted-foreground flex flex-col gap-1 p-2 text-sm transition-all outline-none focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4 py-1.5"
-														to={link.to}
-													>
-														{link.label}
-													</Link>
-												</NavigationMenuLink>
-											</NavigationMenuItem>
-										))}
-									</NavigationMenuList>
-								</NavigationMenu>
-							</PopoverContent>
+										<svg
+											className="pointer-events-none"
+											fill="none"
+											height={16}
+											stroke="currentColor"
+											strokeLinecap="round"
+											strokeLinejoin="round"
+											strokeWidth="2"
+											viewBox="0 0 24 24"
+											width={16}
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<title>Menu</title>
+											<path
+												className="origin-center -translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-x-0 group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[315deg]"
+												d="M4 12L20 12"
+											/>
+											<path
+												className="origin-center transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.8)] group-aria-expanded:rotate-45"
+												d="M4 12H20"
+											/>
+											<path
+												className="origin-center translate-y-[7px] transition-all duration-300 ease-[cubic-bezier(.5,.85,.25,1.1)] group-aria-expanded:translate-y-0 group-aria-expanded:rotate-[135deg]"
+												d="M4 12H20"
+											/>
+										</svg>
+									</Button>
+								)}
+							/>
+							<PopoverPositioner align="start" className="w-36 p-1 md:hidden">
+								<PopoverPopup>
+									<NavigationMenu className="max-w-none *:w-full">
+										<NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
+											{navigationLinks.map((link) => (
+												<NavigationMenuItem className="w-full" key={link.label}>
+													<NavigationMenuLink
+														render={() => (
+															<Link
+																activeProps={{
+																	className:
+																		"focus:bg-accent rounded-none hover:bg-accent bg-accent/50 text-accent-foreground",
+																}}
+																className="hover:bg-accent rounded-none hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-ring/50 [&_svg:not([class*='text-'])]:text-muted-foreground flex flex-col gap-1 p-2 text-sm transition-all outline-none focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4 py-1.5"
+																to={link.to}
+															>
+																{link.label}
+															</Link>
+														)}
+													/>
+												</NavigationMenuItem>
+											))}
+										</NavigationMenuList>
+									</NavigationMenu>
+								</PopoverPopup>
+							</PopoverPositioner>
 						</Popover>
 					</div>
 					{/* Main nav */}
@@ -107,18 +115,20 @@ export function Header() {
 							<NavigationMenuList className="h-full gap-2">
 								{navigationLinks.map((link) => (
 									<NavigationMenuItem className="h-full" key={link.label}>
-										<NavigationMenuLink asChild>
-											<Link
-												activeProps={{
-													className:
-														"focus:bg-accent hover:bg-accent bg-accent/50 text-accent-foreground border-b-primary bg-transparent!",
-												}}
-												className="hover:bg-accent rounded-none hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-ring/50 [&_svg:not([class*='text-'])]:text-muted-foreground flex flex-col gap-1 p-2 text-sm transition-all outline-none focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4 text-muted-foreground hover:text-primary hover:border-b-primary h-full justify-center rounded-none border-y-2 border-transparent py-1.5 font-medium hover:bg-transparent"
-												to={link.to}
-											>
-												{link.label}
-											</Link>
-										</NavigationMenuLink>
+										<NavigationMenuLink
+											render={() => (
+												<Link
+													activeProps={{
+														className:
+															"focus:bg-accent hover:bg-accent bg-accent/50 text-accent-foreground border-b-primary bg-transparent!",
+													}}
+													className="hover:bg-accent rounded-none hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-ring/50 [&_svg:not([class*='text-'])]:text-muted-foreground flex flex-col gap-1 p-2 text-sm transition-all outline-none focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4 text-muted-foreground hover:text-primary hover:border-b-primary h-full justify-center rounded-none border-y-2 border-transparent py-1.5 font-medium hover:bg-transparent"
+													to={link.to}
+												>
+													{link.label}
+												</Link>
+											)}
+										/>
 									</NavigationMenuItem>
 								))}
 							</NavigationMenuList>

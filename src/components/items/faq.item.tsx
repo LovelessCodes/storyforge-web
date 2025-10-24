@@ -1,7 +1,7 @@
 import { useId } from "react";
 import {
-	AccordionContent,
 	AccordionItem,
+	AccordionPanel,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
 
@@ -16,9 +16,9 @@ export const FAQItem = ({
 			<AccordionTrigger className="font-semibold hover:no-underline">
 				{item.question}
 			</AccordionTrigger>
-			<AccordionContent className="text-muted-foreground">
+			<AccordionPanel className="text-muted-foreground">
 				{item.answer}
-			</AccordionContent>
+			</AccordionPanel>
 		</AccordionItem>
 	);
 };
