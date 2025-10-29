@@ -9,20 +9,24 @@
     <loc>https://getstoryforge.app/#/faq</loc>
     <lastmod>2025-10-29</lastmod>
     <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://getstoryforge.app/#/map</loc>
     <lastmod>2025-10-29</lastmod>
     <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://getstoryforge.app/#/guide</loc>
     <lastmod>2025-10-29</lastmod>
     <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://getstoryforge.app/#/guide/migrate</loc>
     <lastmod>2025-10-29</lastmod>
     <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
   </url>
 </urlset>
