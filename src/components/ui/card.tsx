@@ -6,7 +6,7 @@ function Card({ className, ...props }: React.ComponentProps<"div">) {
 	return (
 		<div
 			className={cn(
-				"bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm",
+				"relative flex flex-col gap-6 rounded-2xl border bg-card bg-clip-padding py-6 text-card-foreground shadow-xs before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-2xl)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] dark:bg-clip-border dark:before:shadow-[0_-1px_--theme(--color-white/8%)]",
 				className,
 			)}
 			data-slot="card"
@@ -31,7 +31,7 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
 function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
 	return (
 		<div
-			className={cn("leading-none font-semibold", className)}
+			className={cn("text-lg leading-none font-semibold", className)}
 			data-slot="card-title"
 			{...props}
 		/>
@@ -41,7 +41,7 @@ function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
 function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
 	return (
 		<div
-			className={cn("text-muted-foreground text-sm", className)}
+			className={cn("text-sm text-muted-foreground", className)}
 			data-slot="card-description"
 			{...props}
 		/>
@@ -61,7 +61,7 @@ function CardAction({ className, ...props }: React.ComponentProps<"div">) {
 	);
 }
 
-function CardContent({ className, ...props }: React.ComponentProps<"div">) {
+function CardPanel({ className, ...props }: React.ComponentProps<"div">) {
 	return (
 		<div
 			className={cn("px-6", className)}
@@ -88,5 +88,6 @@ export {
 	CardTitle,
 	CardAction,
 	CardDescription,
-	CardContent,
+	CardPanel,
+	CardPanel as CardContent,
 };

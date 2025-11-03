@@ -1,19 +1,13 @@
 import { Accordion as AccordionPrimitive } from "@base-ui-components/react/accordion";
 import { ChevronDownIcon } from "lucide-react";
-import type * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-function Accordion({
-	...props
-}: React.ComponentProps<typeof AccordionPrimitive.Root>) {
+function Accordion(props: AccordionPrimitive.Root.Props) {
 	return <AccordionPrimitive.Root data-slot="accordion" {...props} />;
 }
 
-function AccordionItem({
-	className,
-	...props
-}: React.ComponentProps<typeof AccordionPrimitive.Item>) {
+function AccordionItem({ className, ...props }: AccordionPrimitive.Item.Props) {
 	return (
 		<AccordionPrimitive.Item
 			className={cn("border-b last:border-b-0", className)}
@@ -27,19 +21,19 @@ function AccordionTrigger({
 	className,
 	children,
 	...props
-}: React.ComponentProps<typeof AccordionPrimitive.Trigger>) {
+}: AccordionPrimitive.Trigger.Props) {
 	return (
 		<AccordionPrimitive.Header className="flex">
 			<AccordionPrimitive.Trigger
 				className={cn(
-					"focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium transition-all outline-none hover:underline focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&[data-panel-open='']>svg]:rotate-180",
+					"flex flex-1 cursor-pointer items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium transition-all outline-none focus-visible:ring-[3px] focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-64 [&[data-panel-open]>svg]:rotate-180",
 					className,
 				)}
 				data-slot="accordion-trigger"
 				{...props}
 			>
 				{children}
-				<ChevronDownIcon className="text-muted-foreground pointer-events-none size-4 shrink-0 translate-y-0.5 transition-transform duration-200" />
+				<ChevronDownIcon className="pointer-events-none size-4 shrink-0 translate-y-0.5 opacity-72 transition-transform duration-200 ease-in-out" />
 			</AccordionPrimitive.Trigger>
 		</AccordionPrimitive.Header>
 	);
@@ -49,12 +43,11 @@ function AccordionPanel({
 	className,
 	children,
 	...props
-}: React.ComponentProps<typeof AccordionPrimitive.Panel>) {
+}: AccordionPrimitive.Panel.Props) {
 	return (
 		<AccordionPrimitive.Panel
-			className="h-[var(--accordion-panel-height)] transition-[height] ease-out data-[ending-style]:h-0 data-[starting-style]:h-0 overflow-hidden text-sm"
+			className="h-(--accordion-panel-height) overflow-hidden text-sm text-muted-foreground transition-[height] duration-200 ease-in-out data-ending-style:h-0 data-starting-style:h-0"
 			data-slot="accordion-panel"
-			keepMounted
 			{...props}
 		>
 			<div className={cn("pt-0 pb-4", className)}>{children}</div>
@@ -62,4 +55,10 @@ function AccordionPanel({
 	);
 }
 
-export { Accordion, AccordionItem, AccordionTrigger, AccordionPanel };
+export {
+	Accordion,
+	AccordionItem,
+	AccordionTrigger,
+	AccordionPanel,
+	AccordionPanel as AccordionContent,
+};
