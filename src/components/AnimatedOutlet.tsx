@@ -103,7 +103,8 @@ export function AnimatedOutlet({
 	useEffect(() => {
 		if (pathname) {
 			registry.set(pathname, () => {
-				const outletNode = outletRef.current!;
+				if (!outletRef.current) return;
+				const outletNode = outletRef.current;
 				const snapshotNode = outletNode.firstChild as HTMLElement;
 				if (snapshotNode) {
 					let node = snapshotNode;
