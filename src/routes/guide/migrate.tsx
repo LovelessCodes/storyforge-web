@@ -139,7 +139,7 @@ function RouteComponent() {
 				<h2 className="text-2xl font-semibold mb-2 mt-8">
 					Step 1: Install Story Forge
 				</h2>
-				<p className="mb-4">
+				<div className="mb-4">
 					If you haven't already, download and install Story Forge from our
 					official website. Follow the installation instructions provided.
 					<div className="w-fit flex flex-col p-4 items-center border">
@@ -191,7 +191,7 @@ function RouteComponent() {
 								))}
 						</div>
 					</div>
-				</p>
+				</div>
 				<h2 className="text-2xl font-semibold mb-2 mt-8">
 					Step 2: Find the Vintage Story Data Folder
 				</h2>
