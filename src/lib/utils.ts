@@ -32,3 +32,31 @@ export type DownloadInfo = {
 		browser_download_url: string;
 	}[];
 };
+
+export const isMac = /nix|mac os x/i.test(navigator.userAgent);
+
+export const modifierLabel = isMac ? "⌘" : "Ctrl+";
+
+function parseVer(v: string) {
+	const parts = String(v).trim().split(".");
+	const major = Number(parts[0] ?? 0) || 0;
+	const minor = Number(parts[1] ?? 0) || 0;
+	const patch = Number(parts[2] ?? 0) || 0;
+	return [major, minor, patch];
+}
+
+export function compareSemverDesc(a: string, b: string) {
+	const [ma, mi, pa] = parseVer(a);
+	const [mb, mj, pb] = parseVer(b);
+	if (ma !== mb) return mb - ma;
+	if (mi !== mj) return mj - mi;
+	return pb - pa;
+}
+
+export function compareSemverAsc(a: string, b: string) {
+	const [ma, mi, pa] = parseVer(a);
+	const [mb, mj, pb] = parseVer(b);
+	if (ma !== mb) return ma - mb;
+	if (mi !== mj) return mi - mj;
+	return pa - pb;
+}
