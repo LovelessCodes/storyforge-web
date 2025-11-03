@@ -70,7 +70,7 @@ function RouteComponent() {
 					value={searchText}
 				/>
 				<Select multiple value={selectedGameVersions}>
-					<SelectTrigger className="w-40 h-9">
+					<SelectTrigger className="w-40">
 						<span
 							className={cn(
 								"pointer-events-none absolute start-1 z-10 block -translate-y-1/2 inline-flex text-muted-foreground px-2 transition-all",
@@ -106,7 +106,7 @@ function RouteComponent() {
 					</SelectContent>
 				</Select>
 				<Select multiple value={selectedModTags}>
-					<SelectTrigger className="w-40 h-9">
+					<SelectTrigger className="w-40">
 						<span
 							className={cn(
 								"pointer-events-none absolute start-1 z-10 block -translate-y-1/2 inline-flex text-muted-foreground px-2 transition-all",
