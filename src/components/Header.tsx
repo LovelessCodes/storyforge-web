@@ -7,12 +7,7 @@ import {
 	NavigationMenuLink,
 	NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import {
-	Popover,
-	PopoverPopup,
-	PopoverPositioner,
-	PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverPopup, PopoverTrigger } from "@/components/ui/popover";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
@@ -20,6 +15,7 @@ const navigationLinks = [
 	{ label: "FAQ", to: "/faq" },
 	{ label: "Guides", to: "/guide" },
 	{ label: "Map Viewer", to: "/map" },
+	{ label: "Mods", to: "/mods" },
 ];
 
 export function Header() {
@@ -68,32 +64,30 @@ export function Header() {
 									</Button>
 								)}
 							/>
-							<PopoverPositioner align="start" className="w-36 p-1 md:hidden">
-								<PopoverPopup>
-									<NavigationMenu className="max-w-none *:w-full">
-										<NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
-											{navigationLinks.map((link) => (
-												<NavigationMenuItem className="w-full" key={link.label}>
-													<NavigationMenuLink
-														render={() => (
-															<Link
-																activeProps={{
-																	className:
-																		"focus:bg-accent rounded-none hover:bg-accent bg-accent/50 text-accent-foreground",
-																}}
-																className="hover:bg-accent rounded-none hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-ring/50 [&_svg:not([class*='text-'])]:text-muted-foreground flex flex-col gap-1 p-2 text-sm transition-all outline-none focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4 py-1.5"
-																to={link.to}
-															>
-																{link.label}
-															</Link>
-														)}
-													/>
-												</NavigationMenuItem>
-											))}
-										</NavigationMenuList>
-									</NavigationMenu>
-								</PopoverPopup>
-							</PopoverPositioner>
+							<PopoverPopup>
+								<NavigationMenu className="max-w-none *:w-full">
+									<NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
+										{navigationLinks.map((link) => (
+											<NavigationMenuItem className="w-full" key={link.label}>
+												<NavigationMenuLink
+													render={() => (
+														<Link
+															activeProps={{
+																className:
+																	"focus:bg-accent rounded-none hover:bg-accent bg-accent/50 text-accent-foreground",
+															}}
+															className="hover:bg-accent rounded-none hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-ring/50 [&_svg:not([class*='text-'])]:text-muted-foreground flex flex-col gap-1 p-2 text-sm transition-all outline-none focus-visible:ring-[3px] focus-visible:outline-1 [&_svg:not([class*='size-'])]:size-4 py-1.5"
+															to={link.to}
+														>
+															{link.label}
+														</Link>
+													)}
+												/>
+											</NavigationMenuItem>
+										))}
+									</NavigationMenuList>
+								</NavigationMenu>
+							</PopoverPopup>
 						</Popover>
 					</div>
 					{/* Main nav */}
