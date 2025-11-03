@@ -9,12 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ModsRouteImport } from './routes/mods'
 import { Route as MapRouteImport } from './routes/map'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as GuideIndexRouteImport } from './routes/guide/index'
 import { Route as GuideMigrateRouteImport } from './routes/guide/migrate'
 
+const ModsRoute = ModsRouteImport.update({
+  id: '/mods',
+  path: '/mods',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MapRoute = MapRouteImport.update({
   id: '/map',
   path: '/map',
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/faq': typeof FaqRoute
   '/map': typeof MapRoute
+  '/mods': typeof ModsRoute
   '/guide/migrate': typeof GuideMigrateRoute
   '/guide': typeof GuideIndexRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/faq': typeof FaqRoute
   '/map': typeof MapRoute
+  '/mods': typeof ModsRoute
   '/guide/migrate': typeof GuideMigrateRoute
   '/guide': typeof GuideIndexRoute
 }
@@ -60,27 +68,43 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/faq': typeof FaqRoute
   '/map': typeof MapRoute
+  '/mods': typeof ModsRoute
   '/guide/migrate': typeof GuideMigrateRoute
   '/guide/': typeof GuideIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/faq' | '/map' | '/guide/migrate' | '/guide'
+  fullPaths: '/' | '/faq' | '/map' | '/mods' | '/guide/migrate' | '/guide'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/faq' | '/map' | '/guide/migrate' | '/guide'
-  id: '__root__' | '/' | '/faq' | '/map' | '/guide/migrate' | '/guide/'
+  to: '/' | '/faq' | '/map' | '/mods' | '/guide/migrate' | '/guide'
+  id:
+    | '__root__'
+    | '/'
+    | '/faq'
+    | '/map'
+    | '/mods'
+    | '/guide/migrate'
+    | '/guide/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FaqRoute: typeof FaqRoute
   MapRoute: typeof MapRoute
+  ModsRoute: typeof ModsRoute
   GuideMigrateRoute: typeof GuideMigrateRoute
   GuideIndexRoute: typeof GuideIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/mods': {
+      id: '/mods'
+      path: '/mods'
+      fullPath: '/mods'
+      preLoaderRoute: typeof ModsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/map': {
       id: '/map'
       path: '/map'
@@ -123,6 +147,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FaqRoute: FaqRoute,
   MapRoute: MapRoute,
+  ModsRoute: ModsRoute,
   GuideMigrateRoute: GuideMigrateRoute,
   GuideIndexRoute: GuideIndexRoute,
 }
