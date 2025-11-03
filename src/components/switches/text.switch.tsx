@@ -38,7 +38,7 @@ export const TextSwitch = forwardRef<HTMLInputElement, TextSwitchProps>(
 			typeof className === "function" ? className(active) : className;
 
 		return (
-			<div className="relative inline-grid h-9 grid-cols-[1fr_1fr] items-center text-sm font-medium">
+			<div className="relative inline-grid h-8 grid-cols-[1fr_1fr] items-center text-sm font-medium">
 				<Switch
 					checked={active}
 					className={clsx([

@@ -81,12 +81,16 @@ function RouteComponent() {
 						>
 							Game Version(s)
 						</span>
-						<SelectValue>
+						<SelectValue
+							className={
+								selectedGameVersions.length === 0 ? "text-transparent" : ""
+							}
+						>
 							{selectedGameVersions.length > 0
 								? selectedGameVersions.length > 1
 									? `${selectedGameVersions.length} versions`
 									: selectedGameVersions[0]
-								: null}
+								: "Game version(s)"}
 						</SelectValue>
 					</SelectTrigger>
 					<SelectContent align="start" alignItemWithTrigger={false}>
@@ -117,12 +121,14 @@ function RouteComponent() {
 						>
 							Mod Tag(s)
 						</span>
-						<SelectValue>
+						<SelectValue
+							className={selectedModTags.length === 0 ? "text-transparent" : ""}
+						>
 							{selectedModTags.length > 0
 								? selectedModTags.length > 1
 									? `${selectedModTags.length} tags`
 									: selectedModTags[0].name
-								: null}
+								: "Mod tag(s)"}
 						</SelectValue>
 					</SelectTrigger>
 					<SelectContent align="start" alignItemWithTrigger={false}>
