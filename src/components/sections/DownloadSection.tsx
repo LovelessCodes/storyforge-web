@@ -1,11 +1,12 @@
 import { Download, FileText, Loader2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { AppleIcon, LinuxIcon, WindowsIcon } from "@/components/icons";
 import { Reveal } from "@/components/motion/Reveal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useLatestReleaseQuery } from "@/hooks/use-latest-release";
-import { getPlatformFromAssetUrl, type PlatformKey, RELEASES_URL } from "@/lib/utils";
+import { getPlatformFromAssetUrl, RELEASES_URL, type PlatformKey } from "@/lib/utils";
 
 const groups = [
 	{
@@ -43,6 +44,7 @@ function detectPlatform(): PlatformKey {
 }
 
 export function DownloadSection() {
+	const { t } = useTranslation();
 	const { data: release, isPending } = useLatestReleaseQuery();
 	const currentPlatform = detectPlatform();
 
@@ -67,18 +69,19 @@ export function DownloadSection() {
 			<div className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
 				<Reveal className="mx-auto max-w-2xl text-center">
 					<p className="text-accent-amber text-[10px] font-medium tracking-widest uppercase">
-						Get started
+						{t("home.download.eyebrow")}
 					</p>
 					<h2 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">
-						Download Story Forge
+						{t("home.download.title")}
 					</h2>
 					<p className="text-muted-foreground mt-3 text-sm/relaxed">
-						{release?.version ? `Latest release ${release.version} — ` : ""}
-						free and open source for Windows, macOS and Linux.
+						{release?.version
+							? t("home.download.descriptionWithVersion", { version: release.version })
+							: t("home.download.description")}
 					</p>
 				</Reveal>
 
-				<div className="border-border bg-border mt-10 grid gap-px border md:grid-cols-3">
+				<div className="bg-border border-border mt-10 grid gap-px border md:grid-cols-3">
 					{groups.map((group, groupIndex) => (
 						<Reveal delay={groupIndex * 0.08} key={group.label}>
 							<div className="bg-background grid h-full content-start gap-4 p-6">
@@ -89,7 +92,7 @@ export function DownloadSection() {
 								<div className="grid gap-2">
 									{isPending ? (
 										<div className="text-muted-foreground flex items-center gap-2 py-2 text-[11px]">
-											<Loader2 className="size-3.5 animate-spin" /> Loading release…
+											<Loader2 className="size-3.5 animate-spin" /> {t("home.download.loading")}
 										</div>
 									) : (
 										group.assets.map((platform) => {
@@ -107,7 +110,7 @@ export function DownloadSection() {
 															className="border-transparent bg-white/15 text-white"
 															variant="outline"
 														>
-															Recommended
+															{t("home.download.recommended")}
 														</Badge>
 													) : asset?.size ? (
 														<span className="text-muted-foreground text-[10px]">
@@ -145,7 +148,7 @@ export function DownloadSection() {
 						target="_blank"
 					>
 						<FileText className="size-3.5" />
-						Release notes & all platforms
+						{t("home.download.releaseNotes")}
 					</a>
 				</div>
 			</div>

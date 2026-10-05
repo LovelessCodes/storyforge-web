@@ -1,8 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import type { TFunction } from "i18next";
 import { Check, Globe, Loader2, LogOut, Mail, ShieldCheck, User } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { DiscordIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
@@ -41,21 +43,22 @@ const providerIcons: Record<string, React.ReactNode> = {
 	discord: <DiscordIcon className="size-3.5" />,
 };
 
-function validate(mode: Mode, values: Record<FieldName, string>): FieldErrors {
+function validate(mode: Mode, values: Record<FieldName, string>, t: TFunction): FieldErrors {
 	const errors: FieldErrors = {};
 	if (mode === "signup" && !values.name.trim()) {
-		errors.name = "Please enter your name.";
+		errors.name = t("auth.errors.nameRequired");
 	}
 	if (!EMAIL_PATTERN.test(values.email)) {
-		errors.email = "Please enter a valid email address.";
+		errors.email = t("auth.errors.invalidEmail");
 	}
 	if (values.password.length < 8) {
-		errors.password = "Passwords must be at least 8 characters.";
+		errors.password = t("auth.errors.passwordMin");
 	}
 	return errors;
 }
 
 function AccountCard() {
+	const { t } = useTranslation();
 	const { user, signOut } = useAuthSession();
 	const navigate = useNavigate();
 
@@ -88,24 +91,24 @@ function AccountCard() {
 
 			<div className="text-muted-foreground grid gap-2 text-[11px]">
 				<span className="flex items-center gap-2">
-					<ShieldCheck className="text-success size-3.5" /> Signed in to your Story Forge account
+					<ShieldCheck className="text-success size-3.5" /> {t("auth.signedInAs")}
 				</span>
 				<span className="flex items-center gap-2">
-					<Check className="text-success size-3.5" /> Modpacks you own are marked in the browser
+					<Check className="text-success size-3.5" /> {t("auth.ownsModpacks")}
 				</span>
 			</div>
 
 			<div className="flex gap-2">
-				<Button render={<Link to="/modpacks" />} variant="accent">
-					Browse modpacks
+				<Button variant="accent" render={<Link to="/modpacks" />}>
+					{t("account.browse")}
 				</Button>
 				<Button
+					variant="outline"
 					onClick={() => {
 						void signOut().then(() => navigate({ to: "/" }));
 					}}
-					variant="outline"
 				>
-					<LogOut /> Sign out
+					<LogOut /> {t("auth.signOut")}
 				</Button>
 			</div>
 		</div>
@@ -113,6 +116,7 @@ function AccountCard() {
 }
 
 function AuthPage() {
+	const { t } = useTranslation();
 	const search = Route.useSearch();
 	const redirect = search.redirect;
 	const mode = search.mode ?? "signin";
@@ -129,7 +133,7 @@ function AuthPage() {
 	const [formError, setFormError] = useState<string | null>(null);
 	const [submitting, setSubmitting] = useState(false);
 
-	useDocumentTitle(user ? "Your account — Story Forge" : "Sign in — Story Forge");
+	useDocumentTitle(user ? t("auth.docTitleAccount") : t("auth.docTitleSignIn"));
 
 	const { data: providers } = useQuery({
 		enabled: !user,
@@ -149,7 +153,7 @@ function AuthPage() {
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
 		setFormError(null);
-		const nextErrors = validate(mode, values);
+		const nextErrors = validate(mode, values, t);
 		if (Object.keys(nextErrors).length > 0) {
 			setErrors(nextErrors);
 			return;
@@ -170,13 +174,13 @@ function AuthPage() {
 			if (result.error) {
 				setFormError(
 					result.error.message ??
-						(isSignUp ? "Could not create your account." : "Could not sign you in."),
+						(isSignUp ? t("auth.errors.signUpFailed") : t("auth.errors.signInFailed")),
 				);
 			} else {
 				void navigate({ to: target });
 			}
 		} catch (error) {
-			setFormError(error instanceof Error ? error.message : "Something went wrong. Try again.");
+			setFormError(error instanceof Error ? error.message : t("auth.errors.unexpected"));
 		} finally {
 			setSubmitting(false);
 		}
@@ -225,26 +229,30 @@ function AuthPage() {
 						<span className="grid leading-tight">
 							<span className="text-xs font-bold tracking-wide">STORY FORGE</span>
 							<span className="text-accent-amber text-[9px] font-medium tracking-widest uppercase">
-								Account
+								{t("account.account")}
 							</span>
 						</span>
 					</div>
 					<h1 className="mt-5 text-lg font-bold tracking-tight">
-						{user ? "Your account" : isSignUp ? "Create your account" : "Welcome back"}
+						{user
+							? t("auth.yourAccount")
+							: isSignUp
+								? t("auth.createAccount")
+								: t("auth.welcomeBack")}
 					</h1>
 					<p className="text-muted-foreground mt-1 text-[11px]">
 						{user
-							? "You are signed in to Story Forge."
+							? t("auth.accountDescription")
 							: isSignUp
-								? "One account for the launcher, modpacks and more."
-								: "Sign in with your Story Forge account."}
+								? t("auth.signUpDescription")
+								: t("auth.signInDescription")}
 					</p>
 				</div>
 
 				<div className="p-6">
 					{isLoading ? (
 						<div className="text-muted-foreground flex items-center gap-2 py-8 text-xs">
-							<Loader2 className="size-4 animate-spin" /> Checking session…
+							<Loader2 className="size-4 animate-spin" /> {t("auth.checkingSession")}
 						</div>
 					) : user ? (
 						<AccountCard />
@@ -256,23 +264,23 @@ function AuthPage() {
 										{socialProviders.map((provider) => (
 											<Button
 												key={provider}
+												variant="outline"
 												onClick={() => {
 													void authClient.signIn.social({
 														callbackURL: `${window.location.origin}/#${target}`,
 														provider,
 													});
 												}}
-												variant="outline"
 											>
 												{providerIcons[provider] ?? <Globe className="size-3.5" />}
-												<span className="capitalize">Continue with {provider}</span>
+												<span className="capitalize">{t("auth.continueWith", { provider })}</span>
 											</Button>
 										))}
 									</div>
 									<div className="my-4 flex items-center gap-3">
 										<Separator className="flex-1" />
 										<span className="text-muted-foreground text-[10px] tracking-widest uppercase">
-											or
+											{t("auth.or")}
 										</span>
 										<Separator className="flex-1" />
 									</div>
@@ -283,14 +291,14 @@ function AuthPage() {
 								{isSignUp && (
 									<div className="grid gap-1.5">
 										<label className="text-[11px] font-medium" htmlFor="name">
-											Name
+											{t("auth.name")}
 										</label>
 										<Input
 											autoComplete="name"
 											id="name"
-											onChange={(event) => setValue("name", event.target.value)}
-											placeholder="Your name"
+											placeholder={t("auth.namePlaceholder")}
 											value={values.name}
+											onChange={(event) => setValue("name", event.target.value)}
 										/>
 										{errors.name && <p className="text-destructive text-[10px]">{errors.name}</p>}
 									</div>
@@ -298,30 +306,32 @@ function AuthPage() {
 
 								<div className="grid gap-1.5">
 									<label className="text-[11px] font-medium" htmlFor="email">
-										Email
+										{t("auth.email")}
 									</label>
 									<Input
 										autoComplete="email"
 										id="email"
-										onChange={(event) => setValue("email", event.target.value)}
 										placeholder="you@example.com"
 										type="email"
 										value={values.email}
+										onChange={(event) => setValue("email", event.target.value)}
 									/>
 									{errors.email && <p className="text-destructive text-[10px]">{errors.email}</p>}
 								</div>
 
 								<div className="grid gap-1.5">
 									<label className="text-[11px] font-medium" htmlFor="password">
-										Password
+										{t("auth.password")}
 									</label>
 									<Input
 										autoComplete={isSignUp ? "new-password" : "current-password"}
 										id="password"
-										onChange={(event) => setValue("password", event.target.value)}
-										placeholder={isSignUp ? "At least 8 characters" : "Your password"}
+										placeholder={
+											isSignUp ? t("auth.passwordNewPlaceholder") : t("auth.passwordPlaceholder")
+										}
 										type="password"
 										value={values.password}
+										onChange={(event) => setValue("password", event.target.value)}
 									/>
 									{errors.password && (
 										<p className="text-destructive text-[10px]">{errors.password}</p>
@@ -336,26 +346,30 @@ function AuthPage() {
 
 								<Button
 									className="w-full"
-									disabled={submitting}
 									size="lg"
 									type="submit"
 									variant="accent"
+									disabled={submitting}
 								>
 									{submitting ? <Loader2 className="animate-spin" /> : <User />}
-									{submitting ? "Please wait…" : isSignUp ? "Create account" : "Sign in"}
+									{submitting
+										? t("auth.submitting")
+										: isSignUp
+											? t("auth.submitSignUp")
+											: t("auth.submitSignIn")}
 								</Button>
 							</form>
 
 							<Separator className="my-4" />
 
 							<p className="text-muted-foreground text-center text-[11px]">
-								{isSignUp ? "Already have an account?" : "New to Story Forge?"}{" "}
+								{isSignUp ? t("auth.hasAccount") : t("auth.noAccount")}{" "}
 								<button
 									className="text-accent-primary hover:underline"
 									onClick={toggleMode}
 									type="button"
 								>
-									{isSignUp ? "Sign in" : "Create one"}
+									{isSignUp ? t("auth.submitSignIn") : t("auth.createOne")}
 								</button>
 							</p>
 						</>

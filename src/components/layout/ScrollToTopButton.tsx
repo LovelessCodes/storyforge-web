@@ -1,12 +1,14 @@
 import { ArrowUp } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { usePageScroll } from "@/components/layout/PageScroll";
 import { Button } from "@/components/ui/button";
 
 /** Floating back-to-top button; appears once the page scroller moves down. */
 export function ScrollToTopButton() {
+	const { t } = useTranslation();
 	const { viewport } = usePageScroll();
 	const [visible, setVisible] = useState(false);
 
@@ -29,7 +31,7 @@ export function ScrollToTopButton() {
 					transition={{ duration: 0.2 }}
 				>
 					<Button
-						aria-label="Back to top"
+						aria-label={t("common.backToTop")}
 						className="border-border bg-card/90 shadow-lg backdrop-blur-sm"
 						onClick={() => viewport?.scrollTo({ behavior: "smooth", top: 0 })}
 						size="icon"

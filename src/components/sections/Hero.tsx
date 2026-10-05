@@ -3,13 +3,14 @@ import { Download, Github, Package, Server, Sparkles } from "lucide-react";
 import type { Variants } from "motion/react";
 import { motion, useReducedMotion } from "motion/react";
 import { useMemo } from "react";
+import { Trans, useTranslation } from "react-i18next";
 
 import { Button } from "@/components/ui/button";
 import { NumberTicker } from "@/components/ui/number-ticker";
 import { useGithubStatsQuery } from "@/hooks/use-github-stats";
 import { useLatestReleaseQuery } from "@/hooks/use-latest-release";
 import { useModpacks } from "@/hooks/use-modpacks";
-import { getPlatformFromAssetUrl, type PlatformKey, RELEASES_URL } from "@/lib/utils";
+import { getPlatformFromAssetUrl, RELEASES_URL, type PlatformKey } from "@/lib/utils";
 
 function detectPlatform(): PlatformKey {
 	const ua = navigator.userAgent;
@@ -21,14 +22,15 @@ function detectPlatform(): PlatformKey {
 }
 
 const platformLabels: Record<PlatformKey, string> = {
-	"darwin-aarch64": "macOS · Apple Silicon",
-	"darwin-x86_64": "macOS · Intel",
-	"linux-aarch64": "Linux · ARM64",
-	"linux-x86_64": "Linux · x64",
-	"windows-x86_64": "Windows · x64",
+	"darwin-aarch64": "macOS",
+	"darwin-x86_64": "macOS",
+	"linux-aarch64": "Linux",
+	"linux-x86_64": "Linux",
+	"windows-x86_64": "Windows",
 };
 
 export function Hero() {
+	const { t } = useTranslation();
 	const reduceMotion = useReducedMotion();
 	const { data: release } = useLatestReleaseQuery();
 	const { data: modpacksData } = useModpacks();
@@ -64,8 +66,8 @@ export function Hero() {
 				hidden: { opacity: 0, y: 18 },
 				show: {
 					opacity: 1,
-					transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
 					y: 0,
+					transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
 				},
 			};
 
@@ -90,23 +92,26 @@ export function Hero() {
 						variants={item}
 					>
 						<Sparkles className="text-accent-amber size-3" />
-						Open source · GPLv3 · {version}
+						{t("home.hero.badge", { version })}
 					</motion.span>
 
 					<motion.h1
 						className="max-w-xl text-4xl leading-[1.05] font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl"
 						variants={item}
 					>
-						Forge your next{" "}
-						<span className="text-gradient-violet whitespace-nowrap">Vintage Story</span> adventure.
+						<Trans
+							components={{
+								gradient: <span className="text-gradient-violet whitespace-nowrap" />,
+							}}
+							i18nKey="home.hero.title"
+						/>
 					</motion.h1>
 
 					<motion.p
 						className="text-muted-foreground max-w-lg text-sm/relaxed sm:text-base/relaxed"
 						variants={item}
 					>
-						Story Forge is a fast, open-source launcher and mod manager for Vintage Story —
-						profiles, mods, modpacks, world maps and server hosting, all in one place.
+						{t("home.hero.description")}
 					</motion.p>
 
 					<motion.div className="flex flex-wrap items-center gap-3" variants={item}>
@@ -115,16 +120,19 @@ export function Hero() {
 								<a
 									href={downloadUrl}
 									rel="noopener noreferrer"
-									target={downloadUrl?.includes("github.com") ? "_blank" : undefined}
+									target={downloadUrl.includes("github.com") ? "_blank" : undefined}
 								>
-									<Download /> Download for {platformLabels[detectPlatform()].split(" · ")[0]}
+									<Download />{" "}
+									{t("home.hero.downloadFor", {
+										platform: platformLabels[detectPlatform()],
+									})}
 								</a>
 							}
 							size="xl"
 							variant="amber"
 						/>
 						<Button render={<Link to="/modpacks" />} size="xl" variant="outline">
-							<Package /> Browse modpacks
+							<Package /> {t("home.hero.browse")}
 						</Button>
 					</motion.div>
 
@@ -137,21 +145,21 @@ export function Hero() {
 							<span className="text-foreground font-medium tabular-nums">
 								<NumberTicker value={stars} />
 							</span>
-							GitHub stars
+							{t("home.hero.stars")}
 						</span>
 						<span className="flex items-center gap-1.5">
 							<Download className="size-3.5" />
 							<span className="text-foreground font-medium tabular-nums">
 								<NumberTicker value={downloads} />
 							</span>
-							downloads
+							{t("home.hero.downloads")}
 						</span>
 						<span className="hidden items-center gap-1.5 sm:flex">
 							<Package className="size-3.5" />
 							<span className="text-foreground font-medium tabular-nums">
 								<NumberTicker value={modpackCount} />
 							</span>
-							modpacks
+							{t("home.hero.modpacks")}
 						</span>
 					</motion.div>
 				</motion.div>
@@ -174,7 +182,7 @@ export function Hero() {
 							</span>
 						</div>
 						<img
-							alt="Story Forge profiles screen"
+							alt={t("home.hero.screenshotAlt")}
 							className="block w-full"
 							src="/screenshots/profiles.webp"
 						/>
@@ -188,7 +196,7 @@ export function Hero() {
 						transition={{ delay: 0.7, duration: 0.5 }}
 					>
 						<Package className="text-accent-primary size-3.5" />
-						<span className="text-[10px] font-medium">Mods, updated in one click</span>
+						<span className="text-[10px] font-medium">{t("home.hero.chipMods")}</span>
 					</motion.div>
 					<motion.div
 						animate={{ opacity: 1, x: 0 }}
@@ -197,7 +205,7 @@ export function Hero() {
 						transition={{ delay: 0.85, duration: 0.5 }}
 					>
 						<Server className="text-accent-amber size-3.5" />
-						<span className="text-[10px] font-medium">Server hosting built in</span>
+						<span className="text-[10px] font-medium">{t("home.hero.chipHosting")}</span>
 					</motion.div>
 				</motion.div>
 			</div>

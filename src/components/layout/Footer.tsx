@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, Github } from "lucide-react";
+import { Trans, useTranslation } from "react-i18next";
 
 import { DiscordIcon, RedditIcon } from "@/components/icons";
 import { useLatestReleaseQuery } from "@/hooks/use-latest-release";
@@ -8,13 +9,14 @@ import { RELEASES_URL } from "@/lib/utils";
 const currentYear = new Date().getFullYear();
 
 const productLinks = [
-	{ label: "Download", to: "/" },
-	{ label: "Modpacks", to: "/modpacks" },
-	{ label: "Mod Browser", to: "/mods" },
-	{ label: "Map Viewer", to: "/map" },
+	{ key: "footer.download", to: "/" },
+	{ key: "nav.modpacks", to: "/modpacks" },
+	{ key: "footer.modBrowser", to: "/mods" },
+	{ key: "footer.mapViewer", to: "/map" },
 ] as const;
 
 export function Footer() {
+	const { t } = useTranslation();
 	const { data: release } = useLatestReleaseQuery();
 
 	return (
@@ -27,17 +29,14 @@ export function Footer() {
 						<span className="leading-tight">
 							<span className="block text-[13px] font-bold tracking-wide">STORY FORGE</span>
 							<span className="text-accent-amber block text-[9px] font-medium tracking-widest uppercase">
-								Vintage Story Launcher
+								{t("common.tagline")}
 							</span>
 						</span>
 					</div>
-					<p className="text-muted-foreground text-xs/relaxed">
-						An open-source Vintage Story launcher and mod manager, built by the community for the
-						community.
-					</p>
+					<p className="text-muted-foreground text-xs/relaxed">{t("footer.blurb")}</p>
 					<div className="flex items-center gap-1">
 						<a
-							aria-label="GitHub"
+							aria-label={t("common.github")}
 							href="https://github.com/lovelesscodes/storyforge"
 							rel="noopener noreferrer"
 							target="_blank"
@@ -47,7 +46,7 @@ export function Footer() {
 							</span>
 						</a>
 						<a
-							aria-label="Discord"
+							aria-label={t("common.discord")}
 							href="https://discord.gg/gByx63peUC"
 							rel="noopener noreferrer"
 							target="_blank"
@@ -75,7 +74,7 @@ export function Footer() {
 							rel="noopener noreferrer"
 							target="_blank"
 						>
-							Read our intro on r/VintageStory
+							{t("footer.reddit")}
 						</a>
 					</div>
 				</div>
@@ -83,16 +82,16 @@ export function Footer() {
 				{/* Product */}
 				<div className="grid content-start gap-3">
 					<h3 className="text-muted-foreground text-[10px] font-medium tracking-widest uppercase">
-						Product
+						{t("footer.product")}
 					</h3>
 					<ul className="grid gap-2">
 						{productLinks.map((link) => (
-							<li key={link.label}>
+							<li key={link.key}>
 								<Link
 									className="text-muted-foreground hover:text-foreground text-xs transition-colors"
 									to={link.to}
 								>
-									{link.label}
+									{t(link.key)}
 								</Link>
 							</li>
 						))}
@@ -102,7 +101,7 @@ export function Footer() {
 				{/* Resources */}
 				<div className="grid content-start gap-3">
 					<h3 className="text-muted-foreground text-[10px] font-medium tracking-widest uppercase">
-						Resources
+						{t("footer.resources")}
 					</h3>
 					<ul className="grid gap-2">
 						<li>
@@ -110,7 +109,7 @@ export function Footer() {
 								className="text-muted-foreground hover:text-foreground text-xs transition-colors"
 								to="/guide"
 							>
-								Guides
+								{t("footer.guides")}
 							</Link>
 						</li>
 						<li>
@@ -118,7 +117,7 @@ export function Footer() {
 								className="text-muted-foreground hover:text-foreground text-xs transition-colors"
 								to="/faq"
 							>
-								FAQ
+								{t("footer.faq")}
 							</Link>
 						</li>
 						<li>
@@ -128,7 +127,7 @@ export function Footer() {
 								rel="noopener noreferrer"
 								target="_blank"
 							>
-								Contributing <ArrowUpRight className="size-3" />
+								{t("footer.contributing")} <ArrowUpRight className="size-3" />
 							</a>
 						</li>
 						<li>
@@ -138,7 +137,7 @@ export function Footer() {
 								rel="noopener noreferrer"
 								target="_blank"
 							>
-								Report an issue <ArrowUpRight className="size-3" />
+								{t("footer.reportIssue")} <ArrowUpRight className="size-3" />
 							</a>
 						</li>
 					</ul>
@@ -147,9 +146,11 @@ export function Footer() {
 				{/* Latest release */}
 				<div className="grid content-start gap-3">
 					<h3 className="text-muted-foreground text-[10px] font-medium tracking-widest uppercase">
-						Latest release
+						{t("footer.latestRelease")}
 					</h3>
-					<p className="text-muted-foreground text-xs">{release?.version ?? "Fetching release…"}</p>
+					<p className="text-muted-foreground text-xs">
+						{release?.version ?? t("footer.fetchingRelease")}
+					</p>
 					<ul className="grid gap-2">
 						<li>
 							<a
@@ -158,7 +159,7 @@ export function Footer() {
 								rel="noopener noreferrer"
 								target="_blank"
 							>
-								Release notes <ArrowUpRight className="size-3" />
+								{t("footer.releaseNotes")} <ArrowUpRight className="size-3" />
 							</a>
 						</li>
 						<li>
@@ -168,7 +169,7 @@ export function Footer() {
 								rel="noopener noreferrer"
 								target="_blank"
 							>
-								All releases <ArrowUpRight className="size-3" />
+								{t("footer.allReleases")} <ArrowUpRight className="size-3" />
 							</a>
 						</li>
 					</ul>
@@ -177,26 +178,29 @@ export function Footer() {
 
 			<div className="border-border border-t">
 				<div className="text-muted-foreground mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 text-[10px] sm:flex-row sm:items-center sm:justify-between sm:px-6">
-					<p>© {currentYear} Story Forge · Open source under the GPLv3 license</p>
+					<p>{t("footer.copyright", { year: currentYear })}</p>
 					<p>
-						Not affiliated with or endorsed by{" "}
-						<a
-							className="hover:text-foreground underline underline-offset-2 transition-colors"
-							href="https://anegostudios.com/"
-							rel="noopener noreferrer"
-							target="_blank"
-						>
-							Anego Studios
-						</a>{" "}
-						or{" "}
-						<a
-							className="hover:text-foreground underline underline-offset-2 transition-colors"
-							href="https://vintagestory.at"
-							rel="noopener noreferrer"
-							target="_blank"
-						>
-							Vintage Story
-						</a>
+						<Trans
+							components={{
+								anego: (
+									<a
+										className="hover:text-foreground underline underline-offset-2 transition-colors"
+										href="https://anegostudios.com/"
+										rel="noopener noreferrer"
+										target="_blank"
+									/>
+								),
+								vintage: (
+									<a
+										className="hover:text-foreground underline underline-offset-2 transition-colors"
+										href="https://vintagestory.at"
+										rel="noopener noreferrer"
+										target="_blank"
+									/>
+								),
+							}}
+							i18nKey="footer.disclaimer"
+						/>
 					</p>
 				</div>
 			</div>

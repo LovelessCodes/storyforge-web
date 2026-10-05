@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import "./tailwind.css";
+import "@/lib/i18n";
 import { createHashHistory, createRouter, RouterProvider } from "@tanstack/react-router";
 import { ThemeProvider } from "next-themes";
 import ReactDOM from "react-dom/client";

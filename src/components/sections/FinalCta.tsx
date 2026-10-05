@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Download, Layers } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { DiscordIcon } from "@/components/icons";
 import { usePageScroll } from "@/components/layout/PageScroll";
@@ -7,6 +8,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/button";
 
 export function FinalCta() {
+	const { t } = useTranslation();
 	const { scrollToId } = usePageScroll();
 
 	return (
@@ -20,23 +22,22 @@ export function FinalCta() {
 				<Reveal className="mx-auto grid max-w-2xl justify-items-center gap-6">
 					<img alt="Story Forge" className="size-14 object-contain" src="/StoryForge.svg" />
 					<h2 className="text-3xl font-bold tracking-tight text-balance sm:text-4xl">
-						Ready to forge your story?
+						{t("home.finalCta.title")}
 					</h2>
 					<p className="text-muted-foreground max-w-lg text-sm/relaxed">
-						Join thousands of Vintage Story players who manage their mods, worlds and servers with
-						Story Forge.
+						{t("home.finalCta.description")}
 					</p>
 					<div className="flex flex-wrap justify-center gap-3">
 						<Button onClick={() => scrollToId("download")} size="xl" variant="amber">
-							<Download /> Download now
+							<Download /> {t("home.finalCta.download")}
 						</Button>
 						<Button render={<Link to="/modpacks" />} size="xl" variant="outline">
-							<Layers /> Explore modpacks
+							<Layers /> {t("home.finalCta.explore")}
 						</Button>
 						<Button
 							render={
 								<a href="https://discord.gg/gByx63peUC" rel="noopener noreferrer" target="_blank">
-									<DiscordIcon className="size-4" /> Join Discord
+									<DiscordIcon className="size-4" /> {t("home.finalCta.discord")}
 								</a>
 							}
 							size="xl"

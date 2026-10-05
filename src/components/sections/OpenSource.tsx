@@ -1,4 +1,5 @@
 import { DownloadIcon, GitFork, Github, Star } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { Reveal } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/button";
@@ -6,12 +7,13 @@ import { NumberTicker } from "@/components/ui/number-ticker";
 import { useGithubStatsQuery } from "@/hooks/use-github-stats";
 
 export function OpenSource() {
+	const { t } = useTranslation();
 	const { data: stats } = useGithubStatsQuery();
 
 	const items = [
-		{ icon: Star, label: "Stars", value: stats?.stars ?? 0 },
-		{ icon: GitFork, label: "Forks", value: stats?.forks ?? 0 },
-		{ icon: DownloadIcon, label: "Downloads", value: stats?.downloads ?? 0 },
+		{ icon: Star, label: t("home.openSource.stars"), value: stats?.stars ?? 0 },
+		{ icon: GitFork, label: t("home.openSource.forks"), value: stats?.forks ?? 0 },
+		{ icon: DownloadIcon, label: t("home.openSource.downloads"), value: stats?.downloads ?? 0 },
 	];
 
 	return (
@@ -29,16 +31,14 @@ export function OpenSource() {
 										<Github className="size-4" />
 									</div>
 									<h2 className="text-xl font-bold tracking-tight sm:text-2xl">
-										Built in the open
+										{t("home.openSource.title")}
 									</h2>
 								</div>
 								<p className="text-muted-foreground mt-4 text-sm/relaxed">
-									Story Forge is GPLv3-licensed and developed in public. Read the source, report
-									bugs, request features or send a pull request — every contribution makes the
-									launcher better.
+									{t("home.openSource.description")}
 								</p>
 
-								<div className="border-border bg-border mt-8 grid grid-cols-3 gap-px border">
+								<div className="bg-border border-border mt-8 grid grid-cols-3 gap-px border">
 									{items.map((stat) => (
 										<div
 											className="bg-background grid justify-items-center gap-1 px-4 py-5"
@@ -58,42 +58,42 @@ export function OpenSource() {
 
 							<div className="flex flex-wrap gap-3 lg:flex-col">
 								<Button
+									size="lg"
 									render={
 										<a
 											href="https://github.com/lovelesscodes/storyforge"
 											rel="noopener noreferrer"
 											target="_blank"
 										>
-											<Github /> View repository
+											<Github /> {t("home.openSource.viewRepo")}
 										</a>
 									}
-									size="lg"
 								/>
 								<Button
+									size="lg"
+									variant="outline"
 									render={
 										<a
 											href="https://github.com/lovelesscodes/storyforge/issues"
 											rel="noopener noreferrer"
 											target="_blank"
 										>
-											Report an issue
+											{t("home.openSource.reportIssue")}
 										</a>
 									}
-									size="lg"
-									variant="outline"
 								/>
 								<Button
+									size="lg"
+									variant="outline"
 									render={
 										<a
 											href="https://github.com/lovelesscodes/storyforge/blob/release/CONTRIBUTING.md"
 											rel="noopener noreferrer"
 											target="_blank"
 										>
-											Contribute
+											{t("home.openSource.contribute")}
 										</a>
 									}
-									size="lg"
-									variant="outline"
 								/>
 							</div>
 						</div>

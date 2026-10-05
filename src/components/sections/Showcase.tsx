@@ -1,55 +1,46 @@
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Reveal } from "@/components/motion/Reveal";
 
 const shots = [
 	{
-		alt: "Profiles manager",
-		caption: "Profiles for every playthrough",
-		label: "Profiles",
+		captionKey: "captionProfiles",
+		key: "profiles",
 		src: "/screenshots/profiles.webp",
 		value: "profiles",
 	},
+	{ captionKey: "captionMods", key: "mods", src: "/screenshots/mods.webp", value: "mods" },
 	{
-		alt: "Mod browser",
-		caption: "The full ModDB, with one-click updates",
-		label: "Mods",
-		src: "/screenshots/mods.webp",
-		value: "mods",
-	},
-	{
-		alt: "Mod configuration editor",
-		caption: "Edit mod configs without leaving the app",
-		label: "Mod configs",
+		captionKey: "captionModConfigs",
+		key: "modConfigs",
 		src: "/screenshots/mod-configs.webp",
 		value: "mod-configs",
 	},
 	{
-		alt: "Server manager",
-		caption: "Favourite and join servers",
-		label: "Servers",
+		captionKey: "captionServers",
+		key: "servers",
 		src: "/screenshots/servers.webp",
 		value: "servers",
 	},
 	{
-		alt: "Version manager",
-		caption: "Every game version, one click away",
-		label: "Versions",
+		captionKey: "captionVersions",
+		key: "versions",
 		src: "/screenshots/versions.webp",
 		value: "versions",
 	},
 	{
-		alt: "World map viewer",
-		caption: "Explore your worlds as a map",
-		label: "Worlds",
+		captionKey: "captionWorlds",
+		key: "worlds",
 		src: "/screenshots/worlds.webp",
 		value: "worlds",
 	},
-];
+] as const;
 
 export function Showcase() {
-	const [active, setActive] = useState(shots[0].value);
+	const { t } = useTranslation();
+	const [active, setActive] = useState<(typeof shots)[number]["value"]>("profiles");
 	const shot = shots.find((entry) => entry.value === active) ?? shots[0];
 
 	return (
@@ -58,14 +49,13 @@ export function Showcase() {
 				<Reveal className="flex flex-wrap items-end justify-between gap-6">
 					<div className="max-w-2xl">
 						<p className="text-accent-amber text-[10px] font-medium tracking-widest uppercase">
-							A look inside
+							{t("home.showcase.eyebrow")}
 						</p>
 						<h2 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">
-							Built like a tool, not a toy
+							{t("home.showcase.title")}
 						</h2>
 						<p className="text-muted-foreground mt-3 text-sm/relaxed">
-							Sharp, fast and keyboard-friendly — the same interface power users have been asking
-							for.
+							{t("home.showcase.description")}
 						</p>
 					</div>
 
@@ -88,7 +78,7 @@ export function Showcase() {
 										transition={{ damping: 30, stiffness: 400, type: "spring" }}
 									/>
 								)}
-								<span className="relative">{entry.label}</span>
+								<span className="relative">{t(`home.showcase.${entry.key}`)}</span>
 							</button>
 						))}
 					</div>
@@ -100,7 +90,7 @@ export function Showcase() {
 						<div className="relative">
 							<AnimatePresence mode="wait">
 								<motion.img
-									alt={shot.alt}
+									alt={t(`home.showcase.${shot.key}`)}
 									animate={{ opacity: 1, scale: 1 }}
 									className="block w-full"
 									exit={{ opacity: 0, scale: 0.995 }}
@@ -111,7 +101,9 @@ export function Showcase() {
 								/>
 							</AnimatePresence>
 							<div className="border-border bg-surface flex items-center justify-between border-t px-3 py-2">
-								<span className="text-muted-foreground text-[10px]">{shot.caption}</span>
+								<span className="text-muted-foreground text-[10px]">
+									{t(`home.showcase.${shot.captionKey}`)}
+								</span>
 								<span className="text-muted-foreground/70 font-mono text-[9px]">
 									storyforge — {shot.value}
 								</span>

@@ -2,22 +2,25 @@ import { Link } from "@tanstack/react-router";
 import { Github, LogIn, LogOut, Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { DiscordIcon } from "@/components/icons";
+import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { useAuthSession } from "@/hooks/use-auth-session";
 
 const navigationLinks = [
-	{ label: "Home", to: "/" },
-	{ label: "Modpacks", to: "/modpacks" },
-	{ label: "Mods", to: "/mods" },
-	{ label: "Map Viewer", to: "/map" },
-	{ label: "Guides", to: "/guide" },
-	{ label: "FAQ", to: "/faq" },
+	{ key: "nav.home", to: "/" },
+	{ key: "nav.modpacks", to: "/modpacks" },
+	{ key: "nav.mods", to: "/mods" },
+	{ key: "nav.map", to: "/map" },
+	{ key: "nav.guides", to: "/guide" },
+	{ key: "nav.faq", to: "/faq" },
 ] as const;
 
 export function MobileMenu() {
+	const { t } = useTranslation();
 	const [open, setOpen] = useState(false);
 	const { user, signOut } = useAuthSession();
 
@@ -33,10 +36,10 @@ export function MobileMenu() {
 		<div className="md:hidden">
 			<Button
 				aria-expanded={open}
-				aria-label="Toggle menu"
-				onClick={() => setOpen((value) => !value)}
+				aria-label={t("account.toggleMenu")}
 				size="icon-sm"
 				variant="ghost"
+				onClick={() => setOpen((value) => !value)}
 			>
 				<AnimatePresence initial={false} mode="wait">
 					{open ? (
@@ -89,7 +92,7 @@ export function MobileMenu() {
 										onClick={() => setOpen(false)}
 										to={link.to}
 									>
-										{link.label}
+										{t(link.key)}
 									</Link>
 								</motion.div>
 							))}
@@ -99,24 +102,25 @@ export function MobileMenu() {
 							{user ? (
 								<>
 									<div className="text-muted-foreground text-xs">
-										Signed in as <span className="text-foreground font-medium">{user.name}</span>
+										{t("account.signedInAs")}{" "}
+										<span className="text-foreground font-medium">{user.name}</span>
 									</div>
 									<Button
+										variant="outline"
 										onClick={() => {
 											void signOut().then(() => setOpen(false));
 										}}
-										variant="outline"
 									>
-										<LogOut /> Sign out
+										<LogOut /> {t("account.signOut")}
 									</Button>
 								</>
 							) : (
 								<Button
-									render={<Link onClick={() => setOpen(false)} to="/auth" />}
 									size="lg"
 									variant="accent"
+									render={<Link onClick={() => setOpen(false)} to="/auth" />}
 								>
-									<LogIn /> Sign in to Story Forge
+									<LogIn /> {t("account.signIn")}
 								</Button>
 							)}
 							<div className="flex items-center gap-2">
@@ -134,6 +138,7 @@ export function MobileMenu() {
 										<DiscordIcon className="size-3.5" /> Discord
 									</Button>
 								</a>
+								<LanguageSwitcher />
 								<ThemeToggle />
 							</div>
 						</div>

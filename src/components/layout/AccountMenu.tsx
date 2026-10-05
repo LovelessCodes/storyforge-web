@@ -1,11 +1,13 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Github, LogOut, Package, User } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import { DiscordIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
+	DropdownMenuGroup,
 	DropdownMenuItem,
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
@@ -24,6 +26,7 @@ function initials(name: string | undefined) {
 }
 
 export function AccountMenu() {
+	const { t } = useTranslation();
 	const { user, signOut } = useAuthSession();
 	const navigate = useNavigate();
 
@@ -34,7 +37,7 @@ export function AccountMenu() {
 			<DropdownMenuTrigger
 				render={
 					<Button
-						aria-label="Account menu"
+						aria-label={t("account.menu")}
 						className="border-border"
 						size="icon-sm"
 						variant="outline"
@@ -56,24 +59,28 @@ export function AccountMenu() {
 				)}
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" className="min-w-56">
-				<DropdownMenuLabel className="normal-case">
-					<span className="grid gap-0.5">
-						<span className="text-foreground text-xs font-medium tracking-normal">{user.name}</span>
-						<span className="text-muted-foreground text-[10px] font-normal tracking-normal">
-							{user.email}
+				<DropdownMenuGroup>
+					<DropdownMenuLabel className="normal-case">
+						<span className="grid gap-0.5">
+							<span className="text-foreground text-xs font-medium tracking-normal">
+								{user.name}
+							</span>
+							<span className="text-muted-foreground text-[10px] font-normal tracking-normal">
+								{user.email}
+							</span>
 						</span>
-					</span>
-				</DropdownMenuLabel>
+					</DropdownMenuLabel>
+				</DropdownMenuGroup>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem
 					onClick={() => {
 						void navigate({ to: "/modpacks" });
 					}}
 				>
-					<Package /> Browse modpacks
+					<Package /> {t("account.browse")}
 				</DropdownMenuItem>
 				<DropdownMenuItem render={<Link to="/auth" />}>
-					<User /> Account
+					<User /> {t("account.account")}
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem
@@ -82,7 +89,7 @@ export function AccountMenu() {
 					}}
 					variant="destructive"
 				>
-					<LogOut /> Sign out
+					<LogOut /> {t("account.signOut")}
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
 				<div className="flex items-center gap-1 px-2 py-1.5">

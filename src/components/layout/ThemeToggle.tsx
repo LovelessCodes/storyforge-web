@@ -1,6 +1,7 @@
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useCallback, useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Button } from "@/components/ui/button";
 import { elementCenter, switchTheme } from "@/lib/theme-transition";
@@ -11,9 +12,11 @@ interface ThemeToggleProps {
 }
 
 export function ThemeToggle({ className, duration = 400 }: ThemeToggleProps) {
+	const { t } = useTranslation();
 	const { resolvedTheme, setTheme } = useTheme();
 	const wrapperRef = useRef<HTMLSpanElement>(null);
 	const isDark = resolvedTheme !== "light";
+	const label = isDark ? t("common.switchToLight") : t("common.switchToDark");
 
 	const toggleTheme = useCallback(() => {
 		// Derive from the DOM so rapid clicks can't race the React render.
@@ -27,13 +30,7 @@ export function ThemeToggle({ className, duration = 400 }: ThemeToggleProps) {
 
 	return (
 		<span className={className} ref={wrapperRef}>
-			<Button
-				aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
-				onClick={toggleTheme}
-				size="icon-sm"
-				title={isDark ? "Switch to light theme" : "Switch to dark theme"}
-				variant="ghost"
-			>
+			<Button aria-label={label} onClick={toggleTheme} size="icon-sm" title={label} variant="ghost">
 				{isDark ? <Moon /> : <Sun />}
 			</Button>
 		</span>

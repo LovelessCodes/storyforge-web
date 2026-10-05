@@ -1,24 +1,27 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { Github, LogIn } from "lucide-react";
 import { motion } from "motion/react";
+import { useTranslation } from "react-i18next";
 
 import { DiscordIcon } from "@/components/icons";
 import { AccountMenu } from "@/components/layout/AccountMenu";
+import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { useAuthSession } from "@/hooks/use-auth-session";
 
 const navigationLinks = [
-	{ label: "Home", to: "/" },
-	{ label: "Modpacks", to: "/modpacks" },
-	{ label: "Mods", to: "/mods" },
-	{ label: "Map Viewer", to: "/map" },
-	{ label: "Guides", to: "/guide" },
-	{ label: "FAQ", to: "/faq" },
+	{ key: "nav.home", to: "/" },
+	{ key: "nav.modpacks", to: "/modpacks" },
+	{ key: "nav.mods", to: "/mods" },
+	{ key: "nav.map", to: "/map" },
+	{ key: "nav.guides", to: "/guide" },
+	{ key: "nav.faq", to: "/faq" },
 ] as const;
 
 export function Header() {
+	const { t } = useTranslation();
 	const pathname = useLocation({ select: (s) => s.pathname });
 	const { user, isLoading } = useAuthSession();
 
@@ -37,7 +40,7 @@ export function Header() {
 					<span className="hidden leading-tight sm:grid">
 						<span className="text-[13px] font-bold tracking-wide">STORY FORGE</span>
 						<span className="text-accent-amber text-[9px] font-medium tracking-widest uppercase">
-							Vintage Story Launcher
+							{t("common.tagline")}
 						</span>
 					</span>
 				</Link>
@@ -54,7 +57,7 @@ export function Header() {
 								key={link.to}
 								to={link.to}
 							>
-								{link.label}
+								{t(link.key)}
 								{active && (
 									<motion.span
 										className="bg-accent-primary absolute inset-x-2 -bottom-[1px] h-px"
@@ -68,26 +71,27 @@ export function Header() {
 				</nav>
 
 				<div className="ml-auto flex items-center gap-1.5">
+					<LanguageSwitcher />
 					<ThemeToggle />
 					<a
-						aria-label="GitHub repository"
+						aria-label={t("common.github")}
 						className="text-muted-foreground hover:text-foreground transition-colors"
 						href="https://github.com/lovelesscodes/storyforge"
 						rel="noopener noreferrer"
 						target="_blank"
 					>
-						<Button aria-label="GitHub repository" size="icon-sm" variant="ghost">
+						<Button aria-label={t("common.github")} size="icon-sm" variant="ghost">
 							<Github />
 						</Button>
 					</a>
 					<a
-						aria-label="Join our Discord"
+						aria-label={t("common.discord")}
 						className="text-muted-foreground hover:text-foreground hidden transition-colors sm:block"
 						href="https://discord.gg/gByx63peUC"
 						rel="noopener noreferrer"
 						target="_blank"
 					>
-						<Button aria-label="Join our Discord" size="icon-sm" variant="ghost">
+						<Button aria-label={t("common.discord")} size="icon-sm" variant="ghost">
 							<DiscordIcon className="size-3.5" />
 						</Button>
 					</a>
@@ -103,7 +107,7 @@ export function Header() {
 							size="sm"
 							variant="accent"
 						>
-							<LogIn /> Sign in
+							<LogIn /> {t("account.signIn")}
 						</Button>
 					)}
 

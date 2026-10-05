@@ -1,0 +1,177 @@
+{
+	"common": {
+		"tagline": "Vintage-Story-Launcher",
+		"language": "Sprache",
+		"backToTop": "Nach oben",
+		"github": "GitHub-Repository",
+		"discord": "Unserem Discord beitreten",
+		"switchToLight": "Zum hellen Design wechseln",
+		"switchToDark": "Zum dunklen Design wechseln"
+	},
+	"nav": {
+		"home": "Start",
+		"modpacks": "Modpacks",
+		"mods": "Mods",
+		"map": "Kartenansicht",
+		"guides": "Anleitungen",
+		"faq": "FAQ"
+	},
+	"account": {
+		"menu": "Kontomenü",
+		"browse": "Modpacks durchstöbern",
+		"account": "Konto",
+		"settings": "Kontoeinstellungen",
+		"signIn": "Anmelden",
+		"signOut": "Abmelden",
+		"signedInAs": "Angemeldet als",
+		"toggleMenu": "Menü umschalten"
+	},
+	"footer": {
+		"blurb": "Ein quelloffener Vintage-Story-Launcher und Mod-Manager, von der Community für die Community gebaut.",
+		"product": "Produkt",
+		"resources": "Ressourcen",
+		"latestRelease": "Neueste Version",
+		"fetchingRelease": "Version wird geladen…",
+		"releaseNotes": "Versionshinweise",
+		"allReleases": "Alle Versionen",
+		"download": "Download",
+		"modBrowser": "Mod-Browser",
+		"mapViewer": "Kartenansicht",
+		"guides": "Anleitungen",
+		"faq": "FAQ",
+		"contributing": "Mitwirken",
+		"reportIssue": "Problem melden",
+		"reddit": "Lies unsere Vorstellung auf r/VintageStory",
+		"copyright": "© {{year}} Story Forge · Open Source unter der GPLv3-Lizenz",
+		"disclaimer": "Nicht mit <anego>Anego Studios</anego> oder <vintage>Vintage Story</vintage> verbunden und nicht von ihnen unterstützt."
+	},
+	"home": {
+		"hero": {
+			"badge": "Open Source · GPLv3 · {{version}}",
+			"title": "Schmiede dein nächstes <gradient>Vintage Story</gradient>-Abenteuer.",
+			"description": "Story Forge ist ein schneller, quelloffener Launcher und Mod-Manager für Vintage Story — Profile, Mods, Modpacks, Weltkarten und Server-Hosting an einem Ort.",
+			"downloadFor": "Für {{platform}} herunterladen",
+			"browse": "Modpacks durchstöbern",
+			"stars": "GitHub-Sterne",
+			"downloads": "Downloads",
+			"modpacks": "Modpacks",
+			"chipMods": "Mods mit einem Klick aktualisiert",
+			"chipHosting": "Server-Hosting integriert",
+			"screenshotAlt": "Story-Forge-Profilansicht"
+		},
+		"features": {
+			"eyebrow": "Warum Story Forge",
+			"title": "Alles, was der Launcher schon immer sein sollte",
+			"description": "Gebaut für Vintage-Story-Spieler, die lieber spielen, als ihren Mod-Ordner zu reparieren.",
+			"profiles": {
+				"title": "Profile, die Ordnung halten",
+				"description": "Getrennte Mod-Sammlungen und Welten für jeden Server oder Durchlauf. Klonen, umbenennen, exportieren und importieren in Sekunden."
+			},
+			"mods": {
+				"title": "Mods ohne Chaos",
+				"description": "Durchstöbere die gesamte Vintage-Story-ModDB, filtere nach Version und Tag und aktualisiere alles mit einem Klick."
+			},
+			"modpacks": {
+				"title": "Community-Modpacks",
+				"description": "Veröffentliche, entdecke und installiere Community-Modpacks. Story Forge löst jede Mod und jede Konfiguration für dich auf."
+			},
+			"versions": {
+				"title": "Jede Spielversion",
+				"description": "Installiere jede Vintage-Story-Version direkt vom offiziellen CDN — und binde vorhandene Installationen ein."
+			},
+			"maps": {
+				"title": "Weltkarten-Ansicht",
+				"description": "Öffne deine Welten als interaktive Karte und teile sie mit deinen Freunden."
+			},
+			"hosting": {
+				"title": "Server-Hosting",
+				"description": "Betreibe einen dedizierten Vintage-Story-Server mit demselben Profil — ganz ohne Kommandozeile."
+			}
+		},
+		"showcase": {
+			"eyebrow": "Ein Blick hinein",
+			"title": "Gebaut wie ein Werkzeug, nicht wie ein Spielzeug",
+			"description": "Klar, schnell und tastaturfreundlich — die Oberfläche, die Power-User sich gewünscht haben.",
+			"profiles": "Profile",
+			"mods": "Mods",
+			"modConfigs": "Mod-Konfigs",
+			"servers": "Server",
+			"versions": "Versionen",
+			"worlds": "Welten",
+			"captionProfiles": "Profile für jeden Durchlauf",
+			"captionMods": "Die komplette ModDB mit Ein-Klick-Updates",
+			"captionModConfigs": "Mod-Konfigs bearbeiten, ohne die App zu verlassen",
+			"captionServers": "Server als Favoriten speichern und beitreten",
+			"captionVersions": "Jede Spielversion, einen Klick entfernt",
+			"captionWorlds": "Erkunde deine Welten als Karte"
+		},
+		"modpacks": {
+			"eyebrow": "Modpacks",
+			"title": "Community-Modpacks, sofort spielbereit",
+			"description": "Von der Community zusammengestellte Packs. Installiere sie direkt aus Story Forge und leg los.",
+			"browseAll": "Alle Modpacks durchstöbern"
+		},
+		"download": {
+			"eyebrow": "Loslegen",
+			"title": "Story Forge herunterladen",
+			"description": "Kostenlos und quelloffen für Windows, macOS und Linux.",
+			"descriptionWithVersion": "Neueste Version {{version}} — kostenlos und quelloffen für Windows, macOS und Linux.",
+			"loading": "Version wird geladen…",
+			"recommended": "Empfohlen",
+			"releaseNotes": "Versionshinweise & alle Plattformen"
+		},
+		"openSource": {
+			"title": "Offen entwickelt",
+			"description": "Story Forge steht unter GPLv3 und wird öffentlich entwickelt. Lies den Quellcode, melde Fehler, wünsch dir Funktionen oder schick einen Pull Request — jeder Beitrag macht den Launcher besser.",
+			"stars": "Sterne",
+			"forks": "Forks",
+			"downloads": "Downloads",
+			"viewRepo": "Repository ansehen",
+			"reportIssue": "Problem melden",
+			"contribute": "Mitwirken"
+		},
+		"finalCta": {
+			"title": "Bereit, deine Geschichte zu schmieden?",
+			"description": "Schließ dich tausenden Vintage-Story-Spielern an, die ihre Mods, Welten und Server mit Story Forge verwalten.",
+			"download": "Jetzt herunterladen",
+			"explore": "Modpacks entdecken",
+			"discord": "Discord beitreten"
+		}
+	},
+	"auth": {
+		"docTitleSignIn": "Anmelden — Story Forge",
+		"docTitleAccount": "Dein Konto — Story Forge",
+		"welcomeBack": "Willkommen zurück",
+		"createAccount": "Konto erstellen",
+		"yourAccount": "Dein Konto",
+		"signInDescription": "Melde dich mit deinem Story-Forge-Konto an.",
+		"signUpDescription": "Ein Konto für den Launcher, Modpacks und mehr.",
+		"accountDescription": "Du bist bei Story Forge angemeldet.",
+		"checkingSession": "Sitzung wird geprüft…",
+		"or": "oder",
+		"continueWith": "Weiter mit {{provider}}",
+		"name": "Name",
+		"namePlaceholder": "Dein Name",
+		"email": "E-Mail",
+		"password": "Passwort",
+		"passwordPlaceholder": "Dein Passwort",
+		"passwordNewPlaceholder": "Mindestens 8 Zeichen",
+		"submitSignIn": "Anmelden",
+		"submitSignUp": "Konto erstellen",
+		"submitting": "Bitte warten…",
+		"noAccount": "Neu bei Story Forge?",
+		"hasAccount": "Schon ein Konto?",
+		"createOne": "Erstelle eins",
+		"signedInAs": "Bei deinem Story-Forge-Konto angemeldet",
+		"ownsModpacks": "Modpacks in deinem Besitz sind im Browser markiert",
+		"signOut": "Abmelden",
+		"errors": {
+			"nameRequired": "Bitte gib deinen Namen ein.",
+			"invalidEmail": "Bitte gib eine gültige E-Mail-Adresse ein.",
+			"passwordMin": "Passwörter müssen mindestens 8 Zeichen lang sein.",
+			"signUpFailed": "Konto konnte nicht erstellt werden.",
+			"signInFailed": "Anmeldung fehlgeschlagen.",
+			"unexpected": "Etwas ist schiefgelaufen. Versuch es erneut."
+		}
+	}
+}
