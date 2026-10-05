@@ -37,10 +37,7 @@ function Faq() {
 					answer: (
 						<p>
 							Yes — guides live under the{" "}
-							<Link
-								className="text-accent-primary underline-offset-2 hover:underline"
-								to="/guide"
-							>
+							<Link className="text-accent-primary underline-offset-2 hover:underline" to="/guide">
 								Guides
 							</Link>{" "}
 							section. The migration guide is a good place to start.
@@ -64,8 +61,7 @@ function Faq() {
 					answer:
 						"Click “More info” in the SmartScreen dialog, then “Run anyway”. You can also add an exception in Windows Defender settings.",
 					id: "faq-windows-1",
-					question:
-						"My 'Windows Defender SmartScreen' is blocking the app. What should I do?",
+					question: "My 'Windows Defender SmartScreen' is blocking the app. What should I do?",
 				},
 			],
 			title: "Windows",
@@ -109,13 +105,13 @@ function Faq() {
 	return (
 		<main className="mx-auto w-full max-w-4xl flex-1 px-4 py-12 sm:px-6">
 			<Reveal>
-				<div className="flex items-center gap-2 text-[10px] font-medium tracking-widest text-accent-amber uppercase">
+				<div className="text-accent-amber flex items-center gap-2 text-[10px] font-medium tracking-widest uppercase">
 					<HelpCircle className="size-3" /> Support
 				</div>
 				<h1 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">
 					Frequently asked questions
 				</h1>
-				<p className="mt-3 text-sm/relaxed text-muted-foreground">
+				<p className="text-muted-foreground mt-3 text-sm/relaxed">
 					Install troubles, macOS warnings and everything in between.
 				</p>
 			</Reveal>
@@ -123,7 +119,7 @@ function Faq() {
 			<div className="mt-10 grid gap-10">
 				{categories.map((category) => (
 					<Reveal key={category.title}>
-						<h2 className="border-b border-border pb-2 text-[10px] font-medium tracking-widest text-muted-foreground uppercase">
+						<h2 className="border-border text-muted-foreground border-b pb-2 text-[10px] font-medium tracking-widest uppercase">
 							{category.title}
 						</h2>
 						<Accordion multiple={false}>
@@ -135,12 +131,12 @@ function Faq() {
 				))}
 			</div>
 
-			<Reveal className="mt-12 flex items-center justify-between gap-4 border border-border bg-surface/50 p-5">
-				<p className="text-xs text-muted-foreground">
+			<Reveal className="border-border bg-surface/50 mt-12 flex items-center justify-between gap-4 border p-5">
+				<p className="text-muted-foreground text-xs">
 					Still stuck? Ask the community — we’re friendly.
 				</p>
 				<a
-					className="text-[11px] font-medium text-accent-primary transition-colors hover:text-accent-amber"
+					className="text-accent-primary hover:text-accent-amber text-[11px] font-medium transition-colors"
 					href="https://discord.gg/gByx63peUC"
 					rel="noopener noreferrer"
 					target="_blank"

@@ -10,12 +10,7 @@ interface RevealProps {
 }
 
 /** Fades/slides its children into view the first time they are visible. */
-export function Reveal({
-	children,
-	className,
-	delay = 0,
-	y = 18,
-}: RevealProps) {
+export function Reveal({ children, className, delay = 0, y = 18 }: RevealProps) {
 	const reduceMotion = useReducedMotion();
 
 	if (reduceMotion) {

@@ -1,6 +1,7 @@
 import type { Input as InputPrimitive } from "@base-ui-components/react/input";
 import { Search } from "lucide-react";
 import { forwardRef, useEffect, useId, useRef } from "react";
+
 import { Input } from "@/components/ui/input";
 import { modifierLabel } from "@/lib/utils";
 
@@ -27,9 +28,9 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
 		}, []);
 		return (
 			<div className="relative">
-				<Search className="pointer-events-none absolute top-1/2 left-2.5 z-10 size-3.5 -translate-y-1/2 text-muted-foreground" />
+				<Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-2.5 z-10 size-3.5 -translate-y-1/2" />
 				<Input
-					className={`pl-8 pe-12 ${className ?? ""}`}
+					className={`pe-12 pl-8 ${className ?? ""}`}
 					id={id}
 					placeholder="Search mods…"
 					ref={(element) => {
@@ -44,7 +45,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
 					{...rest}
 				/>
 				<div className="pointer-events-none absolute inset-y-0 end-0 flex items-center pe-2">
-					<kbd className="inline-flex h-5 items-center border border-border px-1 font-sans text-[9px] font-medium text-muted-foreground">
+					<kbd className="border-border text-muted-foreground inline-flex h-5 items-center border px-1 font-sans text-[9px] font-medium">
 						{modifierLabel}K
 					</kbd>
 				</div>

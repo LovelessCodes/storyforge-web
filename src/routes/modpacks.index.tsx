@@ -7,6 +7,7 @@ import {
 	Search,
 } from "lucide-react";
 import { useMemo } from "react";
+
 import { ModpackCard } from "@/components/modpacks/ModpackCard";
 import { Reveal } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/button";
@@ -45,10 +46,7 @@ export const Route = createFileRoute("/modpacks/")({
 	component: ModpacksPage,
 	validateSearch: (search: Record<string, unknown>): ModpacksSearch => ({
 		order: search.order === "asc" ? "asc" : undefined,
-		owner:
-			typeof search.owner === "string" && search.owner
-				? search.owner
-				: undefined,
+		owner: typeof search.owner === "string" && search.owner ? search.owner : undefined,
 		q: typeof search.q === "string" && search.q ? search.q : undefined,
 		sort:
 			search.sort === "downloads" ||
@@ -60,10 +58,7 @@ export const Route = createFileRoute("/modpacks/")({
 	}),
 });
 
-function filterAndSort(
-	modpacks: ModpackItem[],
-	search: ModpacksSearch,
-): ModpackItem[] {
+function filterAndSort(modpacks: ModpackItem[], search: ModpacksSearch): ModpackItem[] {
 	const query = search.q ? stripped(search.q).toLowerCase() : "";
 	const owner = search.owner ? stripped(search.owner).toLowerCase() : "";
 
@@ -107,10 +102,7 @@ function ModpacksPage() {
 	const { data, isPending, error } = useModpacks();
 	const { user, isLoading: sessionLoading } = useAuthSession();
 
-	const modpacks = useMemo(
-		() => filterAndSort(data?.modpacks ?? [], search),
-		[data, search],
-	);
+	const modpacks = useMemo(() => filterAndSort(data?.modpacks ?? [], search), [data, search]);
 
 	const sort = search.sort ?? "downloads";
 	const order = search.order ?? "desc";
@@ -130,22 +122,16 @@ function ModpacksPage() {
 			{/* Page header */}
 			<Reveal className="flex flex-wrap items-end justify-between gap-4">
 				<div>
-					<h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-						Modpacks
-					</h1>
-					<p className="mt-2 text-sm text-muted-foreground">
-						Community-published modpacks for Vintage Story — install them
-						straight from Story Forge.
+					<h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Modpacks</h1>
+					<p className="text-muted-foreground mt-2 text-sm">
+						Community-published modpacks for Vintage Story — install them straight from Story Forge.
 					</p>
 				</div>
 				{!sessionLoading && !user ? (
-					<div className="flex items-center gap-2 text-[11px] text-muted-foreground">
+					<div className="text-muted-foreground flex items-center gap-2 text-[11px]">
 						<CloudOff className="size-3.5 shrink-0" />
 						<p>
-							<Link
-								className="text-accent-primary underline-offset-2 hover:underline"
-								to="/auth"
-							>
+							<Link className="text-accent-primary underline-offset-2 hover:underline" to="/auth">
 								Sign in
 							</Link>{" "}
 							to connect your Story Forge account.
@@ -157,13 +143,11 @@ function ModpacksPage() {
 			{/* Filters */}
 			<div className="mt-8 flex flex-wrap items-center gap-2">
 				<div className="relative w-full sm:w-72">
-					<Search className="pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-muted-foreground" />
+					<Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2" />
 					<Input
 						aria-label="Search modpacks"
 						className="pl-8"
-						onChange={(event) =>
-							setSearch({ q: event.target.value || undefined })
-						}
+						onChange={(event) => setSearch({ q: event.target.value || undefined })}
 						placeholder="Search modpacks…"
 						type="search"
 						value={search.q ?? ""}
@@ -191,9 +175,7 @@ function ModpacksPage() {
 
 				<Button
 					aria-label={order === "desc" ? "Sort descending" : "Sort ascending"}
-					onClick={() =>
-						setSearch({ order: order === "desc" ? "asc" : "desc" })
-					}
+					onClick={() => setSearch({ order: order === "desc" ? "asc" : "desc" })}
 					size="icon"
 					title={order === "desc" ? "Descending" : "Ascending"}
 					variant="outline"
@@ -202,13 +184,11 @@ function ModpacksPage() {
 				</Button>
 
 				<div className="relative w-full sm:w-56">
-					<Search className="pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-muted-foreground" />
+					<Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2" />
 					<Input
 						aria-label="Filter by owner"
 						className="pl-8"
-						onChange={(event) =>
-							setSearch({ owner: event.target.value || undefined })
-						}
+						onChange={(event) => setSearch({ owner: event.target.value || undefined })}
 						placeholder="Filter by creator…"
 						type="search"
 						value={search.owner ?? ""}
@@ -225,24 +205,16 @@ function ModpacksPage() {
 					</Button>
 				)}
 
-				<div className="ml-auto text-[11px] text-muted-foreground tabular-nums">
-					{isPending
-						? "Loading…"
-						: `${modpacks.length} of ${data?.totalCount ?? 0} modpacks`}
+				<div className="text-muted-foreground ml-auto text-[11px] tabular-nums">
+					{isPending ? "Loading…" : `${modpacks.length} of ${data?.totalCount ?? 0} modpacks`}
 				</div>
 			</div>
 
 			{/* Results */}
 			{error ? (
-				<div className="mt-8 flex flex-col items-center gap-3 border border-dashed border-destructive/40 p-10 text-center">
-					<p className="text-xs text-destructive">
-						Could not load modpacks: {error.message}
-					</p>
-					<Button
-						onClick={() => window.location.reload()}
-						size="sm"
-						variant="outline"
-					>
+				<div className="border-destructive/40 mt-8 flex flex-col items-center gap-3 border border-dashed p-10 text-center">
+					<p className="text-destructive text-xs">Could not load modpacks: {error.message}</p>
+					<Button onClick={() => window.location.reload()} size="sm" variant="outline">
 						Try again
 					</Button>
 				</div>
@@ -250,7 +222,7 @@ function ModpacksPage() {
 				<div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 					{Array.from({ length: 8 }, (_, index) => (
 						<div
-							className="border border-border bg-card p-3"
+							className="border-border bg-card border p-3"
 							key={`modpack-skeleton-${index.toString()}`}
 						>
 							<Skeleton className="aspect-video w-full" />
@@ -261,9 +233,9 @@ function ModpacksPage() {
 					))}
 				</div>
 			) : modpacks.length === 0 ? (
-				<div className="mt-8 flex flex-col items-center justify-center gap-3 border border-dashed border-border p-12 text-center">
-					<PackageOpen className="size-6 text-muted-foreground" />
-					<p className="text-xs text-muted-foreground">
+				<div className="border-border mt-8 flex flex-col items-center justify-center gap-3 border border-dashed p-12 text-center">
+					<PackageOpen className="text-muted-foreground size-6" />
+					<p className="text-muted-foreground text-xs">
 						{hasFilters
 							? "No modpacks match your filters."
 							: "No modpacks published yet — be the first!"}

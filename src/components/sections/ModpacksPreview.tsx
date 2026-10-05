@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, Layers } from "lucide-react";
 import { useMemo } from "react";
+
 import { ModpackCard } from "@/components/modpacks/ModpackCard";
 import { Reveal } from "@/components/motion/Reveal";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -13,33 +14,29 @@ export function ModpacksPreview() {
 	const topModpacks = useMemo(
 		() =>
 			[...(data?.modpacks ?? [])]
-				.sort(
-					(a, b) =>
-						b.downloads - a.downloads ||
-						toTime(b.updatedAt) - toTime(a.updatedAt),
-				)
+				.sort((a, b) => b.downloads - a.downloads || toTime(b.updatedAt) - toTime(a.updatedAt))
 				.slice(0, 4),
 		[data],
 	);
 
 	return (
-		<section className="border-b border-border bg-surface/30">
+		<section className="border-border bg-surface/30 border-b">
 			<div className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
 				<Reveal className="flex flex-wrap items-end justify-between gap-4">
 					<div className="max-w-2xl">
-						<p className="flex items-center gap-2 text-[10px] font-medium tracking-widest text-accent-amber uppercase">
+						<p className="text-accent-amber flex items-center gap-2 text-[10px] font-medium tracking-widest uppercase">
 							<Layers className="size-3" /> Modpacks
 						</p>
 						<h2 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">
 							Community modpacks, ready to play
 						</h2>
-						<p className="mt-3 text-sm/relaxed text-muted-foreground">
-							Curated packs published by the community. Install them straight
-							from Story Forge and jump in.
+						<p className="text-muted-foreground mt-3 text-sm/relaxed">
+							Curated packs published by the community. Install them straight from Story Forge and
+							jump in.
 						</p>
 					</div>
 					<Link
-						className="group inline-flex items-center gap-1.5 text-xs font-medium text-accent-primary transition-colors hover:text-accent-amber"
+						className="group text-accent-primary hover:text-accent-amber inline-flex items-center gap-1.5 text-xs font-medium transition-colors"
 						to="/modpacks"
 					>
 						Browse all modpacks
@@ -51,7 +48,7 @@ export function ModpacksPreview() {
 					{isPending
 						? Array.from({ length: 4 }, (_, index) => (
 								<div
-									className="border border-border bg-card p-3"
+									className="border-border bg-card border p-3"
 									key={`skeleton-${index.toString()}`}
 								>
 									<Skeleton className="aspect-video w-full" />

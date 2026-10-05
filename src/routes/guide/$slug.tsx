@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BookOpen } from "lucide-react";
+
 import { guideContent } from "@/components/guides/content";
 import { GuideShell } from "@/components/guides/GuideShell";
 import { Button } from "@/components/ui/button";
@@ -18,11 +19,10 @@ function RouteComponent() {
 		return (
 			<main className="mx-auto grid w-full max-w-3xl flex-1 place-items-center px-4 py-24 text-center sm:px-6">
 				<div className="grid justify-items-center gap-4">
-					<BookOpen className="size-8 text-muted-foreground" />
+					<BookOpen className="text-muted-foreground size-8" />
 					<h1 className="text-xl font-bold">Guide not found</h1>
-					<p className="max-w-sm text-xs text-muted-foreground">
-						This guide doesn't exist (yet). Browse the guide index to find what
-						you need.
+					<p className="text-muted-foreground max-w-sm text-xs">
+						This guide doesn't exist (yet). Browse the guide index to find what you need.
 					</p>
 					<Button render={<Link to="/guide" />} size="sm" variant="outline">
 						All guides

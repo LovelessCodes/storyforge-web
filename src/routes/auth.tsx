@@ -1,14 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import {
-	Check,
-	Globe,
-	Loader2,
-	LogOut,
-	Mail,
-	ShieldCheck,
-	User,
-} from "lucide-react";
+import { Check, Globe, Loader2, LogOut, Mail, ShieldCheck, User } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 
@@ -75,18 +67,18 @@ function AccountCard() {
 				{user.image ? (
 					<img
 						alt={user.name}
-						className="size-12 border border-border object-cover"
+						className="border-border size-12 border object-cover"
 						referrerPolicy="no-referrer"
 						src={user.image}
 					/>
 				) : (
-					<span className="grid size-12 place-items-center border border-border bg-secondary text-sm font-bold">
+					<span className="border-border bg-secondary grid size-12 place-items-center border text-sm font-bold">
 						{user.name?.charAt(0)?.toUpperCase() ?? "?"}
 					</span>
 				)}
 				<div className="grid gap-0.5">
 					<span className="text-sm font-medium">{user.name}</span>
-					<span className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+					<span className="text-muted-foreground flex items-center gap-1.5 text-[11px]">
 						<Mail className="size-3" /> {user.email}
 					</span>
 				</div>
@@ -94,14 +86,12 @@ function AccountCard() {
 
 			<Separator />
 
-			<div className="grid gap-2 text-[11px] text-muted-foreground">
+			<div className="text-muted-foreground grid gap-2 text-[11px]">
 				<span className="flex items-center gap-2">
-					<ShieldCheck className="size-3.5 text-success" /> Signed in to your
-					Story Forge account
+					<ShieldCheck className="text-success size-3.5" /> Signed in to your Story Forge account
 				</span>
 				<span className="flex items-center gap-2">
-					<Check className="size-3.5 text-success" /> Modpacks you own are
-					marked in the browser
+					<Check className="text-success size-3.5" /> Modpacks you own are marked in the browser
 				</span>
 			</div>
 
@@ -139,9 +129,7 @@ function AuthPage() {
 	const [formError, setFormError] = useState<string | null>(null);
 	const [submitting, setSubmitting] = useState(false);
 
-	useDocumentTitle(
-		user ? "Your account — Story Forge" : "Sign in — Story Forge",
-	);
+	useDocumentTitle(user ? "Your account — Story Forge" : "Sign in — Story Forge");
 
 	const { data: providers } = useQuery({
 		enabled: !user,
@@ -182,19 +170,13 @@ function AuthPage() {
 			if (result.error) {
 				setFormError(
 					result.error.message ??
-						(isSignUp
-							? "Could not create your account."
-							: "Could not sign you in."),
+						(isSignUp ? "Could not create your account." : "Could not sign you in."),
 				);
 			} else {
 				void navigate({ to: target });
 			}
 		} catch (error) {
-			setFormError(
-				error instanceof Error
-					? error.message
-					: "Something went wrong. Try again.",
-			);
+			setFormError(error instanceof Error ? error.message : "Something went wrong. Try again.");
 		} finally {
 			setSubmitting(false);
 		}
@@ -227,40 +209,30 @@ function AuthPage() {
 	return (
 		<main className="relative flex flex-1 items-center justify-center overflow-hidden px-4 py-16">
 			<div className="pointer-events-none absolute inset-0">
-				<div className="bg-grid absolute inset-0 opacity-40 [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,black,transparent)]" />
-				<div className="absolute top-1/4 left-1/2 h-[380px] w-[560px] -translate-x-1/2 bg-accent-primary/12 blur-[130px]" />
+				<div className="bg-grid absolute inset-0 [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,black,transparent)] opacity-40" />
+				<div className="bg-accent-primary/12 absolute top-1/4 left-1/2 h-[380px] w-[560px] -translate-x-1/2 blur-[130px]" />
 			</div>
 
 			<motion.div
 				animate={{ opacity: 1, y: 0 }}
-				className="relative w-full max-w-md border border-border bg-card shadow-2xl shadow-black/40"
+				className="border-border bg-card relative w-full max-w-md border shadow-2xl shadow-black/40"
 				initial={reduceMotion ? false : { opacity: 0, y: 16 }}
 				transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
 			>
-				<div className="border-b border-border p-6 pb-5">
+				<div className="border-border border-b p-6 pb-5">
 					<div className="flex items-center gap-2.5">
-						<img
-							alt="Story Forge"
-							className="size-8 object-contain"
-							src="/StoryForge.png"
-						/>
+						<img alt="Story Forge" className="size-8 object-contain" src="/StoryForge.svg" />
 						<span className="grid leading-tight">
-							<span className="text-xs font-bold tracking-wide">
-								STORY FORGE
-							</span>
-							<span className="text-[9px] font-medium tracking-widest text-accent-amber uppercase">
+							<span className="text-xs font-bold tracking-wide">STORY FORGE</span>
+							<span className="text-accent-amber text-[9px] font-medium tracking-widest uppercase">
 								Account
 							</span>
 						</span>
 					</div>
 					<h1 className="mt-5 text-lg font-bold tracking-tight">
-						{user
-							? "Your account"
-							: isSignUp
-								? "Create your account"
-								: "Welcome back"}
+						{user ? "Your account" : isSignUp ? "Create your account" : "Welcome back"}
 					</h1>
-					<p className="mt-1 text-[11px] text-muted-foreground">
+					<p className="text-muted-foreground mt-1 text-[11px]">
 						{user
 							? "You are signed in to Story Forge."
 							: isSignUp
@@ -271,7 +243,7 @@ function AuthPage() {
 
 				<div className="p-6">
 					{isLoading ? (
-						<div className="flex items-center gap-2 py-8 text-xs text-muted-foreground">
+						<div className="text-muted-foreground flex items-center gap-2 py-8 text-xs">
 							<Loader2 className="size-4 animate-spin" /> Checking session…
 						</div>
 					) : user ? (
@@ -292,18 +264,14 @@ function AuthPage() {
 												}}
 												variant="outline"
 											>
-												{providerIcons[provider] ?? (
-													<Globe className="size-3.5" />
-												)}
-												<span className="capitalize">
-													Continue with {provider}
-												</span>
+												{providerIcons[provider] ?? <Globe className="size-3.5" />}
+												<span className="capitalize">Continue with {provider}</span>
 											</Button>
 										))}
 									</div>
 									<div className="my-4 flex items-center gap-3">
 										<Separator className="flex-1" />
-										<span className="text-[10px] tracking-widest text-muted-foreground uppercase">
+										<span className="text-muted-foreground text-[10px] tracking-widest uppercase">
 											or
 										</span>
 										<Separator className="flex-1" />
@@ -311,10 +279,7 @@ function AuthPage() {
 								</>
 							)}
 
-							<form
-								className="grid gap-4"
-								onSubmit={(event) => void handleSubmit(event)}
-							>
+							<form className="grid gap-4" onSubmit={(event) => void handleSubmit(event)}>
 								{isSignUp && (
 									<div className="grid gap-1.5">
 										<label className="text-[11px] font-medium" htmlFor="name">
@@ -327,11 +292,7 @@ function AuthPage() {
 											placeholder="Your name"
 											value={values.name}
 										/>
-										{errors.name && (
-											<p className="text-[10px] text-destructive">
-												{errors.name}
-											</p>
-										)}
+										{errors.name && <p className="text-destructive text-[10px]">{errors.name}</p>}
 									</div>
 								)}
 
@@ -347,11 +308,7 @@ function AuthPage() {
 										type="email"
 										value={values.email}
 									/>
-									{errors.email && (
-										<p className="text-[10px] text-destructive">
-											{errors.email}
-										</p>
-									)}
+									{errors.email && <p className="text-destructive text-[10px]">{errors.email}</p>}
 								</div>
 
 								<div className="grid gap-1.5">
@@ -359,28 +316,20 @@ function AuthPage() {
 										Password
 									</label>
 									<Input
-										autoComplete={
-											isSignUp ? "new-password" : "current-password"
-										}
+										autoComplete={isSignUp ? "new-password" : "current-password"}
 										id="password"
-										onChange={(event) =>
-											setValue("password", event.target.value)
-										}
-										placeholder={
-											isSignUp ? "At least 8 characters" : "Your password"
-										}
+										onChange={(event) => setValue("password", event.target.value)}
+										placeholder={isSignUp ? "At least 8 characters" : "Your password"}
 										type="password"
 										value={values.password}
 									/>
 									{errors.password && (
-										<p className="text-[10px] text-destructive">
-											{errors.password}
-										</p>
+										<p className="text-destructive text-[10px]">{errors.password}</p>
 									)}
 								</div>
 
 								{formError && (
-									<p className="border border-destructive/30 bg-destructive/10 px-3 py-2 text-[11px] text-destructive">
+									<p className="border-destructive/30 bg-destructive/10 text-destructive border px-3 py-2 text-[11px]">
 										{formError}
 									</p>
 								)}
@@ -393,17 +342,13 @@ function AuthPage() {
 									variant="accent"
 								>
 									{submitting ? <Loader2 className="animate-spin" /> : <User />}
-									{submitting
-										? "Please wait…"
-										: isSignUp
-											? "Create account"
-											: "Sign in"}
+									{submitting ? "Please wait…" : isSignUp ? "Create account" : "Sign in"}
 								</Button>
 							</form>
 
 							<Separator className="my-4" />
 
-							<p className="text-center text-[11px] text-muted-foreground">
+							<p className="text-muted-foreground text-center text-[11px]">
 								{isSignUp ? "Already have an account?" : "New to Story Forge?"}{" "}
 								<button
 									className="text-accent-primary hover:underline"

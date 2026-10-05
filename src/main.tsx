@@ -1,12 +1,10 @@
-import ReactDOM from "react-dom/client";
-import "./tailwind.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import {
-	createHashHistory,
-	createRouter,
-	RouterProvider,
-} from "@tanstack/react-router";
+
+import "./tailwind.css";
+import { createHashHistory, createRouter, RouterProvider } from "@tanstack/react-router";
 import { ThemeProvider } from "next-themes";
+import ReactDOM from "react-dom/client";
+
 import { routeTree } from "./routeTree.gen";
 
 const queryClient = new QueryClient();

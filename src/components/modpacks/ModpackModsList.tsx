@@ -3,12 +3,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 
 import { useModInfo } from "@/hooks/use-modpacks";
-import {
-	formatCount,
-	modLogoUrl,
-	modUrl,
-	parseModsString,
-} from "@/lib/modpacks";
+import { formatCount, modLogoUrl, modUrl, parseModsString } from "@/lib/modpacks";
 
 function ModRow({ modid, version }: { modid: string; version: string }) {
 	const { data, isLoading } = useModInfo(modid);
@@ -17,8 +12,8 @@ function ModRow({ modid, version }: { modid: string; version: string }) {
 	if (isLoading) {
 		return (
 			<div className="flex items-center gap-2 px-2 py-1.5">
-				<div className="size-6 shrink-0 animate-pulse bg-muted" />
-				<div className="h-3 w-40 animate-pulse bg-muted" />
+				<div className="bg-muted size-6 shrink-0 animate-pulse" />
+				<div className="bg-muted h-3 w-40 animate-pulse" />
 			</div>
 		);
 	}
@@ -26,7 +21,7 @@ function ModRow({ modid, version }: { modid: string; version: string }) {
 	if (!mod) {
 		return (
 			<a
-				className="flex items-center gap-2 px-2 py-1.5 text-[11px] text-muted-foreground transition-colors hover:text-foreground"
+				className="text-muted-foreground hover:text-foreground flex items-center gap-2 px-2 py-1.5 text-[11px] transition-colors"
 				href={modUrl({}, modid)}
 				rel="noopener noreferrer"
 				target="_blank"
@@ -44,20 +39,20 @@ function ModRow({ modid, version }: { modid: string; version: string }) {
 			<a href={modUrl(mod)} rel="noopener noreferrer" target="_blank">
 				<img
 					alt={mod.name}
-					className="size-6 shrink-0 border border-border object-cover"
+					className="border-border size-6 shrink-0 border object-cover"
 					loading="lazy"
 					src={modLogoUrl(mod.logofile)}
 				/>
 			</a>
 			<a
-				className="min-w-0 flex-1 truncate text-[11px] font-medium transition-colors hover:text-accent-amber"
+				className="hover:text-accent-amber min-w-0 flex-1 truncate text-[11px] font-medium transition-colors"
 				href={modUrl(mod)}
 				rel="noopener noreferrer"
 				target="_blank"
 			>
 				{mod.name}
 			</a>
-			<span className="flex shrink-0 items-center gap-2 text-[10px] text-muted-foreground tabular-nums">
+			<span className="text-muted-foreground flex shrink-0 items-center gap-2 text-[10px] tabular-nums">
 				<span className="hidden sm:inline">{formatCount(mod.downloads)} ↓</span>
 				<span className="hidden sm:inline">{formatCount(mod.follows)} ★</span>
 				<span className="font-mono">v{version}</span>
@@ -73,10 +68,7 @@ interface ModpackModsListProps {
 }
 
 /** Collapsible list of the mods a modpack version contains. */
-export function ModpackModsList({
-	modsString,
-	defaultOpen = false,
-}: ModpackModsListProps) {
+export function ModpackModsList({ modsString, defaultOpen = false }: ModpackModsListProps) {
 	const [open, setOpen] = useState(defaultOpen);
 	const mods = parseModsString(modsString);
 
@@ -85,14 +77,12 @@ export function ModpackModsList({
 	return (
 		<div className="grid gap-1.5">
 			<button
-				className="flex w-fit items-center gap-1 text-[11px] text-muted-foreground transition-colors hover:text-foreground"
+				className="text-muted-foreground hover:text-foreground flex w-fit items-center gap-1 text-[11px] transition-colors"
 				onClick={() => setOpen((value) => !value)}
 				type="button"
 			>
 				<ChevronDown
-					className={`size-3.5 transition-transform duration-200 ${
-						open ? "rotate-180" : ""
-					}`}
+					className={`size-3.5 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
 				/>
 				{mods.length} mod{mods.length === 1 ? "" : "s"}
 			</button>
@@ -105,13 +95,9 @@ export function ModpackModsList({
 						initial={{ height: 0, opacity: 0 }}
 						transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
 					>
-						<div className="grid divide-y divide-border/60 border border-border/60 bg-background/60">
+						<div className="divide-border/60 border-border/60 bg-background/60 grid divide-y border">
 							{mods.map((mod) => (
-								<ModRow
-									key={mod.modid}
-									modid={mod.modid}
-									version={mod.version}
-								/>
+								<ModRow key={mod.modid} modid={mod.modid} version={mod.version} />
 							))}
 						</div>
 					</motion.div>

@@ -14,16 +14,14 @@ function RouteComponent() {
 	return (
 		<main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-6 px-4 py-8 sm:px-6">
 			<Reveal>
-				<div className="flex items-center gap-2 text-[10px] font-medium tracking-widest text-accent-amber uppercase">
+				<div className="text-accent-amber flex items-center gap-2 text-[10px] font-medium tracking-widest uppercase">
 					<MapIcon className="size-3" /> Tools
 				</div>
-				<h1 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">
-					World Map Viewer
-				</h1>
-				<p className="mt-3 max-w-2xl text-sm/relaxed text-muted-foreground">
-					Drop in a <code className="font-mono text-[11px]">.db</code> map file
-					exported from Story Forge (or the game’s map cache) and explore your
-					world — pan, zoom and read coordinates without launching the game.
+				<h1 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">World Map Viewer</h1>
+				<p className="text-muted-foreground mt-3 max-w-2xl text-sm/relaxed">
+					Drop in a <code className="font-mono text-[11px]">.db</code> map file exported from Story
+					Forge (or the game’s map cache) and explore your world — pan, zoom and read coordinates
+					without launching the game.
 				</p>
 			</Reveal>
 			<Reveal className="min-h-[60vh] flex-1" delay={0.08}>

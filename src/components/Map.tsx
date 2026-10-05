@@ -1,13 +1,11 @@
 import { Loader2Icon, MapIcon } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import initSqlJs, { type Database } from "sql.js";
+
 import { Card } from "@/components/ui/card";
-import {
-	imageDataToCanvas,
-	imageDataToDataUrl,
-	pixelsToImageData,
-} from "@/hooks/use-world-map";
+import { imageDataToCanvas, imageDataToDataUrl, pixelsToImageData } from "@/hooks/use-world-map";
 import { decodeMapPieceDb } from "@/lib/schema";
+
 import { Button } from "./ui/button";
 
 const COORD_BITS = 27;
@@ -39,126 +37,119 @@ export function WorldMapViewer() {
 	const [error, setError] = useState<Error | null>(null);
 
 	// Load database from file
-	const handleFileUpload = useCallback(
-		async (event: React.ChangeEvent<HTMLInputElement>) => {
-			const file = event.target.files?.[0];
-			if (!file) return;
+	const handleFileUpload = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
+		const file = event.target.files?.[0];
+		if (!file) return;
 
-			setIsLoading(true);
-			setError(null);
+		setIsLoading(true);
+		setError(null);
 
-			try {
-				const arrayBuffer = await file.arrayBuffer();
-				const uint8Array = new Uint8Array(arrayBuffer);
+		try {
+			const arrayBuffer = await file.arrayBuffer();
+			const uint8Array = new Uint8Array(arrayBuffer);
 
-				const SQL = await initSqlJs({
-					locateFile: () => "https://sql.js.org/dist/sql-wasm.wasm",
-				});
-				const database = new SQL.Database(uint8Array);
-				setDb(database);
+			const SQL = await initSqlJs({
+				locateFile: () => "https://sql.js.org/dist/sql-wasm.wasm",
+			});
+			const database = new SQL.Database(uint8Array);
+			setDb(database);
 
-				// Find the main table
-				const tablesResult = database.exec(
-					"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' LIMIT 1",
-				);
-				if (tablesResult.length === 0) {
-					throw new Error("No map table found in database");
-				}
-				const tableName = tablesResult[0].values[0][0];
-
-				// Get all tiles
-				const tilesResult = database.exec(
-					`SELECT position, data FROM ${tableName}`,
-				);
-
-				if (tilesResult.length === 0) {
-					throw new Error("No map data found in table");
-				}
-
-				let minX = Number.MAX_SAFE_INTEGER;
-				let maxX = Number.MIN_SAFE_INTEGER;
-				let minY = Number.MAX_SAFE_INTEGER;
-				let maxY = Number.MIN_SAFE_INTEGER;
-
-				const tileData: Array<{
-					x: number;
-					y: number;
-					width: number;
-					image_data: Uint8Array;
-				}> = [];
-
-				for (const row of tilesResult[0].values) {
-					const position = Number(row[0]);
-					const imageBlob = row[1] as Uint8Array;
-
-					const [x, y] = decodePosition(position);
-
-					minX = Math.min(minX, x);
-					maxX = Math.max(maxX, x);
-					minY = Math.min(minY, y);
-					maxY = Math.max(maxY, y);
-
-					// Decode protobuf to pixels
-					const mapPiece = decodeMapPieceDb(imageBlob);
-					const pixels = mapPiece.pixels;
-					if (!pixels || pixels.length === 0) {
-						console.warn(`Failed to decode protobuf for tile ${x},${y}`);
-						continue;
-					}
-
-					// Calculate size from pixel count
-					const pixelCount = pixels.length;
-					const size = Math.sqrt(pixelCount);
-
-					if (size * size !== pixelCount) {
-						console.warn(
-							`Tile ${x},${y}: pixel count ${pixelCount} is not a perfect square (${size}x${size})`,
-						);
-					}
-
-					// Convert pixels to ImageData
-					const int32Array = new Int32Array(pixels);
-					const imageData = pixelsToImageData(int32Array, size, size);
-
-					// Convert ImageData to PNG data URL
-					const canvas = imageDataToCanvas(imageData);
-					const pngDataUrl = canvas.toDataURL("image/png");
-
-					// Store as base64 PNG for use in canvas rendering
-					const base64 = pngDataUrl.split(",")[1];
-					const binaryString = atob(base64);
-					const bytes = new Uint8Array(binaryString.length);
-					for (let i = 0; i < binaryString.length; i++) {
-						bytes[i] = binaryString.charCodeAt(i);
-					}
-
-					tileData.push({
-						image_data: bytes,
-						width: size,
-						x,
-						y,
-					});
-				}
-
-				setBounds({
-					max_x: maxX,
-					max_y: maxY,
-					min_x: minX,
-					min_y: minY,
-				});
-
-				setTiles(tileData);
-			} catch (err) {
-				console.error("Database error:", err);
-				setError(
-					err instanceof Error ? err : new Error("Failed to load database"),
-				);
-			} finally {
-				setIsLoading(false);
+			// Find the main table
+			const tablesResult = database.exec(
+				"SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' LIMIT 1",
+			);
+			if (tablesResult.length === 0) {
+				throw new Error("No map table found in database");
 			}
-		},
-		[],
-	);
+			const tableName = String(tablesResult[0].values[0][0]);
+
+			// Get all tiles
+			const tilesResult = database.exec(`SELECT position, data FROM ${tableName}`);
+
+			if (tilesResult.length === 0) {
+				throw new Error("No map data found in table");
+			}
+
+			let minX = Number.MAX_SAFE_INTEGER;
+			let maxX = Number.MIN_SAFE_INTEGER;
+			let minY = Number.MAX_SAFE_INTEGER;
+			let maxY = Number.MIN_SAFE_INTEGER;
+
+			const tileData: Array<{
+				x: number;
+				y: number;
+				width: number;
+				image_data: Uint8Array;
+			}> = [];
+
+			for (const row of tilesResult[0].values) {
+				const position = Number(row[0]);
+				const imageBlob = row[1] as Uint8Array;
+
+				const [x, y] = decodePosition(position);
+
+				minX = Math.min(minX, x);
+				maxX = Math.max(maxX, x);
+				minY = Math.min(minY, y);
+				maxY = Math.max(maxY, y);
+
+				// Decode protobuf to pixels
+				const mapPiece = decodeMapPieceDb(imageBlob);
+				const pixels = mapPiece.pixels;
+				if (!pixels || pixels.length === 0) {
+					console.warn(`Failed to decode protobuf for tile ${x},${y}`);
+					continue;
+				}
+
+				// Calculate size from pixel count
+				const pixelCount = pixels.length;
+				const size = Math.sqrt(pixelCount);
+
+				if (size * size !== pixelCount) {
+					console.warn(
+						`Tile ${x},${y}: pixel count ${pixelCount} is not a perfect square (${size}x${size})`,
+					);
+				}
+
+				// Convert pixels to ImageData
+				const int32Array = new Int32Array(pixels);
+				const imageData = pixelsToImageData(int32Array, size, size);
+
+				// Convert ImageData to PNG data URL
+				const canvas = imageDataToCanvas(imageData);
+				const pngDataUrl = canvas.toDataURL("image/png");
+
+				// Store as base64 PNG for use in canvas rendering
+				const base64 = pngDataUrl.split(",")[1];
+				const binaryString = atob(base64);
+				const bytes = new Uint8Array(binaryString.length);
+				for (let i = 0; i < binaryString.length; i++) {
+					bytes[i] = binaryString.charCodeAt(i);
+				}
+
+				tileData.push({
+					image_data: bytes,
+					width: size,
+					x,
+					y,
+				});
+			}
+
+			setBounds({
+				max_x: maxX,
+				max_y: maxY,
+				min_x: minX,
+				min_y: minY,
+			});
+
+			setTiles(tileData);
+		} catch (err) {
+			console.error("Database error:", err);
+			setError(err instanceof Error ? err : new Error("Failed to load database"));
+		} finally {
+			setIsLoading(false);
+		}
+	}, []);
 
 	// Viewport state
 	const [viewport, setViewport] = useState({ x: 0, y: 0, zoom: 0.5 });
@@ -181,25 +172,21 @@ export function WorldMapViewer() {
 		x: number;
 		y: number;
 		z?: number;
-		screenX: number;
-		screenY: number;
+		hudLeft: string;
+		hudTop: string;
 	} | null>(null);
 
-	const [imageCache, setImageCache] = useState<Map<string, HTMLImageElement>>(
-		new Map(),
-	);
+	const [imageCache, setImageCache] = useState<Map<string, HTMLImageElement>>(new Map());
 
 	const [containerSize, setContainerSize] = useState({ height: 0, width: 0 });
 
 	const SPAWN_COORDINATE = 512000;
 	const MAP_CHUNK_SIZE = 32;
 	const spawnOffsetX = bounds
-		? Math.round((bounds.min_y * MAP_CHUNK_SIZE) / SPAWN_COORDINATE) *
-			SPAWN_COORDINATE
+		? Math.round((bounds.min_y * MAP_CHUNK_SIZE) / SPAWN_COORDINATE) * SPAWN_COORDINATE
 		: 0;
 	const spawnOffsetY = bounds
-		? Math.round((bounds.min_x * MAP_CHUNK_SIZE) / SPAWN_COORDINATE) *
-			SPAWN_COORDINATE
+		? Math.round((bounds.min_x * MAP_CHUNK_SIZE) / SPAWN_COORDINATE) * SPAWN_COORDINATE
 		: 0;
 
 	// Observe container resize
@@ -284,12 +271,7 @@ export function WorldMapViewer() {
 	// Build LOD levels
 	useEffect(() => {
 		if (!tiles || tiles.length === 0) return;
-		if (
-			!tileSizeRef.current ||
-			minXRef.current === null ||
-			minYRef.current === null
-		)
-			return;
+		if (!tileSizeRef.current || minXRef.current === null || minYRef.current === null) return;
 		if (imageCache.size !== tiles.length) return;
 
 		const existingLevels = lodCacheRef.current;
@@ -322,13 +304,7 @@ export function WorldMapViewer() {
 							const sy = groupY + dy;
 							const img = imageCache.get(`${sx},${sy}`);
 							if (!img) continue;
-							tCtx.drawImage(
-								img,
-								dy * baseTileSize,
-								dx * baseTileSize,
-								baseTileSize,
-								baseTileSize,
-							);
+							tCtx.drawImage(img, dy * baseTileSize, dx * baseTileSize, baseTileSize, baseTileSize);
 						}
 					}
 
@@ -338,13 +314,7 @@ export function WorldMapViewer() {
 					const fCtx = finalCanvas.getContext("2d");
 					if (fCtx) {
 						fCtx.imageSmoothingEnabled = true;
-						fCtx.drawImage(
-							tempCanvas,
-							0,
-							0,
-							finalCanvas.width,
-							finalCanvas.height,
-						);
+						fCtx.drawImage(tempCanvas, 0, 0, finalCanvas.width, finalCanvas.height);
 						compositeMap.set(key, finalCanvas);
 					}
 				}
@@ -363,12 +333,7 @@ export function WorldMapViewer() {
 
 	const drawBase = useCallback(() => {
 		if (!baseCanvasRef.current || !tiles || tiles.length === 0) return;
-		if (
-			minXRef.current === null ||
-			minYRef.current === null ||
-			!tileSizeRef.current
-		)
-			return;
+		if (minXRef.current === null || minYRef.current === null || !tileSizeRef.current) return;
 		const canvas = baseCanvasRef.current;
 		if (!containerRef.current) return;
 		const rect = containerRef.current.getBoundingClientRect();
@@ -390,11 +355,9 @@ export function WorldMapViewer() {
 				const normalizedX = tile.x - minX;
 				const normalizedY = tile.y - minY;
 				const screenX =
-					(normalizedY * tileSize - viewportRef.current.x * tileSize) *
-					viewportRef.current.zoom;
+					(normalizedY * tileSize - viewportRef.current.x * tileSize) * viewportRef.current.zoom;
 				const screenY =
-					(normalizedX * tileSize - viewportRef.current.y * tileSize) *
-					viewportRef.current.zoom;
+					(normalizedX * tileSize - viewportRef.current.y * tileSize) * viewportRef.current.zoom;
 				const screenSize = tileSize * viewportRef.current.zoom;
 				if (
 					screenX + screenSize > 0 &&
@@ -416,13 +379,10 @@ export function WorldMapViewer() {
 					const normalizedX = gx - minX;
 					const normalizedY = gy - minY;
 					const screenX =
-						(normalizedY * tileSize - viewportRef.current.x * tileSize) *
-						viewportRef.current.zoom;
+						(normalizedY * tileSize - viewportRef.current.x * tileSize) * viewportRef.current.zoom;
 					const screenY =
-						(normalizedX * tileSize - viewportRef.current.y * tileSize) *
-						viewportRef.current.zoom;
-					const screenSize =
-						tileSize * viewportRef.current.zoom * lod.groupSize;
+						(normalizedX * tileSize - viewportRef.current.y * tileSize) * viewportRef.current.zoom;
+					const screenSize = tileSize * viewportRef.current.zoom * lod.groupSize;
 					if (
 						screenX + screenSize > 0 &&
 						screenX < canvas.width &&
@@ -448,12 +408,7 @@ export function WorldMapViewer() {
 
 	const drawOverlay = useCallback(() => {
 		if (!overlayCanvasRef.current || !tiles || tiles.length === 0) return;
-		if (
-			minXRef.current === null ||
-			minYRef.current === null ||
-			!tileSizeRef.current
-		)
-			return;
+		if (minXRef.current === null || minYRef.current === null || !tileSizeRef.current) return;
 		const canvas = overlayCanvasRef.current;
 		if (!containerRef.current) return;
 		const rect = containerRef.current.getBoundingClientRect();
@@ -474,7 +429,6 @@ export function WorldMapViewer() {
 		});
 	}, [drawBase, drawOverlay]);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: Needed
 	useEffect(() => {
 		scheduleRedraw();
 	}, [viewport, tiles, containerSize, scheduleRedraw]);
@@ -513,8 +467,7 @@ export function WorldMapViewer() {
 
 	const handleMouseMove = useCallback(
 		(e: React.MouseEvent) => {
-			if (!overlayCanvasRef.current || !tiles || tiles.length === 0 || !bounds)
-				return;
+			if (!overlayCanvasRef.current || !tiles || tiles.length === 0 || !bounds) return;
 			const canvas = overlayCanvasRef.current;
 			const rect = canvas.getBoundingClientRect();
 			const mouseX = e.clientX - rect.left;
@@ -523,18 +476,16 @@ export function WorldMapViewer() {
 			const tileSize = tiles[0]?.width || 512;
 			const minX = minXRef.current ?? Math.min(...tiles.map((t) => t.x));
 			const minY = minYRef.current ?? Math.min(...tiles.map((t) => t.y));
-			const worldX =
-				mouseX / (viewportRef.current.zoom * tileSize) + viewportRef.current.x;
-			const worldY =
-				mouseY / (viewportRef.current.zoom * tileSize) + viewportRef.current.y;
+			const worldX = mouseX / (viewportRef.current.zoom * tileSize) + viewportRef.current.x;
+			const worldY = mouseY / (viewportRef.current.zoom * tileSize) + viewportRef.current.y;
 			const absoluteX = Math.round((worldX + minY) * MAP_CHUNK_SIZE);
 			const absoluteY = Math.round((worldY + minX) * MAP_CHUNK_SIZE);
 			const vsX = absoluteX - spawnOffsetX;
 			const vsY = absoluteY - spawnOffsetY;
 
 			setCursorCoords({
-				screenX: e.clientX,
-				screenY: e.clientY,
+				hudLeft: `${Math.min(e.clientX - rect.left + 12, rect.width - 160)}px`,
+				hudTop: `${Math.min(Math.max(e.clientY - rect.top - 12, 4), rect.height - 4)}px`,
 				x: vsX,
 				y: vsY,
 			});
@@ -561,16 +512,7 @@ export function WorldMapViewer() {
 				setLastMousePos({ x: e.clientX, y: e.clientY });
 			}
 		},
-		[
-			isPanning,
-			lastMousePos,
-			tiles,
-			bounds,
-			spawnOffsetX,
-			spawnOffsetY,
-			drawBase,
-			drawOverlay,
-		],
+		[isPanning, lastMousePos, tiles, bounds, spawnOffsetX, spawnOffsetY, drawBase, drawOverlay],
 	);
 
 	const handleMouseUp = useCallback(() => {
@@ -585,14 +527,14 @@ export function WorldMapViewer() {
 	// UI with file upload
 	if (!db) {
 		return (
-			<Card className="flex items-center justify-center h-full min-h-[400px]">
+			<Card className="flex h-full min-h-[400px] items-center justify-center">
 				<div className="flex flex-col items-center gap-4 p-8">
-					<MapIcon className="h-12 w-12 text-muted-foreground" />
+					<MapIcon className="text-muted-foreground h-12 w-12" />
 					<div className="flex flex-col items-center gap-2">
-						<h3 className="text-sm font-medium mb-2">Upload Map Database</h3>
+						<h3 className="mb-2 text-sm font-medium">Upload Map Database</h3>
 						<input
 							accept=".db"
-							className="border border-border bg-background px-3 py-2 text-xs file:mr-2 file:border-0 file:bg-transparent file:text-xs file:font-medium"
+							className="border-border bg-background border px-3 py-2 text-xs file:mr-2 file:border-0 file:bg-transparent file:text-xs file:font-medium"
 							disabled={isLoading}
 							onChange={handleFileUpload}
 							type="file"
@@ -600,15 +542,11 @@ export function WorldMapViewer() {
 					</div>
 					{isLoading && (
 						<div className="flex items-center gap-2">
-							<Loader2Icon className="animate-spin h-4 w-4" />
-							<p className="text-sm text-muted-foreground">
-								Loading database...
-							</p>
+							<Loader2Icon className="h-4 w-4 animate-spin" />
+							<p className="text-muted-foreground text-sm">Loading database...</p>
 						</div>
 					)}
-					{error && (
-						<p className="text-sm text-destructive">Error: {error.message}</p>
-					)}
+					{error && <p className="text-destructive text-sm">Error: {error.message}</p>}
 				</div>
 			</Card>
 		);
@@ -616,10 +554,10 @@ export function WorldMapViewer() {
 
 	if (isLoading) {
 		return (
-			<Card className="flex items-center justify-center h-full min-h-[400px]">
+			<Card className="flex h-full min-h-[400px] items-center justify-center">
 				<div className="flex flex-col items-center gap-2">
-					<Loader2Icon className="animate-spin h-8 w-8 text-muted-foreground" />
-					<p className="text-sm text-muted-foreground">Loading map...</p>
+					<Loader2Icon className="text-muted-foreground h-8 w-8 animate-spin" />
+					<p className="text-muted-foreground text-sm">Loading map...</p>
 				</div>
 			</Card>
 		);
@@ -627,12 +565,10 @@ export function WorldMapViewer() {
 
 	if (error) {
 		return (
-			<Card className="flex items-center justify-center h-full min-h-[400px]">
-				<div className="flex flex-col items-center gap-2 text-center p-4">
-					<MapIcon className="h-12 w-12 text-muted-foreground opacity-50" />
-					<p className="text-sm text-muted-foreground">
-						Error: {error.message}
-					</p>
+			<Card className="flex h-full min-h-[400px] items-center justify-center">
+				<div className="flex flex-col items-center gap-2 p-4 text-center">
+					<MapIcon className="text-muted-foreground h-12 w-12 opacity-50" />
+					<p className="text-muted-foreground text-sm">Error: {error.message}</p>
 					<Button
 						onClick={() => {
 							setDb(null);
@@ -650,12 +586,10 @@ export function WorldMapViewer() {
 
 	if (!tiles || tiles.length === 0) {
 		return (
-			<Card className="flex items-center justify-center h-full min-h-[400px]">
-				<div className="flex flex-col items-center gap-2 text-center p-4">
-					<MapIcon className="h-12 w-12 text-muted-foreground opacity-50" />
-					<p className="text-sm text-muted-foreground">
-						No map tiles found in database.
-					</p>
+			<Card className="flex h-full min-h-[400px] items-center justify-center">
+				<div className="flex flex-col items-center gap-2 p-4 text-center">
+					<MapIcon className="text-muted-foreground h-12 w-12 opacity-50" />
+					<p className="text-muted-foreground text-sm">No map tiles found in database.</p>
 					<Button
 						onClick={() => {
 							setDb(null);
@@ -674,16 +608,16 @@ export function WorldMapViewer() {
 	return (
 		<Card className="relative h-full min-h-[400px] overflow-hidden">
 			<div
-				className="w-full h-full min-h-[400px]"
+				className="h-full min-h-[400px] w-full"
 				ref={containerRef}
 				style={{ cursor: isPanning ? "grabbing" : "grab" }}
 			>
 				<canvas
-					className="absolute inset-0 w-full h-full pointer-events-none"
+					className="pointer-events-none absolute inset-0 h-full w-full"
 					ref={baseCanvasRef}
 				/>
 				<canvas
-					className="absolute inset-0 w-full h-full"
+					className="absolute inset-0 h-full w-full"
 					onMouseDown={handleMouseDown}
 					onMouseLeave={handleMouseLeave}
 					onMouseMove={handleMouseMove}
@@ -691,24 +625,12 @@ export function WorldMapViewer() {
 					onWheel={handleWheel}
 					ref={overlayCanvasRef}
 				/>
-				{cursorCoords && overlayCanvasRef.current && (
+				{cursorCoords && (
 					<div
-						className="absolute pointer-events-none bg-background/95 backdrop-blur-sm border px-2 py-1 font-mono text-[10px] shadow-lg"
+						className="bg-background/95 pointer-events-none absolute border px-2 py-1 font-mono text-[10px] shadow-lg backdrop-blur-sm"
 						style={{
-							left: (() => {
-								const canvasRect =
-									overlayCanvasRef.current?.getBoundingClientRect();
-								if (!canvasRect) return 0;
-								const rawLeft = cursorCoords.screenX - canvasRect.left + 12;
-								return `${Math.min(rawLeft, canvasRect.width - 160)}px`;
-							})(),
-							top: (() => {
-								const canvasRect =
-									overlayCanvasRef.current?.getBoundingClientRect();
-								if (!canvasRect) return 0;
-								const rawTop = cursorCoords.screenY - canvasRect.top - 12;
-								return `${Math.min(Math.max(rawTop, 4), canvasRect.height - 4)}px`;
-							})(),
+							left: cursorCoords.hudLeft,
+							top: cursorCoords.hudTop,
 						}}
 					>
 						{cursorCoords.z !== undefined
@@ -729,7 +651,7 @@ export function WorldMapViewer() {
 			>
 				Upload Another Map
 			</Button>
-			<div className="absolute pointer-events-none bottom-1 right-1 bg-background/90 backdrop-blur-sm border px-3 py-2 text-[10px] text-muted-foreground">
+			<div className="bg-background/90 text-muted-foreground pointer-events-none absolute right-1 bottom-1 border px-3 py-2 text-[10px] backdrop-blur-sm">
 				<p>🖱️ Drag to pan • 🔍 Scroll to zoom</p>
 			</div>
 		</Card>

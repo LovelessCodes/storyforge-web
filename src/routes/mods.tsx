@@ -1,9 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import {
-	ArrowDownNarrowWide,
-	ArrowUpNarrowWide,
-	PackageOpen,
-} from "lucide-react";
+import { ArrowDownNarrowWide, ArrowUpNarrowWide, PackageOpen } from "lucide-react";
 
 import { AuthorAutocomplete } from "@/components/auto-completes/author.auto-complete";
 import { SearchInput } from "@/components/inputs/search.input";
@@ -79,21 +75,18 @@ function RouteComponent() {
 			{/* Page header */}
 			<div className="flex flex-wrap items-end justify-between gap-3">
 				<div>
-					<h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-						Mod Browser
-					</h1>
-					<p className="mt-2 text-sm text-muted-foreground">
-						Search the Vintage Story ModDB — version, tag and side filters
-						included.
+					<h1 className="text-2xl font-bold tracking-tight sm:text-3xl">Mod Browser</h1>
+					<p className="text-muted-foreground mt-2 text-sm">
+						Search the Vintage Story ModDB — version, tag and side filters included.
 					</p>
 				</div>
-				<span className="text-[11px] text-muted-foreground tabular-nums">
+				<span className="text-muted-foreground text-[11px] tabular-nums">
 					{mods ? `${mods.length.toLocaleString()} mods indexed` : "Loading…"}
 				</span>
 			</div>
 
 			{/* Toolbar */}
-			<div className="flex flex-wrap items-center gap-2 border-b border-border py-3">
+			<div className="border-border flex flex-wrap items-center gap-2 border-b py-3">
 				<div className="w-full sm:w-64">
 					<SearchInput onValueChange={setSearchText} value={searchText} />
 				</div>
@@ -145,9 +138,7 @@ function RouteComponent() {
 										<SelectItem
 											key={tag.tagid}
 											onClick={() =>
-												selectedModTags.includes(tag)
-													? removeModTag(tag)
-													: addModTag(tag)
+												selectedModTags.includes(tag) ? removeModTag(tag) : addModTag(tag)
 											}
 											value={tag}
 										>
@@ -158,10 +149,7 @@ function RouteComponent() {
 					</SelectContent>
 				</Select>
 
-				<Select
-					onValueChange={(value) => setSortBy(value as ModsFilters["sortBy"])}
-					value={sortBy}
-				>
+				<Select onValueChange={(value) => setSortBy(value as ModsFilters["sortBy"])} value={sortBy}>
 					<SelectTrigger aria-label="Sort mods" className="w-36">
 						<SelectValue>{sortOptions[sortBy]}</SelectValue>
 					</SelectTrigger>
@@ -175,9 +163,7 @@ function RouteComponent() {
 				</Select>
 
 				<Select
-					onValueChange={(value) =>
-						setCategory(value as ModsFilters["category"])
-					}
+					onValueChange={(value) => setCategory(value as ModsFilters["category"])}
 					value={category}
 				>
 					<SelectTrigger aria-label="Filter by category" className="w-36">
@@ -193,28 +179,17 @@ function RouteComponent() {
 				</Select>
 
 				<Button
-					aria-label={
-						orderDirection === "descending" ? "Descending" : "Ascending"
-					}
+					aria-label={orderDirection === "descending" ? "Descending" : "Ascending"}
 					onClick={() =>
-						setOrderDirection(
-							orderDirection === "descending" ? "ascending" : "descending",
-						)
+						setOrderDirection(orderDirection === "descending" ? "ascending" : "descending")
 					}
 					title={orderDirection === "descending" ? "Descending" : "Ascending"}
 					variant="outline"
 				>
-					{orderDirection === "descending" ? (
-						<ArrowDownNarrowWide />
-					) : (
-						<ArrowUpNarrowWide />
-					)}
+					{orderDirection === "descending" ? <ArrowDownNarrowWide /> : <ArrowUpNarrowWide />}
 				</Button>
 
-				<AuthorAutocomplete
-					onChange={(event) => setAuthor(event.target.value)}
-					value={author}
-				/>
+				<AuthorAutocomplete onChange={(event) => setAuthor(event.target.value)} value={author} />
 
 				<Tabs
 					className="ms-auto"
@@ -284,7 +259,7 @@ function RouteComponent() {
 
 			{/* Results */}
 			<div className="flex min-h-0 flex-1 flex-col">
-				<div className="flex shrink-0 items-center gap-2 text-[10px] tracking-widest text-muted-foreground uppercase">
+				<div className="text-muted-foreground flex shrink-0 items-center gap-2 text-[10px] tracking-widest uppercase">
 					<PackageOpen className="size-3" /> ModDB results
 				</div>
 				<div className="mt-2 min-h-0 flex-1">

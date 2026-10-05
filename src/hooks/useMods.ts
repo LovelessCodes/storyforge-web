@@ -1,5 +1,6 @@
 import { type UseQueryOptions, useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
+
 import { useModsFilters } from "@/stores/mod-filters";
 
 export type Mod = {
@@ -27,10 +28,7 @@ export type ModsResponse = {
 };
 
 export const useMods = (
-	props?: Omit<
-		UseQueryOptions<ModsResponse, Error, Mod[]>,
-		"queryKey" | "queryFn"
-	>,
+	props?: Omit<UseQueryOptions<ModsResponse, Error, Mod[]>, "queryKey" | "queryFn">,
 ) => {
 	const { selectedGameVersions } = useModsFilters();
 
@@ -38,9 +36,7 @@ export const useMods = (
 		if (selectedGameVersions.length === 0) {
 			return "https://vsapi.betterjs.dev/mods";
 		}
-		return `https://vsapi.betterjs.dev/mods?versions=${selectedGameVersions.join(
-			",",
-		)}`;
+		return `https://vsapi.betterjs.dev/mods?versions=${selectedGameVersions.join(",")}`;
 	}, [selectedGameVersions]);
 
 	return useQuery<ModsResponse, Error, Mod[]>({

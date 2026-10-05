@@ -28,8 +28,7 @@ export const getPlatformFromAssetUrl = (url: string): PlatformKey | null => {
 
 export const isMac = /nix|mac os x/i.test(navigator.userAgent);
 
-export const RELEASES_URL =
-	"https://github.com/lovelesscodes/storyforge/releases";
+export const RELEASES_URL = "https://github.com/lovelesscodes/storyforge/releases";
 
 export const modifierLabel = isMac ? "⌘" : "Ctrl+";
 

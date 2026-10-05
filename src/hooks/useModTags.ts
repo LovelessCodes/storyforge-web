@@ -12,16 +12,10 @@ export type ModTagsResponse = {
 };
 
 export const useModTags = (
-	props?: Omit<
-		UseQueryOptions<ModTagsResponse, Error, ModTag[]>,
-		"queryKey" | "queryFn"
-	>,
+	props?: Omit<UseQueryOptions<ModTagsResponse, Error, ModTag[]>, "queryKey" | "queryFn">,
 ) =>
 	useQuery<ModTagsResponse, Error, ModTag[]>({
-		queryFn: () =>
-			fetch("https://vsapi.betterjs.dev/modtags").then((response) =>
-				response.json(),
-			),
+		queryFn: () => fetch("https://vsapi.betterjs.dev/modtags").then((response) => response.json()),
 		queryKey: ["mod-tags"],
 		select: (data) => data.tags,
 		...props,

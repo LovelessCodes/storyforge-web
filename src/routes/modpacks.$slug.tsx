@@ -1,13 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-	ArrowLeft,
-	Boxes,
-	Check,
-	Download,
-	Package,
-	Share2,
-} from "lucide-react";
+import { ArrowLeft, Boxes, Check, Download, Package, Share2 } from "lucide-react";
 import { useMemo, useState } from "react";
+
 import { ModpackImage } from "@/components/modpacks/ModpackImage";
 import { ModpackVersionCard } from "@/components/modpacks/ModpackVersionCard";
 import { Reveal } from "@/components/motion/Reveal";
@@ -28,9 +22,7 @@ function ModpackDetailPage() {
 	const { data: modpack, isPending, error } = useModpack(slug);
 	const [copied, setCopied] = useState(false);
 
-	useDocumentTitle(
-		modpack ? `${modpack.name} — Story Forge Modpacks` : "Modpacks",
-	);
+	useDocumentTitle(modpack ? `${modpack.name} — Story Forge Modpacks` : "Modpacks");
 
 	const sortedVersions = useMemo(
 		() =>
@@ -73,9 +65,9 @@ function ModpackDetailPage() {
 		return (
 			<main className="mx-auto grid w-full max-w-5xl flex-1 place-items-center px-4 py-24 text-center sm:px-6">
 				<div className="grid justify-items-center gap-4">
-					<Package className="size-8 text-muted-foreground" />
+					<Package className="text-muted-foreground size-8" />
 					<h1 className="text-xl font-bold">Modpack not found</h1>
-					<p className="max-w-sm text-xs text-muted-foreground">
+					<p className="text-muted-foreground max-w-sm text-xs">
 						{error?.message && error.message !== "Request failed (404)"
 							? error.message
 							: "This modpack may have been deleted or renamed."}
@@ -91,7 +83,7 @@ function ModpackDetailPage() {
 	return (
 		<main className="mx-auto w-full max-w-5xl flex-1 px-4 py-10 sm:px-6">
 			<Link
-				className="inline-flex items-center gap-1.5 text-[11px] text-muted-foreground transition-colors hover:text-foreground"
+				className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 text-[11px] transition-colors"
 				to="/modpacks"
 			>
 				<ArrowLeft className="size-3.5" /> All modpacks
@@ -100,7 +92,7 @@ function ModpackDetailPage() {
 			{/* Hero */}
 			<div className="mt-6 grid gap-8 lg:grid-cols-[1.05fr_1fr]">
 				<Reveal>
-					<div className="border border-border bg-card p-1.5">
+					<div className="border-border bg-card border p-1.5">
 						<ModpackImage
 							alt={modpack.name}
 							className="aspect-video w-full"
@@ -115,36 +107,34 @@ function ModpackDetailPage() {
 						<h1 className="text-2xl font-bold tracking-tight text-balance sm:text-3xl">
 							{modpack.name}
 						</h1>
-						<p className="mt-2 text-xs text-muted-foreground">
+						<p className="text-muted-foreground mt-2 text-xs">
 							by{" "}
-							<span className="font-medium text-foreground">
+							<span className="text-foreground font-medium">
 								{modpack.owner?.name ?? "Unknown"}
 							</span>
-							{toTime(modpack.updatedAt) ? (
-								<> · updated {timeAgo(modpack.updatedAt)}</>
-							) : null}
+							{toTime(modpack.updatedAt) ? <> · updated {timeAgo(modpack.updatedAt)}</> : null}
 						</p>
 					</div>
 
-					<div className="grid grid-cols-3 gap-px border border-border bg-border">
-						<div className="grid gap-1 bg-background px-3 py-3">
-							<span className="text-[10px] tracking-widest text-muted-foreground uppercase">
+					<div className="border-border bg-border grid grid-cols-3 gap-px border">
+						<div className="bg-background grid gap-1 px-3 py-3">
+							<span className="text-muted-foreground text-[10px] tracking-widest uppercase">
 								Downloads
 							</span>
 							<span className="text-sm font-bold tabular-nums">
 								{formatCount(modpack.downloads)}
 							</span>
 						</div>
-						<div className="grid gap-1 bg-background px-3 py-3">
-							<span className="text-[10px] tracking-widest text-muted-foreground uppercase">
+						<div className="bg-background grid gap-1 px-3 py-3">
+							<span className="text-muted-foreground text-[10px] tracking-widest uppercase">
 								Versions
 							</span>
 							<span className="text-sm font-bold tabular-nums">
 								{modpack.modpackVersions.length}
 							</span>
 						</div>
-						<div className="grid gap-1 bg-background px-3 py-3">
-							<span className="text-[10px] tracking-widest text-muted-foreground uppercase">
+						<div className="bg-background grid gap-1 px-3 py-3">
+							<span className="text-muted-foreground text-[10px] tracking-widest uppercase">
 								Latest
 							</span>
 							<span className="font-mono text-sm font-bold">
@@ -153,7 +143,7 @@ function ModpackDetailPage() {
 						</div>
 					</div>
 
-					<p className="text-xs/relaxed whitespace-pre-wrap text-muted-foreground">
+					<p className="text-muted-foreground text-xs/relaxed whitespace-pre-wrap">
 						{modpack.description || "No description provided."}
 					</p>
 
@@ -169,8 +159,7 @@ function ModpackDetailPage() {
 
 					{latest?.gameVersion ? (
 						<Badge className="w-fit" variant="outline">
-							<Boxes className="size-3" /> Requires Vintage Story{" "}
-							{latest.gameVersion}
+							<Boxes className="size-3" /> Requires Vintage Story {latest.gameVersion}
 						</Badge>
 					) : null}
 				</Reveal>
@@ -178,11 +167,11 @@ function ModpackDetailPage() {
 
 			{/* Install steps */}
 			<Reveal className="mt-10">
-				<div className="grid gap-3 border border-border bg-surface/50 p-5 sm:grid-cols-[auto_1fr] sm:items-center">
-					<span className="text-[10px] font-medium tracking-widest text-accent-amber uppercase">
+				<div className="border-border bg-surface/50 grid gap-3 border p-5 sm:grid-cols-[auto_1fr] sm:items-center">
+					<span className="text-accent-amber text-[10px] font-medium tracking-widest uppercase">
 						How to install
 					</span>
-					<ol className="grid gap-1 text-[11px] text-muted-foreground sm:grid-cols-3 sm:gap-6">
+					<ol className="text-muted-foreground grid gap-1 text-[11px] sm:grid-cols-3 sm:gap-6">
 						<li>1. Download Story Forge for your platform.</li>
 						<li>2. Open the Modpacks page in the app.</li>
 						<li>3. Install “{modpack.name}” and press Play.</li>
@@ -194,26 +183,22 @@ function ModpackDetailPage() {
 			<Reveal className="mt-10 grid gap-4">
 				<div className="flex items-end justify-between gap-4">
 					<h2 className="text-lg font-bold tracking-tight">Versions</h2>
-					<span className="text-[11px] text-muted-foreground tabular-nums">
+					<span className="text-muted-foreground text-[11px] tabular-nums">
 						{modpack.modpackVersions.length} published
 					</span>
 				</div>
 				<Separator />
 				{sortedVersions.length === 0 ? (
-					<div className="flex flex-col items-center gap-2 border border-dashed border-border p-10 text-center">
-						<Boxes className="size-5 text-muted-foreground" />
-						<p className="text-xs text-muted-foreground">
+					<div className="border-border flex flex-col items-center gap-2 border border-dashed p-10 text-center">
+						<Boxes className="text-muted-foreground size-5" />
+						<p className="text-muted-foreground text-xs">
 							This modpack has no published versions yet.
 						</p>
 					</div>
 				) : (
 					<div className="grid gap-3">
 						{sortedVersions.map((version) => (
-							<ModpackVersionCard
-								key={version.id}
-								slug={modpack.slug}
-								version={version}
-							/>
+							<ModpackVersionCard key={version.id} slug={modpack.slug} version={version} />
 						))}
 					</div>
 				)}

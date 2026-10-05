@@ -50,7 +50,7 @@ export function AccountMenu() {
 						src={user.image}
 					/>
 				) : (
-					<span className="grid size-full place-items-center bg-accent-primary text-[10px] font-bold text-white">
+					<span className="bg-accent-primary grid size-full place-items-center text-[10px] font-bold text-white">
 						{initials(user.name)}
 					</span>
 				)}
@@ -58,10 +58,8 @@ export function AccountMenu() {
 			<DropdownMenuContent align="end" className="min-w-56">
 				<DropdownMenuLabel className="normal-case">
 					<span className="grid gap-0.5">
-						<span className="text-xs font-medium tracking-normal text-foreground">
-							{user.name}
-						</span>
-						<span className="text-[10px] font-normal tracking-normal text-muted-foreground">
+						<span className="text-foreground text-xs font-medium tracking-normal">{user.name}</span>
+						<span className="text-muted-foreground text-[10px] font-normal tracking-normal">
 							{user.email}
 						</span>
 					</span>

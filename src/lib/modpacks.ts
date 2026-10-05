@@ -68,20 +68,14 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 }
 
 export const api = {
-	getModInfo: (modid: string) =>
-		request<{ statuscode: string; mod: ModDbMod }>(`/mod/${modid}`),
-	getModpack: (slug: string) =>
-		request<ModpackItem>(`/api/auth/modpacks/${slug}`),
-	getModpacks: () =>
-		request<{ totalCount: number; modpacks: ModpackItem[] }>(
-			"/api/auth/modpacks",
-		),
+	getModInfo: (modid: string) => request<{ statuscode: string; mod: ModDbMod }>(`/mod/${modid}`),
+	getModpack: (slug: string) => request<ModpackItem>(`/api/auth/modpacks/${slug}`),
+	getModpacks: () => request<{ totalCount: number; modpacks: ModpackItem[] }>("/api/auth/modpacks"),
 	getSocialProviders: () => request<string[]>("/api/auth/social-providers"),
 	incrementModpackVersionDownload: (slug: string, version: string) =>
-		request<ModpackVersion>(
-			`/api/auth/modpacks/${slug}/versions/${version}/download`,
-			{ method: "POST" },
-		),
+		request<ModpackVersion>(`/api/auth/modpacks/${slug}/versions/${version}/download`, {
+			method: "POST",
+		}),
 };
 
 /* ─── Helpers ───────────────────────────────────────────────────────── */
@@ -114,28 +108,20 @@ export function parseModsString(
 export function latestVersion(modpack: ModpackItem): ModpackVersion | null {
 	return modpack.modpackVersions.reduce<ModpackVersion | null>(
 		(latest, version) =>
-			latest === null || toTime(version.createdAt) > toTime(latest.createdAt)
-				? version
-				: latest,
+			latest === null || toTime(version.createdAt) > toTime(latest.createdAt) ? version : latest,
 		null,
 	);
 }
 
-export function modUrl(
-	mod: { urlalias?: string | null; assetid?: number },
-	modid?: string,
-) {
+export function modUrl(mod: { urlalias?: string | null; assetid?: number }, modid?: string) {
 	if (mod.urlalias) return `https://mods.vintagestory.at/${mod.urlalias}`;
-	if (mod.assetid)
-		return `https://mods.vintagestory.at/show/mod/${mod.assetid}`;
+	if (mod.assetid) return `https://mods.vintagestory.at/show/mod/${mod.assetid}`;
 	return `https://mods.vintagestory.at/api/mod/${modid ?? ""}`;
 }
 
 export function modLogoUrl(logofile: string | null | undefined): string {
 	if (!logofile) return "https://mods.vintagestory.at/web/img/mod-default.png";
-	return logofile.startsWith("http")
-		? logofile
-		: `https://mods.vintagestory.at${logofile}`;
+	return logofile.startsWith("http") ? logofile : `https://mods.vintagestory.at${logofile}`;
 }
 
 export function formatCount(count: number): string {

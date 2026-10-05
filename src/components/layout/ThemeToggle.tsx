@@ -17,9 +17,7 @@ export function ThemeToggle({ className, duration = 400 }: ThemeToggleProps) {
 
 	const toggleTheme = useCallback(() => {
 		// Derive from the DOM so rapid clicks can't race the React render.
-		const nextTheme = document.documentElement.classList.contains("dark")
-			? "light"
-			: "dark";
+		const nextTheme = document.documentElement.classList.contains("dark") ? "light" : "dark";
 		switchTheme(nextTheme, {
 			duration,
 			origin: elementCenter(wrapperRef.current),

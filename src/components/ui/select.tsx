@@ -1,10 +1,5 @@
 import { Select as SelectPrimitive } from "@base-ui-components/react/select";
-import {
-	CheckIcon,
-	ChevronDownIcon,
-	ChevronsUpDownIcon,
-	ChevronUpIcon,
-} from "lucide-react";
+import { CheckIcon, ChevronDownIcon, ChevronsUpDownIcon, ChevronUpIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -69,12 +64,12 @@ function SelectPopup({
 				sideOffset={sideOffset}
 			>
 				<SelectPrimitive.Popup
-					className="min-w-(--anchor-width) origin-(--transform-origin) rounded-none bg-popover text-popover-foreground shadow-md ring-1 ring-foreground/10 transition-[scale,opacity] data-ending-style:scale-98 data-ending-style:opacity-0 data-starting-style:scale-98 data-starting-style:opacity-0"
+					className="bg-popover text-popover-foreground ring-foreground/10 min-w-(--anchor-width) origin-(--transform-origin) rounded-none shadow-md ring-1 transition-[scale,opacity] data-ending-style:scale-98 data-ending-style:opacity-0 data-starting-style:scale-98 data-starting-style:opacity-0"
 					data-slot="select-popup"
 					{...props}
 				>
 					<SelectPrimitive.ScrollUpArrow
-						className="top-0 z-50 flex h-6 w-full cursor-default items-center justify-center bg-popover text-muted-foreground"
+						className="bg-popover text-muted-foreground top-0 z-50 flex h-6 w-full cursor-default items-center justify-center"
 						data-slot="select-scroll-up-arrow"
 					>
 						<ChevronUpIcon className="size-4" />
@@ -89,7 +84,7 @@ function SelectPopup({
 						{children}
 					</SelectPrimitive.List>
 					<SelectPrimitive.ScrollDownArrow
-						className="bottom-0 z-50 flex h-6 w-full cursor-default items-center justify-center bg-popover text-muted-foreground"
+						className="bg-popover text-muted-foreground bottom-0 z-50 flex h-6 w-full cursor-default items-center justify-center"
 						data-slot="select-scroll-down-arrow"
 					>
 						<ChevronDownIcon className="size-4" />
@@ -100,11 +95,7 @@ function SelectPopup({
 	);
 }
 
-function SelectItem({
-	className,
-	children,
-	...props
-}: SelectPrimitive.Item.Props) {
+function SelectItem({ className, children, ...props }: SelectPrimitive.Item.Props) {
 	return (
 		<SelectPrimitive.Item
 			className={cn(
@@ -117,17 +108,12 @@ function SelectItem({
 			<SelectPrimitive.ItemIndicator className="col-start-1">
 				<CheckIcon className="size-3.5" />
 			</SelectPrimitive.ItemIndicator>
-			<SelectPrimitive.ItemText className="col-start-2">
-				{children}
-			</SelectPrimitive.ItemText>
+			<SelectPrimitive.ItemText className="col-start-2">{children}</SelectPrimitive.ItemText>
 		</SelectPrimitive.Item>
 	);
 }
 
-function SelectSeparator({
-	className,
-	...props
-}: SelectPrimitive.Separator.Props) {
+function SelectSeparator({ className, ...props }: SelectPrimitive.Separator.Props) {
 	return (
 		<SelectPrimitive.Separator
 			className={cn("-mx-1 my-1 h-px bg-border", className)}
@@ -141,10 +127,7 @@ function SelectGroup(props: SelectPrimitive.Group.Props) {
 	return <SelectPrimitive.Group data-slot="select-group" {...props} />;
 }
 
-function SelectGroupLabel({
-	className,
-	...props
-}: SelectPrimitive.GroupLabel.Props) {
+function SelectGroupLabel({ className, ...props }: SelectPrimitive.GroupLabel.Props) {
 	return (
 		<SelectPrimitive.GroupLabel
 			className={cn(

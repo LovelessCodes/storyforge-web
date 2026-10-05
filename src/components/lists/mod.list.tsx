@@ -1,21 +1,16 @@
 import { measureElement, useVirtualizer } from "@tanstack/react-virtual";
 import { useCallback, useRef } from "react";
+
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useMods } from "@/hooks/useMods";
 import { useModsFilters } from "@/stores/mod-filters";
+
 import { ModItem } from "../items/mod.item";
 
 export const ModList = () => {
 	const { data: mods } = useMods();
-	const {
-		selectedModTags,
-		author,
-		category,
-		side,
-		orderDirection,
-		sortBy,
-		searchText,
-	} = useModsFilters();
+	const { selectedModTags, author, category, side, orderDirection, sortBy, searchText } =
+		useModsFilters();
 
 	const viewportRef = useRef<HTMLDivElement>(null);
 
@@ -51,10 +46,8 @@ export const ModList = () => {
 			}
 			if (sortBy === "updated") {
 				return orderDirection === "descending"
-					? new Date(b.lastreleased).getTime() -
-							new Date(a.lastreleased).getTime()
-					: new Date(a.lastreleased).getTime() -
-							new Date(b.lastreleased).getTime();
+					? new Date(b.lastreleased).getTime() - new Date(a.lastreleased).getTime()
+					: new Date(a.lastreleased).getTime() - new Date(b.lastreleased).getTime();
 			}
 			if (sortBy === "downloads") {
 				return orderDirection === "descending"
@@ -62,9 +55,7 @@ export const ModList = () => {
 					: b.downloads - a.downloads;
 			}
 			if (sortBy === "follows") {
-				return orderDirection === "descending"
-					? a.follows - b.follows
-					: b.follows - a.follows;
+				return orderDirection === "descending" ? a.follows - b.follows : b.follows - a.follows;
 			}
 			if (sortBy === "trending") {
 				return orderDirection === "descending"
@@ -72,9 +63,7 @@ export const ModList = () => {
 					: b.trendingpoints - a.trendingpoints;
 			}
 			if (sortBy === "comments") {
-				return orderDirection === "descending"
-					? a.comments - b.comments
-					: b.comments - a.comments;
+				return orderDirection === "descending" ? a.comments - b.comments : b.comments - a.comments;
 			}
 			return orderDirection === "descending" ? 0 : -1;
 		});
@@ -94,15 +83,13 @@ export const ModList = () => {
 
 	return (
 		<ScrollArea
-			className="h-full w-full border border-border bg-card"
+			className="border-border bg-card h-full w-full border"
 			scrollFade
 			viewportRef={viewportRef}
 		>
 			{modsList && modsList.length === 0 ? (
 				<div className="grid h-full place-items-center p-10 text-center">
-					<p className="text-xs text-muted-foreground">
-						No mods match your filters.
-					</p>
+					<p className="text-muted-foreground text-xs">No mods match your filters.</p>
 				</div>
 			) : (
 				<div className="relative" style={{ height: totalSize }}>
@@ -111,7 +98,7 @@ export const ModList = () => {
 							const mod = modsList[item.index];
 							return (
 								<div
-									className="absolute top-0 left-0 flex w-full border-b border-border/60"
+									className="border-border/60 absolute top-0 left-0 flex w-full border-b"
 									data-index={item.index}
 									key={mod.modid}
 									ref={rowVirtualizer.measureElement}

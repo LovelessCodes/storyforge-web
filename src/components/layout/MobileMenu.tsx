@@ -67,7 +67,7 @@ export function MobileMenu() {
 				{open && (
 					<motion.div
 						animate={{ opacity: 1 }}
-						className="fixed inset-0 top-14 z-50 flex flex-col bg-background"
+						className="bg-background fixed inset-0 top-14 z-50 flex flex-col"
 						exit={{ opacity: 0 }}
 						initial={{ opacity: 0 }}
 						transition={{ duration: 0.2 }}
@@ -85,7 +85,7 @@ export function MobileMenu() {
 									}}
 								>
 									<Link
-										className="flex items-center border-b border-border/60 py-4 text-lg font-semibold tracking-tight text-foreground"
+										className="border-border/60 text-foreground flex items-center border-b py-4 text-lg font-semibold tracking-tight"
 										onClick={() => setOpen(false)}
 										to={link.to}
 									>
@@ -98,11 +98,8 @@ export function MobileMenu() {
 						<div className="mt-auto grid gap-3 px-4 pb-8">
 							{user ? (
 								<>
-									<div className="text-xs text-muted-foreground">
-										Signed in as{" "}
-										<span className="font-medium text-foreground">
-											{user.name}
-										</span>
+									<div className="text-muted-foreground text-xs">
+										Signed in as <span className="text-foreground font-medium">{user.name}</span>
 									</div>
 									<Button
 										onClick={() => {
@@ -132,11 +129,7 @@ export function MobileMenu() {
 										<Github /> GitHub
 									</Button>
 								</a>
-								<a
-									href="https://discord.gg/gByx63peUC"
-									rel="noopener noreferrer"
-									target="_blank"
-								>
+								<a href="https://discord.gg/gByx63peUC" rel="noopener noreferrer" target="_blank">
 									<Button size="sm" variant="outline">
 										<DiscordIcon className="size-3.5" /> Discord
 									</Button>

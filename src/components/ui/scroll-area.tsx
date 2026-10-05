@@ -56,7 +56,7 @@ function ScrollBar({
 			{...props}
 		>
 			<ScrollAreaPrimitive.Thumb
-				className="relative flex-1 bg-border"
+				className="bg-border relative flex-1"
 				data-slot="scroll-area-thumb"
 			/>
 		</ScrollAreaPrimitive.Scrollbar>

@@ -1,6 +1,7 @@
 import { Autocomplete as AutocompletePrimitive } from "@base-ui-components/react/autocomplete";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { useCallback, useMemo, useRef, useState } from "react";
+
 import {
 	Autocomplete,
 	AutocompleteInput,
@@ -10,9 +11,7 @@ import {
 } from "@/components/ui/auto-complete";
 import { useMods } from "@/hooks/useMods";
 
-export const AuthorAutocomplete = (
-	props: React.InputHTMLAttributes<HTMLInputElement>,
-) => {
+export const AuthorAutocomplete = (props: React.InputHTMLAttributes<HTMLInputElement>) => {
 	const { contains } = AutocompletePrimitive.useFilter({
 		sensitivity: "base",
 		usage: "search",
@@ -44,7 +43,6 @@ export const AuthorAutocomplete = (
 		[mods],
 	);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: Shouldn't recompute on every function change
 	const filteredItems = useMemo(() => {
 		return modAuthors
 			? Object.entries(modAuthors)
@@ -52,7 +50,7 @@ export const AuthorAutocomplete = (
 					.sort(([_authorA, countA], [_authorB, countB]) => countB - countA)
 					.map(([author]) => author)
 			: [];
-	}, [modAuthors, actualValue]);
+	}, [contains, modAuthors, actualValue]);
 
 	const shouldRenderPopup = actualValue !== "";
 
@@ -127,7 +125,7 @@ export const AuthorAutocomplete = (
 											>
 												<div className="flex w-full flex-col">
 													<div className="text-xs font-medium">{author}</div>
-													<div className="text-[10px] text-muted-foreground">
+													<div className="text-muted-foreground text-[10px]">
 														{modCount} mod{modCount > 1 ? "s" : ""}
 													</div>
 												</div>

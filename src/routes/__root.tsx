@@ -1,10 +1,8 @@
 import { createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { MotionConfig } from "motion/react";
-import {
-	AnimatedOutlet,
-	AnimatedOutletWrapper,
-} from "@/components/AnimatedOutlet";
+
+import { AnimatedOutlet, AnimatedOutletWrapper } from "@/components/AnimatedOutlet";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { PageScroll } from "@/components/layout/PageScroll";
@@ -12,7 +10,7 @@ import { PageScroll } from "@/components/layout/PageScroll";
 const RootLayout = () => (
 	<MotionConfig reducedMotion="user">
 		<AnimatedOutletWrapper>
-			<div className="flex h-svh flex-col overflow-hidden bg-background text-foreground">
+			<div className="bg-background text-foreground flex h-svh flex-col overflow-hidden">
 				<Header />
 				<PageScroll>
 					<AnimatedOutlet

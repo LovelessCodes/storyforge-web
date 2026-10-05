@@ -1,6 +1,4 @@
-export function elementCenter(
-	element: Element | null,
-): { x: number; y: number } | undefined {
+export function elementCenter(element: Element | null): { x: number; y: number } | undefined {
 	if (!element) return undefined;
 	const { top, left, width, height } = element.getBoundingClientRect();
 	return { x: left + width / 2, y: top + height / 2 };
@@ -37,10 +35,7 @@ export function switchTheme(
 	const viewportHeight = window.innerHeight;
 	const x = origin?.x ?? viewportWidth / 2;
 	const y = origin?.y ?? viewportHeight / 2;
-	const maxRadius = Math.hypot(
-		Math.max(x, viewportWidth - x),
-		Math.max(y, viewportHeight - y),
-	);
+	const maxRadius = Math.hypot(Math.max(x, viewportWidth - x), Math.max(y, viewportHeight - y));
 
 	// clip-path percentages resolve against the snapshot reference box, so the
 	// circle lands correctly at any display scale.
@@ -58,10 +53,7 @@ export function switchTheme(
 		.then(() => {
 			document.documentElement.animate(
 				{
-					clipPath: [
-						`circle(0% at ${point})`,
-						`circle(${endRadius} at ${point})`,
-					],
+					clipPath: [`circle(0% at ${point})`, `circle(${endRadius} at ${point})`],
 				},
 				{
 					duration,

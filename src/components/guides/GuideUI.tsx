@@ -13,16 +13,14 @@ interface StepProps {
 
 export function Step({ n, title, children }: StepProps) {
 	return (
-		<div className="grid gap-3 border-b border-border/60 py-6 first:pt-0 last:border-b-0 last:pb-0">
+		<div className="border-border/60 grid gap-3 border-b py-6 first:pt-0 last:border-b-0 last:pb-0">
 			<div className="flex items-center gap-3">
-				<span className="grid size-6 shrink-0 place-items-center border border-accent-primary/40 bg-accent-primary/10 text-[10px] font-bold text-accent-primary">
+				<span className="border-accent-primary/40 bg-accent-primary/10 text-accent-primary grid size-6 shrink-0 place-items-center border text-[10px] font-bold">
 					{n}
 				</span>
 				<h2 className="text-sm font-bold tracking-tight">{title}</h2>
 			</div>
-			<div className="grid gap-3 pl-9 text-xs/relaxed text-muted-foreground">
-				{children}
-			</div>
+			<div className="text-muted-foreground grid gap-3 pl-9 text-xs/relaxed">{children}</div>
 		</div>
 	);
 }
@@ -40,8 +38,7 @@ const calloutVariants = {
 	},
 	warning: {
 		icon: TriangleAlert,
-		styles:
-			"border-accent-amber/30 bg-accent-amber/5 [&_svg]:text-accent-amber",
+		styles: "border-accent-amber/30 bg-accent-amber/5 [&_svg]:text-accent-amber",
 	},
 } as const;
 
@@ -64,7 +61,7 @@ export function Callout({ children, variant = "info" }: CalloutProps) {
 
 export function Code({ children }: { children: React.ReactNode }) {
 	return (
-		<code className="border border-border bg-background px-1 font-mono text-[10px] text-foreground">
+		<code className="border-border bg-background text-foreground border px-1 font-mono text-[10px]">
 			{children}
 		</code>
 	);

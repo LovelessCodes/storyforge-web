@@ -1,9 +1,6 @@
 import { useId } from "react";
-import {
-	AccordionItem,
-	AccordionPanel,
-	AccordionTrigger,
-} from "@/components/ui/accordion";
+
+import { AccordionItem, AccordionPanel, AccordionTrigger } from "@/components/ui/accordion";
 
 export const FAQItem = ({
 	item,
@@ -16,9 +13,7 @@ export const FAQItem = ({
 			<AccordionTrigger className="font-semibold hover:no-underline">
 				{item.question}
 			</AccordionTrigger>
-			<AccordionPanel className="text-muted-foreground">
-				{item.answer}
-			</AccordionPanel>
+			<AccordionPanel className="text-muted-foreground">{item.answer}</AccordionPanel>
 		</AccordionItem>
 	);
 };

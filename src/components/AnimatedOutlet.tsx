@@ -1,9 +1,4 @@
-import {
-	type AnyRoute,
-	Outlet,
-	useMatch,
-	useRouter,
-} from "@tanstack/react-router";
+import { type AnyRoute, Outlet, useMatch, useRouter } from "@tanstack/react-router";
 import { type MotionProps, motion } from "motion/react";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 
@@ -39,47 +34,37 @@ function isDescendant(pathname: string, destinationPath: string) {
 	);
 }
 
-export function AnimatedOutletWrapper({
-	children,
-}: AnimatedOutletWrapperProps) {
+export function AnimatedOutletWrapper({ children }: AnimatedOutletWrapperProps) {
 	const router = useRouter();
-	const registry = useRef<Registry>(new Map());
+	const [registry] = useState(() => new Map<string, TakeSnapshotFn>());
 
 	useEffect(() => {
 		// NOTE: This should be onBeforeNavigate, but due to https://github.com/TanStack/router/issues/3920 it's not working.
 		// For now, we use onBeforeLoad, which runs right after onBeforeNavigate.
 		// See: https://github.com/TanStack/router/blob/f8015e7629307499d4d6245077ad84145b6064a7/packages/router-core/src/router.ts#L2027
-		const unsubscribe = router.subscribe(
-			"onBeforeLoad",
-			({ toLocation, pathChanged }) => {
-				if (pathChanged) {
-					const destinationPath = toLocation.pathname;
-					// Find the outlet with the longest pathname, that is part of the destination route
-					let takeSnapshot: TakeSnapshotFn | null = null;
-					let longestLength = 0;
-					for (const [pathname, snapshotFn] of registry.current.entries()) {
-						if (
-							isDescendant(pathname, destinationPath) &&
-							pathname.length > longestLength
-						) {
-							longestLength = pathname.length;
-							takeSnapshot = snapshotFn;
-						}
-					}
-					if (takeSnapshot) {
-						// Take a snapshot of the deepest outlet
-						takeSnapshot();
+		const unsubscribe = router.subscribe("onBeforeLoad", ({ toLocation, pathChanged }) => {
+			if (pathChanged) {
+				const destinationPath = toLocation.pathname;
+				// Find the outlet with the longest pathname, that is part of the destination route
+				let takeSnapshot: TakeSnapshotFn | null = null;
+				let longestLength = 0;
+				for (const [pathname, snapshotFn] of registry.entries()) {
+					if (isDescendant(pathname, destinationPath) && pathname.length > longestLength) {
+						longestLength = pathname.length;
+						takeSnapshot = snapshotFn;
 					}
 				}
-			},
-		);
+				if (takeSnapshot) {
+					// Take a snapshot of the deepest outlet
+					takeSnapshot();
+				}
+			}
+		});
 		return () => unsubscribe();
-	}, [router]);
+	}, [registry, router]);
 
 	return (
-		<AnimatedOutletContext.Provider value={registry.current}>
-			{children}
-		</AnimatedOutletContext.Provider>
+		<AnimatedOutletContext.Provider value={registry}>{children}</AnimatedOutletContext.Provider>
 	);
 }
 
@@ -90,16 +75,14 @@ export function AnimatedOutlet({
 	from,
 	clone = true,
 }: AnimatedOutletProps) {
-	const [snapshots, setSnapshots] = useState<
-		{ node: HTMLElement; id: number }[]
-	>([]);
+	const [snapshots, setSnapshots] = useState<{ node: HTMLElement; id: number }[]>([]);
 	const [pathname, setPathname] = useState<string | null>(null);
+	const [enterKey, setEnterKey] = useState(0);
 	const outletRef = useRef<HTMLDivElement>(null);
 	const nextId = useRef(0);
 
 	const registry = useContext(AnimatedOutletContext);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: false positive
 	useEffect(() => {
 		if (pathname) {
 			registry.set(pathname, () => {
@@ -115,6 +98,7 @@ export function AnimatedOutlet({
 					}
 					const newSnapshot = { id: nextId.current++, node };
 					setSnapshots((prevSnapshots) => [...prevSnapshots, newSnapshot]);
+					setEnterKey((key) => key + 1);
 				}
 			});
 
@@ -122,19 +106,15 @@ export function AnimatedOutlet({
 				registry.delete(pathname);
 			};
 		}
-	}, [registry, pathname]);
+	}, [clone, registry, pathname]);
 
 	const handleAnimationComplete = (id: number) => {
-		setSnapshots((prevSnapshots) =>
-			prevSnapshots.filter((snapshot) => snapshot.id !== id),
-		);
+		setSnapshots((prevSnapshots) => prevSnapshots.filter((snapshot) => snapshot.id !== id));
 	};
 
 	return (
 		<>
-			{pathname === null && (
-				<GetPathName from={from} setPathname={setPathname} />
-			)}
+			{pathname === null && <GetPathName from={from} setPathname={setPathname} />}
 			<div className="relative flex w-full flex-1 flex-col">
 				{snapshots.map((snapshot) => (
 					<motion.div
@@ -157,7 +137,7 @@ export function AnimatedOutlet({
 					animate={enter.animate}
 					className="relative flex w-full flex-1 flex-col"
 					initial={enter.initial}
-					key={nextId.current}
+					key={enterKey}
 					ref={outletRef}
 					transition={transition}
 				>
@@ -178,9 +158,8 @@ function GetPathName({
 	setPathname: (pathname: string) => void;
 }) {
 	const match = useMatch({ from });
-	// biome-ignore lint/correctness/useExhaustiveDependencies: false positive
 	useEffect(() => {
 		setPathname(match.pathname);
-	}, [match.pathname]);
+	}, [match.pathname, setPathname]);
 	return null;
 }

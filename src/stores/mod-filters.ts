@@ -1,4 +1,5 @@
 import { create } from "zustand";
+
 import type { ModTag } from "@/hooks/useModTags";
 
 export type ModsFilters = {
@@ -12,14 +13,7 @@ export type ModsFilters = {
 	removeAllModTags: () => void;
 	searchText: string;
 	setSearchText: (text: ModsFilters["searchText"]) => void;
-	sortBy:
-		| "created"
-		| "name"
-		| "trending"
-		| "downloads"
-		| "follows"
-		| "comments"
-		| "updated";
+	sortBy: "created" | "name" | "trending" | "downloads" | "follows" | "comments" | "updated";
 	setSortBy: (key: ModsFilters["sortBy"]) => void;
 	orderDirection: "ascending" | "descending";
 	setOrderDirection: (direction: ModsFilters["orderDirection"]) => void;
@@ -47,9 +41,7 @@ export const useModsFilters = create<ModsFilters>()((set) => ({
 	removeAllModTags: () => set({ selectedModTags: [] }),
 	removeGameVersion: (version) =>
 		set((state) => ({
-			selectedGameVersions: state.selectedGameVersions.filter(
-				(v) => v !== version,
-			),
+			selectedGameVersions: state.selectedGameVersions.filter((v) => v !== version),
 		})),
 	removeModTag: (tag) =>
 		set((state) => ({

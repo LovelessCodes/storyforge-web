@@ -11,11 +11,7 @@ import {
 	Server,
 } from "lucide-react";
 
-export type GuideCategory =
-	| "getting-started"
-	| "migrating"
-	| "everyday"
-	| "advanced";
+export type GuideCategory = "getting-started" | "migrating" | "everyday" | "advanced";
 
 export interface GuideCategoryMeta {
 	id: GuideCategory;
@@ -39,8 +35,7 @@ export const guideCategories: GuideCategoryMeta[] = [
 		label: "Getting started",
 	},
 	{
-		description:
-			"Bring your mods, worlds and settings across — nothing gets left behind.",
+		description: "Bring your mods, worlds and settings across — nothing gets left behind.",
 		id: "migrating",
 		label: "Migrating to Story Forge",
 	},
@@ -150,9 +145,7 @@ export function relatedGuides(slug: string, count = 3): GuideMeta[] {
 	const current = getGuide(slug);
 	const others = guides.filter((guide) => guide.slug !== slug);
 	if (!current) return others.slice(0, count);
-	const sameCategory = others.filter(
-		(guide) => guide.category === current.category,
-	);
+	const sameCategory = others.filter((guide) => guide.category === current.category);
 	const rest = others.filter((guide) => guide.category !== current.category);
 	return [...sameCategory, ...rest].slice(0, count);
 }

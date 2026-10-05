@@ -7,11 +7,7 @@ export type MapTile = {
 	height: number;
 };
 
-export function pixelsToImageData(
-	pixels: Int32Array,
-	width: number,
-	height: number,
-): ImageData {
+export function pixelsToImageData(pixels: Int32Array, width: number, height: number): ImageData {
 	// Ensure dimensions are valid integers
 	width = Math.floor(width);
 	height = Math.floor(height);
@@ -21,9 +17,7 @@ export function pixelsToImageData(
 	}
 
 	if (pixels.length !== width * height) {
-		console.warn(
-			`Pixel count mismatch: got ${pixels.length}, expected ${width * height}`,
-		);
+		console.warn(`Pixel count mismatch: got ${pixels.length}, expected ${width * height}`);
 	}
 
 	const imageData = new ImageData(width, height);
@@ -61,12 +55,7 @@ export function imageDataToDataUrl(data: ImageData | Uint8Array): string {
 	// If it's already a Uint8Array of PNG bytes
 	if (data instanceof Uint8Array) {
 		// Check if it's PNG (magic bytes)
-		if (
-			data[0] === 0x89 &&
-			data[1] === 0x50 &&
-			data[2] === 0x4e &&
-			data[3] === 0x47
-		) {
+		if (data[0] === 0x89 && data[1] === 0x50 && data[2] === 0x4e && data[3] === 0x47) {
 			// Convert to base64
 			let binary = "";
 			for (let i = 0; i < data.length; i++) {

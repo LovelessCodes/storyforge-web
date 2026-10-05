@@ -48,10 +48,4 @@ function TooltipPopup({
 	);
 }
 
-export {
-	TooltipProvider,
-	Tooltip,
-	TooltipTrigger,
-	TooltipPopup,
-	TooltipPopup as TooltipContent,
-};
+export { TooltipProvider, Tooltip, TooltipTrigger, TooltipPopup, TooltipPopup as TooltipContent };

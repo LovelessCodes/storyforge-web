@@ -28,7 +28,7 @@ export function useCopyToClipboard(): [string | null, (value: string) => void] {
 			}
 		};
 
-		handleCopy();
+		void handleCopy();
 	}, []);
 
 	return [state, copyToClipboard];

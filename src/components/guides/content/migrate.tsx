@@ -1,15 +1,12 @@
 import { Check, Copy, Folder } from "lucide-react";
 import { useMemo } from "react";
+
 import { Callout, Code, Step } from "@/components/guides/GuideUI";
 import { AppleIcon, LinuxIcon, WindowsIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { useLatestReleaseQuery } from "@/hooks/use-latest-release";
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
-import {
-	getPlatformFromAssetUrl,
-	type PlatformKey,
-	RELEASES_URL,
-} from "@/lib/utils";
+import { getPlatformFromAssetUrl, type PlatformKey, RELEASES_URL } from "@/lib/utils";
 
 const dataPaths = {
 	linux: "~/.config/VintagestoryData",
@@ -54,16 +51,13 @@ export function MigrateGuide() {
 
 	const assets = useMemo(
 		() =>
-			release?.assets?.reduce<{ platform: PlatformKey; url: string }[]>(
-				(acc, asset) => {
-					const platform = getPlatformFromAssetUrl(asset.url);
-					if (platform) {
-						acc.push({ platform, url: asset.url });
-					}
-					return acc;
-				},
-				[],
-			) ?? [],
+			release?.assets?.reduce<{ platform: PlatformKey; url: string }[]>((acc, asset) => {
+				const platform = getPlatformFromAssetUrl(asset.url);
+				if (platform) {
+					acc.push({ platform, url: asset.url });
+				}
+				return acc;
+			}, []) ?? [],
 		[release],
 	);
 
@@ -81,15 +75,15 @@ export function MigrateGuide() {
 							.filter((entry) => entry.asset);
 						return (
 							<div
-								className="grid content-start gap-2 border border-border bg-background p-3"
+								className="border-border bg-background grid content-start gap-2 border p-3"
 								key={group.label}
 							>
-								<span className="flex items-center gap-2 text-[10px] font-medium tracking-widest text-muted-foreground uppercase">
+								<span className="text-muted-foreground flex items-center gap-2 text-[10px] font-medium tracking-widest uppercase">
 									<group.icon className="size-3.5" /> {group.label}
 								</span>
 								{groupAssets.map(({ asset, platform }) => (
 									<a
-										className="text-[11px] text-accent-primary transition-colors hover:text-accent-amber"
+										className="text-accent-primary hover:text-accent-amber text-[11px] transition-colors"
 										href={asset?.url}
 										key={platform}
 										rel="noopener noreferrer"
@@ -107,7 +101,7 @@ export function MigrateGuide() {
 								))}
 								{groupAssets.length === 0 && (
 									<a
-										className="text-[11px] text-accent-primary transition-colors hover:text-accent-amber"
+										className="text-accent-primary hover:text-accent-amber text-[11px] transition-colors"
 										href={RELEASES_URL}
 										rel="noopener noreferrer"
 										target="_blank"
@@ -121,14 +115,11 @@ export function MigrateGuide() {
 				</div>
 			</Step>
 
-			<Step
-				n={2}
-				title="Let Story Forge adopt your existing data (recommended)"
-			>
+			<Step n={2} title="Let Story Forge adopt your existing data (recommended)">
 				<p>
-					On first launch, Story Forge detects a standard Vintage Story data
-					folder and offers to adopt it as a profile — mods, worlds and settings
-					stay exactly where they are. Nothing is copied, moved or rewritten.
+					On first launch, Story Forge detects a standard Vintage Story data folder and offers to
+					adopt it as a profile — mods, worlds and settings stay exactly where they are. Nothing is
+					copied, moved or rewritten.
 				</p>
 				<p>The folder it looks for:</p>
 				<div className="grid gap-2">
@@ -158,32 +149,29 @@ export function MigrateGuide() {
 					</div>
 				</div>
 				<Callout variant="tip">
-					Adopted folders stay external: deleting the profile only unregisters
-					it. Your original data keeps working with the stock launcher.
+					Adopted folders stay external: deleting the profile only unregisters it. Your original
+					data keeps working with the stock launcher.
 				</Callout>
 			</Step>
 
 			<Step n={3} title="Or copy the data manually">
 				<p>
 					Prefer a clean slate? Create a new profile, open its folder with{" "}
-					<span className="inline-flex items-center gap-1 border border-border bg-background px-1.5 py-0.5 text-[10px] text-foreground">
+					<span className="border-border bg-background text-foreground inline-flex items-center gap-1 border px-1.5 py-0.5 text-[10px]">
 						<Folder className="size-3" /> Open folder
 					</span>
-					, then copy your Vintage Story data into it. The usual suspects are{" "}
-					<Code>Mods/</Code>, <Code>Saves/</Code>, <Code>ModConfig/</Code> and{" "}
-					<Code>clientsettings.json</Code>.
+					, then copy your Vintage Story data into it. The usual suspects are <Code>Mods/</Code>,{" "}
+					<Code>Saves/</Code>, <Code>ModConfig/</Code> and <Code>clientsettings.json</Code>.
 				</p>
 			</Step>
 
 			<Step n={4} title="Check your mods and play">
 				<p>
-					Open the Mods page to install anything missing and check for updates,
-					then press Play. Profiles are isolated, so nothing you do in Story
-					Forge touches your original install.
+					Open the Mods page to install anything missing and check for updates, then press Play.
+					Profiles are isolated, so nothing you do in Story Forge touches your original install.
 				</p>
 				<Callout variant="info">
-					Tip: pair this with{" "}
-					<strong className="text-foreground">Backups</strong> on the profile —
+					Tip: pair this with <strong className="text-foreground">Backups</strong> on the profile —
 					snapshot before big mod changes and you can always roll back.
 				</Callout>
 			</Step>

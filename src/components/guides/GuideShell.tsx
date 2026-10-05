@@ -17,15 +17,13 @@ export function GuideShell({ slug, children }: GuideShellProps) {
 	const guide = getGuide(slug);
 	useDocumentTitle(guide ? `${guide.title} — Story Forge Guides` : "Guides");
 
-	const category = guideCategories.find(
-		(entry) => entry.id === guide?.category,
-	);
+	const category = guideCategories.find((entry) => entry.id === guide?.category);
 	const related = relatedGuides(slug);
 
 	return (
 		<main className="mx-auto w-full max-w-3xl flex-1 px-4 py-10 sm:px-6">
 			<Link
-				className="inline-flex items-center gap-1.5 text-[11px] text-muted-foreground transition-colors hover:text-foreground"
+				className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 text-[11px] transition-colors"
 				to="/guide"
 			>
 				<ArrowLeft className="size-3.5" /> All guides
@@ -34,48 +32,42 @@ export function GuideShell({ slug, children }: GuideShellProps) {
 			<Reveal className="mt-6">
 				{guide ? (
 					<>
-						<div className="flex flex-wrap items-center gap-3 text-[10px] font-medium tracking-widest text-accent-amber uppercase">
+						<div className="text-accent-amber flex flex-wrap items-center gap-3 text-[10px] font-medium tracking-widest uppercase">
 							<span className="flex items-center gap-1.5">
 								<guide.icon className="size-3" />
 								{category?.label}
 							</span>
-							<span className="flex items-center gap-1.5 text-muted-foreground">
+							<span className="text-muted-foreground flex items-center gap-1.5">
 								<Clock className="size-3" /> {guide.minutes} min read
 							</span>
 						</div>
-						<h1 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">
-							{guide.title}
-						</h1>
-						<p className="mt-3 text-sm/relaxed text-muted-foreground">
-							{guide.description}
-						</p>
+						<h1 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">{guide.title}</h1>
+						<p className="text-muted-foreground mt-3 text-sm/relaxed">{guide.description}</p>
 					</>
 				) : null}
 			</Reveal>
 
-			<div className="mt-6 border border-border bg-card px-5 py-5">
-				{children}
-			</div>
+			<div className="border-border bg-card mt-6 border px-5 py-5">{children}</div>
 
 			{/* Related guides */}
 			{related.length > 0 && (
 				<Reveal className="mt-10">
-					<h2 className="text-[10px] font-medium tracking-widest text-muted-foreground uppercase">
+					<h2 className="text-muted-foreground text-[10px] font-medium tracking-widest uppercase">
 						Keep reading
 					</h2>
-					<div className="mt-3 grid gap-px border border-border bg-border sm:grid-cols-3">
+					<div className="border-border bg-border mt-3 grid gap-px border sm:grid-cols-3">
 						{related.map((entry) => (
 							<Link
-								className="group grid content-start gap-2 bg-background p-4 transition-colors hover:bg-surface-hover"
+								className="group bg-background hover:bg-surface-hover grid content-start gap-2 p-4 transition-colors"
 								key={entry.slug}
 								params={{ slug: entry.slug }}
 								to="/guide/$slug"
 							>
-								<entry.icon className="size-4 text-accent-primary transition-colors group-hover:text-accent-amber" />
-								<span className="text-xs font-medium transition-colors group-hover:text-accent-amber">
+								<entry.icon className="text-accent-primary group-hover:text-accent-amber size-4 transition-colors" />
+								<span className="group-hover:text-accent-amber text-xs font-medium transition-colors">
 									{entry.title}
 								</span>
-								<span className="line-clamp-2 text-[10px]/relaxed text-muted-foreground">
+								<span className="text-muted-foreground line-clamp-2 text-[10px]/relaxed">
 									{entry.description}
 								</span>
 							</Link>
@@ -85,10 +77,10 @@ export function GuideShell({ slug, children }: GuideShellProps) {
 			)}
 
 			{/* Help */}
-			<Reveal className="mt-8 flex flex-wrap items-center justify-between gap-4 border border-border bg-surface/50 p-5">
+			<Reveal className="border-border bg-surface/50 mt-8 flex flex-wrap items-center justify-between gap-4 border p-5">
 				<div className="flex items-center gap-3">
-					<MessageCircle className="size-4 text-accent-amber" />
-					<p className="text-xs text-muted-foreground">
+					<MessageCircle className="text-accent-amber size-4" />
+					<p className="text-muted-foreground text-xs">
 						Stuck on a step? The community is happy to help on Discord.
 					</p>
 				</div>
@@ -98,11 +90,7 @@ export function GuideShell({ slug, children }: GuideShellProps) {
 					</Button>
 					<Button
 						render={
-							<a
-								href="https://discord.gg/gByx63peUC"
-								rel="noopener noreferrer"
-								target="_blank"
-							>
+							<a href="https://discord.gg/gByx63peUC" rel="noopener noreferrer" target="_blank">
 								Ask on Discord <ArrowRight className="size-3.5" />
 							</a>
 						}

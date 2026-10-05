@@ -59,10 +59,7 @@ function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
 function CardAction({ className, ...props }: React.ComponentProps<"div">) {
 	return (
 		<div
-			className={cn(
-				"col-start-2 row-span-2 row-start-1 self-start justify-self-end",
-				className,
-			)}
+			className={cn("col-start-2 row-span-2 row-start-1 self-start justify-self-end", className)}
 			data-slot="card-action"
 			{...props}
 		/>
@@ -71,11 +68,7 @@ function CardAction({ className, ...props }: React.ComponentProps<"div">) {
 
 function CardPanel({ className, ...props }: React.ComponentProps<"div">) {
 	return (
-		<div
-			className={cn("px-(--card-spacing)", className)}
-			data-slot="card-content"
-			{...props}
-		/>
+		<div className={cn("px-(--card-spacing)", className)} data-slot="card-content" {...props} />
 	);
 }
 

@@ -28,8 +28,7 @@ const features = [
 		title: "Every game version",
 	},
 	{
-		description:
-			"Open your world saves as an interactive map and share them with your friends.",
+		description: "Open your world saves as an interactive map and share them with your friends.",
 		icon: Earth,
 		title: "World map viewer",
 	},
@@ -43,30 +42,30 @@ const features = [
 
 export function Features() {
 	return (
-		<section className="border-b border-border">
+		<section className="border-border border-b">
 			<div className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
 				<Reveal className="max-w-2xl">
-					<p className="text-[10px] font-medium tracking-widest text-accent-amber uppercase">
+					<p className="text-accent-amber text-[10px] font-medium tracking-widest uppercase">
 						Why Story Forge
 					</p>
 					<h2 className="mt-3 text-2xl font-bold tracking-tight sm:text-3xl">
 						Everything the launcher should have been
 					</h2>
-					<p className="mt-3 text-sm/relaxed text-muted-foreground">
-						Built for Vintage Story players who would rather be playing than
-						fixing their mod folder.
+					<p className="text-muted-foreground mt-3 text-sm/relaxed">
+						Built for Vintage Story players who would rather be playing than fixing their mod
+						folder.
 					</p>
 				</Reveal>
 
-				<div className="mt-10 grid gap-px border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
+				<div className="border-border bg-border mt-10 grid gap-px border sm:grid-cols-2 lg:grid-cols-3">
 					{features.map((feature, index) => (
 						<Reveal delay={Math.min(index * 0.05, 0.3)} key={feature.title}>
-							<div className="group h-full bg-background p-6 transition-colors duration-300 hover:bg-surface-hover">
-								<div className="flex size-8 items-center justify-center border border-border bg-card text-accent-primary transition-colors duration-300 group-hover:border-accent-primary/50 group-hover:text-accent-amber">
+							<div className="group bg-background hover:bg-surface-hover h-full p-6 transition-colors duration-300">
+								<div className="border-border bg-card text-accent-primary group-hover:border-accent-primary/50 group-hover:text-accent-amber flex size-8 items-center justify-center border transition-colors duration-300">
 									<feature.icon className="size-4" />
 								</div>
 								<h3 className="mt-4 text-xs font-medium">{feature.title}</h3>
-								<p className="mt-1.5 text-[11px]/relaxed text-muted-foreground">
+								<p className="text-muted-foreground mt-1.5 text-[11px]/relaxed">
 									{feature.description}
 								</p>
 							</div>

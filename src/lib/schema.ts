@@ -18,7 +18,6 @@ function _decodeMapPieceDb(bb: ByteBuffer): MapPieceDb {
 
 			// repeated int32 pixels = 1;
 			case 1: {
-				// biome-ignore lint/suspicious/noAssignInExpressions: Generated from protobuf
 				const values = message.pixels || (message.pixels = []);
 				if ((tag & 7) === 2) {
 					const outerLimit = pushTemporaryLength(bb);
