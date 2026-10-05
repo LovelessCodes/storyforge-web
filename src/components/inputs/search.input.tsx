@@ -1,11 +1,11 @@
 import type { Input as InputPrimitive } from "@base-ui-components/react/input";
-import clsx from "clsx";
+import { Search } from "lucide-react";
 import { forwardRef, useEffect, useId, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { modifierLabel } from "@/lib/utils";
 
 type SearchInputProps = {
-	className?: string | ((active: boolean) => string);
+	className?: string;
 } & Omit<InputPrimitive.Props, "className">;
 
 export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
@@ -13,8 +13,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
 		const id = useId();
 		const searchRef = useRef<HTMLInputElement>(null);
 		useEffect(() => {
-			// Add a keyboard shortcut to focus the search input
-			// This will listen for the "⌘K" key combination and focus the input
+			// ⌘K / Ctrl+K focuses search from anywhere on the page.
 			const handleKeyDown = (event: KeyboardEvent) => {
 				if ((event.metaKey || event.ctrlKey) && event.key === "k") {
 					event.preventDefault();
@@ -28,23 +27,24 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
 		}, []);
 		return (
 			<div className="relative">
+				<Search className="pointer-events-none absolute top-1/2 left-2.5 z-10 size-3.5 -translate-y-1/2 text-muted-foreground" />
 				<Input
-					className={clsx(["pe-11", className])}
+					className={`pl-8 pe-12 ${className ?? ""}`}
 					id={id}
-					placeholder="Search..."
-					ref={(el) => {
-						searchRef.current = el;
+					placeholder="Search mods…"
+					ref={(element) => {
+						searchRef.current = element;
 						if (typeof ref === "function") {
-							ref(el);
+							ref(element);
 						} else if (ref) {
-							ref.current = el;
+							ref.current = element;
 						}
 					}}
 					type="search"
 					{...rest}
 				/>
-				<div className="text-muted-foreground pointer-events-none absolute inset-y-0 end-0 flex items-center justify-center pe-2">
-					<kbd className="text-muted-foreground/70 inline-flex h-5 max-h-full items-center rounded border px-1 font-[inherit] text-[0.625rem] font-medium">
+				<div className="pointer-events-none absolute inset-y-0 end-0 flex items-center pe-2">
+					<kbd className="inline-flex h-5 items-center border border-border px-1 font-sans text-[9px] font-medium text-muted-foreground">
 						{modifierLabel}K
 					</kbd>
 				</div>

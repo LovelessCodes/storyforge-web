@@ -12,9 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ModsRouteImport } from './routes/mods'
 import { Route as MapRouteImport } from './routes/map'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ModpacksIndexRouteImport } from './routes/modpacks.index'
 import { Route as GuideIndexRouteImport } from './routes/guide/index'
-import { Route as GuideMigrateRouteImport } from './routes/guide/migrate'
+import { Route as ModpacksSlugRouteImport } from './routes/modpacks.$slug'
+import { Route as GuideSlugRouteImport } from './routes/guide/$slug'
 
 const ModsRoute = ModsRouteImport.update({
   id: '/mods',
@@ -31,9 +34,19 @@ const FaqRoute = FaqRouteImport.update({
   path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ModpacksIndexRoute = ModpacksIndexRouteImport.update({
+  id: '/modpacks/',
+  path: '/modpacks/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GuideIndexRoute = GuideIndexRouteImport.update({
@@ -41,59 +54,97 @@ const GuideIndexRoute = GuideIndexRouteImport.update({
   path: '/guide/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GuideMigrateRoute = GuideMigrateRouteImport.update({
-  id: '/guide/migrate',
-  path: '/guide/migrate',
+const ModpacksSlugRoute = ModpacksSlugRouteImport.update({
+  id: '/modpacks/$slug',
+  path: '/modpacks/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuideSlugRoute = GuideSlugRouteImport.update({
+  id: '/guide/$slug',
+  path: '/guide/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/faq': typeof FaqRoute
   '/map': typeof MapRoute
   '/mods': typeof ModsRoute
-  '/guide/migrate': typeof GuideMigrateRoute
+  '/guide/$slug': typeof GuideSlugRoute
+  '/modpacks/$slug': typeof ModpacksSlugRoute
   '/guide': typeof GuideIndexRoute
+  '/modpacks': typeof ModpacksIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/faq': typeof FaqRoute
   '/map': typeof MapRoute
   '/mods': typeof ModsRoute
-  '/guide/migrate': typeof GuideMigrateRoute
+  '/guide/$slug': typeof GuideSlugRoute
+  '/modpacks/$slug': typeof ModpacksSlugRoute
   '/guide': typeof GuideIndexRoute
+  '/modpacks': typeof ModpacksIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/faq': typeof FaqRoute
   '/map': typeof MapRoute
   '/mods': typeof ModsRoute
-  '/guide/migrate': typeof GuideMigrateRoute
+  '/guide/$slug': typeof GuideSlugRoute
+  '/modpacks/$slug': typeof ModpacksSlugRoute
   '/guide/': typeof GuideIndexRoute
+  '/modpacks/': typeof ModpacksIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/faq' | '/map' | '/mods' | '/guide/migrate' | '/guide'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/faq' | '/map' | '/mods' | '/guide/migrate' | '/guide'
-  id:
-    | '__root__'
+  fullPaths:
     | '/'
+    | '/auth'
     | '/faq'
     | '/map'
     | '/mods'
-    | '/guide/migrate'
+    | '/guide/$slug'
+    | '/modpacks/$slug'
+    | '/guide'
+    | '/modpacks'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/auth'
+    | '/faq'
+    | '/map'
+    | '/mods'
+    | '/guide/$slug'
+    | '/modpacks/$slug'
+    | '/guide'
+    | '/modpacks'
+  id:
+    | '__root__'
+    | '/'
+    | '/auth'
+    | '/faq'
+    | '/map'
+    | '/mods'
+    | '/guide/$slug'
+    | '/modpacks/$slug'
     | '/guide/'
+    | '/modpacks/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
   FaqRoute: typeof FaqRoute
   MapRoute: typeof MapRoute
   ModsRoute: typeof ModsRoute
-  GuideMigrateRoute: typeof GuideMigrateRoute
+  GuideSlugRoute: typeof GuideSlugRoute
+  ModpacksSlugRoute: typeof ModpacksSlugRoute
   GuideIndexRoute: typeof GuideIndexRoute
+  ModpacksIndexRoute: typeof ModpacksIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -119,11 +170,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/modpacks/': {
+      id: '/modpacks/'
+      path: '/modpacks'
+      fullPath: '/modpacks'
+      preLoaderRoute: typeof ModpacksIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/guide/': {
@@ -133,11 +198,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuideIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/guide/migrate': {
-      id: '/guide/migrate'
-      path: '/guide/migrate'
-      fullPath: '/guide/migrate'
-      preLoaderRoute: typeof GuideMigrateRouteImport
+    '/modpacks/$slug': {
+      id: '/modpacks/$slug'
+      path: '/modpacks/$slug'
+      fullPath: '/modpacks/$slug'
+      preLoaderRoute: typeof ModpacksSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guide/$slug': {
+      id: '/guide/$slug'
+      path: '/guide/$slug'
+      fullPath: '/guide/$slug'
+      preLoaderRoute: typeof GuideSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -145,11 +217,14 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
   FaqRoute: FaqRoute,
   MapRoute: MapRoute,
   ModsRoute: ModsRoute,
-  GuideMigrateRoute: GuideMigrateRoute,
+  GuideSlugRoute: GuideSlugRoute,
+  ModpacksSlugRoute: ModpacksSlugRoute,
   GuideIndexRoute: GuideIndexRoute,
+  ModpacksIndexRoute: ModpacksIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

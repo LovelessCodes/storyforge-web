@@ -19,7 +19,7 @@ export const AuthorAutocomplete = (
 	});
 	const [internalValue, setInternalValue] = useState("");
 	const actualValue = props.value || internalValue;
-	const scrollElementRef = useRef<HTMLDivElement>(null);
+	const viewportRef = useRef<HTMLDivElement>(null);
 
 	const handleValueChange = (value: string) => {
 		setInternalValue(value);
@@ -60,13 +60,13 @@ export const AuthorAutocomplete = (
 		count: filteredItems.length,
 		enabled: shouldRenderPopup,
 		estimateSize: () => 40,
-		getScrollElement: () => scrollElementRef.current,
+		getScrollElement: () => viewportRef.current,
 		overscan: 20,
 	});
 
-	const handleScrollElementRef = useCallback(
-		(element: HTMLDivElement) => {
-			scrollElementRef.current = element;
+	const handleViewportRef = useCallback(
+		(element: HTMLDivElement | null) => {
+			viewportRef.current = element;
 			if (element) {
 				virtualizer.measure();
 			}
@@ -89,58 +89,51 @@ export const AuthorAutocomplete = (
 			>
 				<AutocompleteInput
 					aria-label="Select author"
-					className="h-9"
-					placeholder="Select author..."
+					className="h-8"
+					placeholder="Select author…"
 					showClear
 					showTrigger
 				/>
 				{shouldRenderPopup && (
 					<AutocompletePopup>
-						<AutocompleteList>
+						<AutocompleteList scrollFade viewportRef={handleViewportRef}>
 							{filteredItems.length > 0 && (
 								<div
-									className="h-[min(22rem,var(--total-size))] max-h-[var(--available-height)] overflow-auto overscroll-contain scroll-pt-2"
-									ref={handleScrollElementRef}
+									className="relative w-full"
 									role="presentation"
-									style={{ "--total-size": totalSizePx } as React.CSSProperties}
+									style={{ height: totalSizePx }}
 								>
-									<div
-										className="relative w-full"
-										role="presentation"
-										style={{ height: totalSizePx }}
-									>
-										{virtualizer.getVirtualItems().map((virtualItem) => {
-											const author = filteredItems[virtualItem.index];
-											if (!author) return null;
-											if (!modAuthors) return null;
-											const modCount = modAuthors[author];
-											return (
-												<AutocompleteItem
-													aria-posinset={virtualItem.index + 1}
-													aria-setsize={filteredItems.length}
-													className="flex cursor-default py-2 pr-8 pl-4 text-base leading-4 outline-none"
-													index={virtualItem.index}
-													key={virtualItem.key}
-													style={{
-														height: `${virtualItem.size}px`,
-														left: 0,
-														position: "absolute",
-														top: 0,
-														transform: `translateY(${virtualItem.start}px)`,
-														width: "100%",
-													}}
-													value={author}
-												>
-													<div className="flex w-full flex-col">
-														<div className="font-medium">{author}</div>
-														<div className="text-xs text-muted-foreground">
-															{modCount} mod{modCount > 1 ? "s" : ""}
-														</div>
+									{virtualizer.getVirtualItems().map((virtualItem) => {
+										const author = filteredItems[virtualItem.index];
+										if (!author) return null;
+										if (!modAuthors) return null;
+										const modCount = modAuthors[author];
+										return (
+											<AutocompleteItem
+												aria-posinset={virtualItem.index + 1}
+												aria-setsize={filteredItems.length}
+												className="flex cursor-default py-1.5 pr-8 pl-3 text-xs outline-none"
+												index={virtualItem.index}
+												key={virtualItem.key}
+												style={{
+													height: `${virtualItem.size}px`,
+													left: 0,
+													position: "absolute",
+													top: 0,
+													transform: `translateY(${virtualItem.start}px)`,
+													width: "100%",
+												}}
+												value={author}
+											>
+												<div className="flex w-full flex-col">
+													<div className="text-xs font-medium">{author}</div>
+													<div className="text-[10px] text-muted-foreground">
+														{modCount} mod{modCount > 1 ? "s" : ""}
 													</div>
-												</AutocompleteItem>
-											);
-										})}
-									</div>
+												</div>
+											</AutocompleteItem>
+										);
+									})}
 								</div>
 							)}
 						</AutocompleteList>

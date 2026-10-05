@@ -1,5 +1,6 @@
 import { measureElement, useVirtualizer } from "@tanstack/react-virtual";
 import { useCallback, useRef } from "react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { useMods } from "@/hooks/useMods";
 import { useModsFilters } from "@/stores/mod-filters";
 import { ModItem } from "../items/mod.item";
@@ -16,8 +17,8 @@ export const ModList = () => {
 		searchText,
 	} = useModsFilters();
 
-	const parentRef = useRef<HTMLDivElement>(null);
-	// If sortOrder is descending, reverse the modsList
+	const viewportRef = useRef<HTMLDivElement>(null);
+
 	const modsList = mods
 		?.filter((mod) => {
 			if (selectedModTags.length > 0) {
@@ -44,78 +45,73 @@ export const ModList = () => {
 		})
 		.sort((a, b) => {
 			if (sortBy === "name") {
-				if (orderDirection === "descending") {
-					return b.name.localeCompare(a.name);
-				}
-				return a.name.localeCompare(b.name);
+				return orderDirection === "descending"
+					? b.name.localeCompare(a.name)
+					: a.name.localeCompare(b.name);
 			}
 			if (sortBy === "updated") {
-				if (orderDirection === "descending") {
-					return (
-						new Date(b.lastreleased).getTime() -
-						new Date(a.lastreleased).getTime()
-					);
-				}
-				return (
-					new Date(a.lastreleased).getTime() -
-					new Date(b.lastreleased).getTime()
-				);
+				return orderDirection === "descending"
+					? new Date(b.lastreleased).getTime() -
+							new Date(a.lastreleased).getTime()
+					: new Date(a.lastreleased).getTime() -
+							new Date(b.lastreleased).getTime();
 			}
 			if (sortBy === "downloads") {
-				if (orderDirection === "descending") {
-					return a.downloads - b.downloads;
-				}
-				return b.downloads - a.downloads;
+				return orderDirection === "descending"
+					? a.downloads - b.downloads
+					: b.downloads - a.downloads;
 			}
 			if (sortBy === "follows") {
-				if (orderDirection === "descending") {
-					return a.follows - b.follows;
-				}
-				return b.follows - a.follows;
+				return orderDirection === "descending"
+					? a.follows - b.follows
+					: b.follows - a.follows;
 			}
 			if (sortBy === "trending") {
-				if (orderDirection === "descending") {
-					return a.trendingpoints - b.trendingpoints;
-				}
-				return b.trendingpoints - a.trendingpoints;
+				return orderDirection === "descending"
+					? a.trendingpoints - b.trendingpoints
+					: b.trendingpoints - a.trendingpoints;
 			}
 			if (sortBy === "comments") {
-				if (orderDirection === "descending") {
-					return a.comments - b.comments;
-				}
-				return b.comments - a.comments;
+				return orderDirection === "descending"
+					? a.comments - b.comments
+					: b.comments - a.comments;
 			}
-			if (orderDirection === "descending") {
-				return 0;
-			}
-			return -1;
+			return orderDirection === "descending" ? 0 : -1;
 		});
 
-	const estimateSize = useCallback(() => 81, []);
+	const estimateSize = useCallback(() => 72, []);
 
 	const rowVirtualizer = useVirtualizer({
 		count: modsList?.length || 0,
 		estimateSize,
-		getScrollElement: () => parentRef.current,
+		getScrollElement: () => viewportRef.current,
 		measureElement,
 		overscan: 20,
 	});
 
 	const items = rowVirtualizer.getVirtualItems();
 	const totalSize = rowVirtualizer.getTotalSize();
+
 	return (
-		<div className="h-full px-4 w-full overflow-hidden">
-			<div
-				className="w-full bg-card p-2 rounded shadow border relative h-full overflow-auto"
-				ref={parentRef}
-			>
+		<ScrollArea
+			className="h-full w-full border border-border bg-card"
+			scrollFade
+			viewportRef={viewportRef}
+		>
+			{modsList && modsList.length === 0 ? (
+				<div className="grid h-full place-items-center p-10 text-center">
+					<p className="text-xs text-muted-foreground">
+						No mods match your filters.
+					</p>
+				</div>
+			) : (
 				<div className="relative" style={{ height: totalSize }}>
 					{modsList &&
 						items.map((item) => {
 							const mod = modsList[item.index];
 							return (
 								<div
-									className="not-last:border-b flex gap-2 absolute top-0 left-0 w-full"
+									className="absolute top-0 left-0 flex w-full border-b border-border/60"
 									data-index={item.index}
 									key={mod.modid}
 									ref={rowVirtualizer.measureElement}
@@ -129,7 +125,7 @@ export const ModList = () => {
 							);
 						})}
 				</div>
-			</div>
-		</div>
+			)}
+		</ScrollArea>
 	);
 };

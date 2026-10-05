@@ -13,7 +13,7 @@ function PopoverPopup({
 	className,
 	side = "bottom",
 	align = "center",
-	sideOffset = 4,
+	sideOffset = 8,
 	...props
 }: PopoverPrimitive.Popup.Props & {
 	side?: PopoverPrimitive.Positioner.Props["side"];
@@ -29,31 +29,29 @@ function PopoverPopup({
 				side={side}
 				sideOffset={sideOffset}
 			>
-				<span className="relative flex origin-(--transform-origin) rounded-lg border bg-popover bg-clip-padding shadow-lg transition-[scale,opacity] before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] has-data-starting-style:scale-98 has-data-starting-style:opacity-0 dark:bg-clip-border dark:before:shadow-[0_-1px_--theme(--color-white/8%)]">
-					<PopoverPrimitive.Popup
-						className={cn(
-							"max-h-(--available-height) min-w-80 overflow-y-auto p-4",
-							className,
-						)}
-						data-slot="popover-content"
-						{...props}
-					>
-						{children}
-					</PopoverPrimitive.Popup>
-				</span>
+				<PopoverPrimitive.Popup
+					className={cn(
+						"relative max-h-(--available-height) min-w-80 origin-(--transform-origin) overflow-y-auto rounded-none bg-popover p-3 text-popover-foreground shadow-md ring-1 ring-foreground/10 transition-[scale,opacity] data-ending-style:scale-98 data-ending-style:opacity-0 data-starting-style:scale-98 data-starting-style:opacity-0",
+						className,
+					)}
+					data-slot="popover-content"
+					{...props}
+				>
+					{children}
+				</PopoverPrimitive.Popup>
 			</PopoverPrimitive.Positioner>
 		</PopoverPrimitive.Portal>
 	);
 }
 
-function PopoverClose({ ...props }: PopoverPrimitive.Close.Props) {
+function PopoverClose(props: PopoverPrimitive.Close.Props) {
 	return <PopoverPrimitive.Close data-slot="popover-close" {...props} />;
 }
 
 function PopoverTitle({ className, ...props }: PopoverPrimitive.Title.Props) {
 	return (
 		<PopoverPrimitive.Title
-			className={cn("text-lg leading-none font-semibold", className)}
+			className={cn("text-sm leading-none font-semibold", className)}
 			data-slot="popover-title"
 			{...props}
 		/>
@@ -66,7 +64,7 @@ function PopoverDescription({
 }: PopoverPrimitive.Description.Props) {
 	return (
 		<PopoverPrimitive.Description
-			className={cn("text-sm text-muted-foreground", className)}
+			className={cn("text-xs text-muted-foreground", className)}
 			data-slot="popover-description"
 			{...props}
 		/>

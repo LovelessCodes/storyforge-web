@@ -6,7 +6,7 @@ import type * as React from "react";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-	"relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg border bg-clip-padding text-sm font-medium whitespace-nowrap transition-shadow outline-none before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-64 pointer-coarse:after:absolute pointer-coarse:after:size-full pointer-coarse:after:min-h-11 pointer-coarse:after:min-w-11 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+	"group/button relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-none border border-transparent bg-clip-padding text-xs font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-1 aria-invalid:ring-destructive/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
 	{
 		defaultVariants: {
 			size: "default",
@@ -14,29 +14,41 @@ const buttonVariants = cva(
 		},
 		variants: {
 			size: {
-				default:
-					"min-h-8 px-[calc(--spacing(3)-1px)] py-[calc(--spacing(1.5)-1px)]",
+				default: "h-8 px-2.5",
 				icon: "size-8",
 				"icon-lg": "size-9",
 				"icon-sm": "size-7",
-				lg: "min-h-9 px-[calc(--spacing(3.5)-1px)] py-[calc(--spacing(2)-1px)]",
-				sm: "min-h-7 gap-1.5 px-[calc(--spacing(2.5)-1px)] py-[calc(--spacing(1)-1px)]",
-				xl: "min-h-10 px-[calc(--spacing(4)-1px)] py-[calc(--spacing(2)-1px)] text-base [&_svg:not([class*='size-'])]:size-4.5",
-				xs: "min-h-6 gap-1 rounded-md px-[calc(--spacing(2)-1px)] py-[calc(--spacing(1)-1px)] text-xs before:rounded-[calc(var(--radius-md)-1px)] [&_svg:not([class*='size-'])]:size-3",
+				"icon-xs": "size-6 [&_svg:not([class*='size-'])]:size-3",
+				lg: "h-9 gap-1.5 px-2.5",
+				sm: "h-7 gap-1.5 px-2.5 [&_svg:not([class*='size-'])]:size-3.5",
+				xl: "h-10 gap-2 px-4 text-sm [&_svg:not([class*='size-'])]:size-4.5",
+				xs: "h-6 gap-1 px-2 text-[11px] [&_svg:not([class*='size-'])]:size-3",
 			},
 			variant: {
-				default:
-					"border-primary bg-primary text-primary-foreground shadow-xs shadow-primary/24 not-disabled:inset-shadow-[0_1px_--theme(--color-white/16%)] hover:bg-primary/90 [&:is(:active,[data-pressed])]:inset-shadow-[0_1px_--theme(--color-black/8%)] [&:is(:disabled,:active,[data-pressed])]:shadow-none",
+				accent:
+					"bg-accent-primary text-white hover:bg-accent-primary-hover focus-visible:border-accent-primary/40 focus-visible:ring-accent-primary/30",
+				amber:
+					"bg-accent-amber text-[#0f1117] hover:bg-accent-amber-hover focus-visible:border-accent-amber/40 focus-visible:ring-accent-amber/30",
+				default: "bg-primary text-primary-foreground hover:bg-primary/80",
 				destructive:
-					"border-destructive bg-destructive text-white shadow-xs shadow-destructive/24 not-disabled:inset-shadow-[0_1px_--theme(--color-white/16%)] hover:bg-destructive/90 [&:is(:active,[data-pressed])]:inset-shadow-[0_1px_--theme(--color-black/8%)] [&:is(:disabled,:active,[data-pressed])]:shadow-none",
-				"destructive-outline":
-					"border-border bg-transparent text-destructive-foreground shadow-xs not-disabled:not-active:not-data-pressed:before:shadow-[0_1px_--theme(--color-black/4%)] dark:bg-input/32 dark:not-in-data-[slot=group]:bg-clip-border dark:not-disabled:before:shadow-[0_-1px_--theme(--color-white/4%)] dark:not-disabled:not-active:not-data-pressed:before:shadow-[0_-1px_--theme(--color-white/8%)] [&:is(:disabled,:active,[data-pressed])]:shadow-none [&:is(:hover,[data-pressed])]:border-destructive/32 [&:is(:hover,[data-pressed])]:bg-destructive/4",
-				ghost: "border-transparent hover:bg-accent data-pressed:bg-accent",
-				link: "border-transparent underline-offset-4 hover:underline",
+					"bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20",
+				ghost:
+					"hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground",
+				info: "bg-info text-[#0f1117] hover:bg-info/80",
+				link: "text-primary underline-offset-4 hover:underline",
 				outline:
-					"border-border bg-background shadow-xs not-disabled:not-active:not-data-pressed:before:shadow-[0_1px_--theme(--color-black/4%)] dark:bg-input/32 dark:not-in-data-[slot=group]:bg-clip-border dark:not-disabled:not-data-pressed:before:shadow-[0_-1px_--theme(--color-white/4%)] dark:not-disabled:not-active:not-data-pressed:before:shadow-[0_-1px_--theme(--color-white/8%)] [&:is(:disabled,:active,[data-pressed])]:shadow-none [&:is(:hover,[data-pressed])]:bg-accent/50 dark:[&:is(:hover,[data-pressed])]:bg-input/64",
+					"border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground",
+				"outline-accent":
+					"border-accent-primary/40 bg-transparent text-accent-primary hover:bg-accent-primary/10 hover:text-accent-primary",
+				"outline-amber":
+					"border-accent-amber/40 bg-transparent text-accent-amber hover:bg-accent-amber/10 hover:text-accent-amber",
+				"outline-success":
+					"border-success/40 bg-transparent text-success hover:bg-success/10 hover:text-success",
 				secondary:
-					"border-secondary bg-secondary text-secondary-foreground hover:bg-secondary/90 data-pressed:bg-secondary/90",
+					"bg-secondary text-secondary-foreground hover:bg-secondary/80 aria-expanded:bg-secondary",
+				success:
+					"bg-success text-white hover:bg-success/80 focus-visible:border-success/40 focus-visible:ring-success/30",
+				warning: "bg-warning text-[#0f1117] hover:bg-warning/80",
 			},
 		},
 	},

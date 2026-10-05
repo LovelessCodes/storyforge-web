@@ -20,7 +20,7 @@
 
     <!-- Mobile/Basic -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#0f172a" />
+    <meta name="theme-color" content="#0f1117" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -67,8 +67,24 @@
       "keywords": "Vintage Story launcher, mod manager, game launcher, Story Forge"
     }
     </script>
+    <script>
+      // Apply the stored theme before first paint (mirrors next-themes).
+      (function () {
+        var light = false;
+        try {
+          light = localStorage.getItem("theme") === "light";
+        } catch (error) {
+          light = false;
+        }
+        if (!light) {
+          document.documentElement.classList.add("dark");
+        }
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute("content", light ? "#ffffff" : "#0f1117");
+      })();
+    </script>
   </head>
-  <body class="dark">
+  <body>
     <div id="app"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

@@ -135,12 +135,12 @@ export function AnimatedOutlet({
 			{pathname === null && (
 				<GetPathName from={from} setPathname={setPathname} />
 			)}
-			<div className="relative w-full h-full">
+			<div className="relative flex w-full flex-1 flex-col">
 				{snapshots.map((snapshot) => (
 					<motion.div
 						animate={exit.animate}
 						aria-hidden="true"
-						className="absolute inset-0 pointer-events-none w-full h-full"
+						className="pointer-events-none absolute inset-0 h-full w-full"
 						initial={exit.initial}
 						key={snapshot.id}
 						onAnimationComplete={() => handleAnimationComplete(snapshot.id)}
@@ -155,13 +155,13 @@ export function AnimatedOutlet({
 
 				<motion.div
 					animate={enter.animate}
-					className="relative w-full h-full"
+					className="relative flex w-full flex-1 flex-col"
 					initial={enter.initial}
 					key={nextId.current}
 					ref={outletRef}
 					transition={transition}
 				>
-					<div className="w-full h-full">
+					<div className="flex w-full flex-1 flex-col">
 						<Outlet />
 					</div>
 				</motion.div>

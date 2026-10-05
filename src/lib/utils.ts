@@ -26,14 +26,10 @@ export const getPlatformFromAssetUrl = (url: string): PlatformKey | null => {
 	return null;
 };
 
-export type DownloadInfo = {
-	html_url: string;
-	assets: {
-		browser_download_url: string;
-	}[];
-};
-
 export const isMac = /nix|mac os x/i.test(navigator.userAgent);
+
+export const RELEASES_URL =
+	"https://github.com/lovelesscodes/storyforge/releases";
 
 export const modifierLabel = isMac ? "⌘" : "Ctrl+";
 

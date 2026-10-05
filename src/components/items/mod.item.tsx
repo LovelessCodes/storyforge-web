@@ -1,4 +1,7 @@
+import { Download, MessageSquare, Star } from "lucide-react";
+
 import type { Mod } from "@/hooks/useMods";
+import { formatCount } from "@/lib/modpacks";
 import { useModsFilters } from "@/stores/mod-filters";
 import {
 	Tooltip,
@@ -9,67 +12,70 @@ import {
 
 export const ModItem = ({ mod }: { mod: Mod }) => {
 	const { setAuthor } = useModsFilters();
+	const url = `https://mods.vintagestory.at/${
+		mod.urlalias ?? `show/mod/${mod.assetid}`
+	}`;
+
 	return (
-		<div className="flex flex-row p-2 justify-between w-full items-center">
-			<div className="flex flex-row gap-2">
-				<a
-					href={`https://mods.vintagestory.at/${mod.urlalias ?? `show/mod/${mod.assetid}`}`}
-					rel="noreferrer"
-					target="_blank"
-				>
+		<div className="flex w-full flex-row items-center justify-between gap-4 px-3 py-2.5 transition-colors hover:bg-surface-hover">
+			<div className="flex min-w-0 flex-row items-center gap-3">
+				<a href={url} rel="noreferrer" target="_blank">
 					<img
 						alt={mod.name}
-						className="w-12 h-12 rounded hover:scale-105 transition-transform"
+						className="size-10 shrink-0 border border-border object-cover transition-transform duration-200 hover:scale-105"
 						loading="lazy"
 						src={
 							mod.logo ?? "https://mods.vintagestory.at/web/img/mod-default.png"
 						}
 					/>
 				</a>
-				<div className="flex flex-col">
-					<div className="flex gap-1 items-center">
+				<div className="flex min-w-0 flex-col gap-0.5">
+					<div className="flex items-center gap-1.5">
 						<a
-							className="hover:underline font-semibold"
-							href={`https://mods.vintagestory.at/${mod.urlalias ?? `show/mod/${mod.assetid}`}`}
+							className="truncate text-xs font-medium transition-colors hover:text-accent-amber"
+							href={url}
 							rel="noreferrer"
 							target="_blank"
 						>
-							<h3 className="font-semibold">{mod.name}</h3>
+							{mod.name}
 						</a>
-						<p className="text-xs opacity-50">by</p>
+						<span className="text-[10px] text-muted-foreground">by</span>
 						<TooltipProvider>
 							<Tooltip>
 								<TooltipTrigger
 									render={
-										// biome-ignore lint/a11y/noStaticElementInteractions: Not really relevant
-										<span
-											className="text-xs opacity-50 text-orange-200 cursor-pointer"
+										<button
+											className="text-[10px] text-accent-amber/80 transition-colors hover:text-accent-amber"
 											onClick={() => setAuthor(mod.author)}
-											onKeyUp={(e) => {
-												if (e.key === "Enter") {
-													setAuthor(mod.author);
-												}
-											}}
+											type="button"
 										/>
 									}
 								>
 									{mod.author}
 								</TooltipTrigger>
-								<TooltipContent>
-									Click to filter by author {mod.author}
-								</TooltipContent>
+								<TooltipContent>Filter by author {mod.author}</TooltipContent>
 							</Tooltip>
 						</TooltipProvider>
 					</div>
-					<p className="text-sm text-muted-foreground line-clamp-1">
+					<p className="line-clamp-1 text-[11px] text-muted-foreground">
 						{mod.summary}
 					</p>
-					<div className="flex gap-2 text-xs text-muted-foreground mt-1">
-						<span>{mod.downloads} downloads</span>
-						<span>{mod.follows} follows</span>
-						<span>{mod.comments} comments</span>
-					</div>
 				</div>
+			</div>
+
+			<div className="hidden shrink-0 items-center gap-3 text-[10px] text-muted-foreground tabular-nums sm:flex">
+				<span className="flex items-center gap-1">
+					<Download className="size-3" />
+					{formatCount(mod.downloads)}
+				</span>
+				<span className="flex items-center gap-1">
+					<Star className="size-3" />
+					{formatCount(mod.follows)}
+				</span>
+				<span className="flex items-center gap-1">
+					<MessageSquare className="size-3" />
+					{formatCount(mod.comments)}
+				</span>
 			</div>
 		</div>
 	);

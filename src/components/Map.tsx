@@ -589,10 +589,10 @@ export function WorldMapViewer() {
 				<div className="flex flex-col items-center gap-4 p-8">
 					<MapIcon className="h-12 w-12 text-muted-foreground" />
 					<div className="flex flex-col items-center gap-2">
-						<h3 className="font-semibold mb-2">Upload Map Database</h3>
+						<h3 className="text-sm font-medium mb-2">Upload Map Database</h3>
 						<input
 							accept=".db"
-							className="border rounded px-3 py-2"
+							className="border border-border bg-background px-3 py-2 text-xs file:mr-2 file:border-0 file:bg-transparent file:text-xs file:font-medium"
 							disabled={isLoading}
 							onChange={handleFileUpload}
 							type="file"
@@ -693,7 +693,7 @@ export function WorldMapViewer() {
 				/>
 				{cursorCoords && overlayCanvasRef.current && (
 					<div
-						className="absolute pointer-events-none bg-background/95 backdrop-blur-sm border rounded px-2 py-1 text-xs font-mono shadow-lg"
+						className="absolute pointer-events-none bg-background/95 backdrop-blur-sm border px-2 py-1 font-mono text-[10px] shadow-lg"
 						style={{
 							left: (() => {
 								const canvasRect =
@@ -729,7 +729,7 @@ export function WorldMapViewer() {
 			>
 				Upload Another Map
 			</Button>
-			<div className="absolute pointer-events-none bottom-1 right-1 bg-background/90 backdrop-blur-sm border rounded-md px-3 py-2 text-xs text-muted-foreground">
+			<div className="absolute pointer-events-none bottom-1 right-1 bg-background/90 backdrop-blur-sm border px-3 py-2 text-[10px] text-muted-foreground">
 				<p>🖱️ Drag to pan • 🔍 Scroll to zoom</p>
 			</div>
 		</Card>

@@ -1,31 +1,37 @@
 import { createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { MotionConfig } from "motion/react";
 import {
 	AnimatedOutlet,
 	AnimatedOutletWrapper,
 } from "@/components/AnimatedOutlet";
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
+import { Footer } from "@/components/layout/Footer";
+import { Header } from "@/components/layout/Header";
+import { PageScroll } from "@/components/layout/PageScroll";
 
 const RootLayout = () => (
-	<AnimatedOutletWrapper>
-		<div className="min-h-screen bg-background dark">
-			<Header />
-			<AnimatedOutlet
-				enter={{
-					animate: { opacity: 1, x: 0 },
-					initial: { opacity: 0, x: 20 },
-				}}
-				exit={{
-					animate: { opacity: 0, x: -20 },
-					initial: { opacity: 1, x: 0 },
-				}}
-				transition={{ duration: 0.3 }}
-			/>
-			<Footer />
-		</div>
-		<TanStackRouterDevtools />
-	</AnimatedOutletWrapper>
+	<MotionConfig reducedMotion="user">
+		<AnimatedOutletWrapper>
+			<div className="flex h-svh flex-col overflow-hidden bg-background text-foreground">
+				<Header />
+				<PageScroll>
+					<AnimatedOutlet
+						enter={{
+							animate: { opacity: 1, y: 0 },
+							initial: { opacity: 0, y: 10 },
+						}}
+						exit={{
+							animate: { opacity: 0, y: -10 },
+							initial: { opacity: 1, y: 0 },
+						}}
+						transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+					/>
+					<Footer />
+				</PageScroll>
+			</div>
+			<TanStackRouterDevtools />
+		</AnimatedOutletWrapper>
+	</MotionConfig>
 );
 
 export const Route = createRootRoute({ component: RootLayout });

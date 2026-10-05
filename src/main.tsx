@@ -6,6 +6,7 @@ import {
 	createRouter,
 	RouterProvider,
 } from "@tanstack/react-router";
+import { ThemeProvider } from "next-themes";
 import { routeTree } from "./routeTree.gen";
 
 const queryClient = new QueryClient();
@@ -31,7 +32,6 @@ const router = createRouter({
 	},
 	history: createHashHistory(),
 	routeTree,
-	scrollRestoration: true,
 });
 
 // Register the router instance for type safety
@@ -45,7 +45,14 @@ declare module "@tanstack/react-router" {
 const rootElement = document.getElementById("app");
 if (!rootElement) throw new Error("No root element found");
 ReactDOM.createRoot(rootElement).render(
-	<QueryClientProvider client={queryClient}>
-		<RouterProvider router={router} />
-	</QueryClientProvider>,
+	<ThemeProvider
+		attribute="class"
+		defaultTheme="dark"
+		disableTransitionOnChange
+		enableSystem={false}
+	>
+		<QueryClientProvider client={queryClient}>
+			<RouterProvider router={router} />
+		</QueryClientProvider>
+	</ThemeProvider>,
 );
