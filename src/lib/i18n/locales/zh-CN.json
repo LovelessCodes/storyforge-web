@@ -1,0 +1,177 @@
+{
+	"common": {
+		"tagline": "Vintage Story 启动器",
+		"language": "语言",
+		"backToTop": "回到顶部",
+		"github": "GitHub 仓库",
+		"discord": "加入我们的 Discord",
+		"switchToLight": "切换到浅色主题",
+		"switchToDark": "切换到深色主题"
+	},
+	"nav": {
+		"home": "首页",
+		"modpacks": "整合包",
+		"mods": "模组",
+		"map": "世界地图",
+		"guides": "指南",
+		"faq": "常见问题"
+	},
+	"account": {
+		"menu": "账户菜单",
+		"browse": "浏览整合包",
+		"account": "账户",
+		"settings": "账户设置",
+		"signIn": "登录",
+		"signOut": "退出登录",
+		"signedInAs": "已登录为",
+		"toggleMenu": "打开菜单"
+	},
+	"footer": {
+		"blurb": "为 Vintage Story 打造的开源启动器与模组管理器，由社区为社区而建。",
+		"product": "产品",
+		"resources": "资源",
+		"latestRelease": "最新版本",
+		"fetchingRelease": "正在获取版本…",
+		"releaseNotes": "更新日志",
+		"allReleases": "所有版本",
+		"download": "下载",
+		"modBrowser": "模组浏览器",
+		"mapViewer": "世界地图",
+		"guides": "指南",
+		"faq": "常见问题",
+		"contributing": "参与贡献",
+		"reportIssue": "报告问题",
+		"reddit": "在 r/VintageStory 查看我们的介绍",
+		"copyright": "© {{year}} Story Forge · 基于 GPLv3 许可证开源",
+		"disclaimer": "与 <anego>Anego Studios</anego> 或 <vintage>Vintage Story</vintage> 无关联，也未获其认可。"
+	},
+	"home": {
+		"hero": {
+			"badge": "开源 · GPLv3 · {{version}}",
+			"title": "铸造你的下一段 <gradient>Vintage Story</gradient> 冒险。",
+			"description": "Story Forge 是一款快速、开源的 Vintage Story 启动器与模组管理器 —— 档案、模组、整合包、世界地图和服务器托管，一应俱全。",
+			"downloadFor": "下载 {{platform}} 版",
+			"browse": "浏览整合包",
+			"stars": "GitHub 星标",
+			"downloads": "次下载",
+			"modpacks": "个整合包",
+			"chipMods": "一键更新模组",
+			"chipHosting": "内置服务器托管",
+			"screenshotAlt": "Story Forge 档案界面"
+		},
+		"features": {
+			"eyebrow": "为什么选择 Story Forge",
+			"title": "启动器本该有的样子",
+			"description": "为那些宁愿玩游戏、也不想整理模组文件夹的 Vintage Story 玩家而打造。",
+			"profiles": {
+				"title": "井井有条的档案",
+				"description": "为每个服务器或存档保留独立的模组与世界。克隆、重命名、导出和导入只需几秒。"
+			},
+			"mods": {
+				"title": "告别模组混乱",
+				"description": "浏览完整的 Vintage Story ModDB，按版本和标签筛选，一键更新全部模组。"
+			},
+			"modpacks": {
+				"title": "社区整合包",
+				"description": "发布、发现并安装社区整合包。Story Forge 会为你解决所有模组与配置。"
+			},
+			"versions": {
+				"title": "所有游戏版本",
+				"description": "直接从官方 CDN 安装任意 Vintage Story 版本 —— 也能关联你已有的安装。"
+			},
+			"maps": {
+				"title": "世界地图查看器",
+				"description": "把世界存档作为交互式地图打开，并与朋友分享。"
+			},
+			"hosting": {
+				"title": "服务器托管",
+				"description": "用同一个档案托管 Vintage Story 专用服务器 —— 无需命令行。"
+			}
+		},
+		"showcase": {
+			"eyebrow": "一窥究竟",
+			"title": "像工具，而不是玩具",
+			"description": "锐利、快速、键盘友好 —— 高级用户一直期待的界面。",
+			"profiles": "档案",
+			"mods": "模组",
+			"modConfigs": "模组配置",
+			"servers": "服务器",
+			"versions": "版本",
+			"worlds": "世界",
+			"captionProfiles": "为每个存档准备的档案",
+			"captionMods": "完整的 ModDB，一键更新",
+			"captionModConfigs": "无需离开应用即可编辑模组配置",
+			"captionServers": "收藏并加入服务器",
+			"captionVersions": "所有游戏版本，一键即达",
+			"captionWorlds": "以地图形式探索你的世界"
+		},
+		"modpacks": {
+			"eyebrow": "整合包",
+			"title": "社区整合包，开箱即玩",
+			"description": "由社区发布的精选整合包。直接从 Story Forge 安装，马上开玩。",
+			"browseAll": "浏览全部整合包"
+		},
+		"download": {
+			"eyebrow": "快速开始",
+			"title": "下载 Story Forge",
+			"description": "面向 Windows、macOS 和 Linux，免费且开源。",
+			"descriptionWithVersion": "最新版本 {{version}} —— 面向 Windows、macOS 和 Linux，免费且开源。",
+			"loading": "正在获取版本…",
+			"recommended": "推荐",
+			"releaseNotes": "更新日志与所有平台"
+		},
+		"openSource": {
+			"title": "公开开发",
+			"description": "Story Forge 采用 GPLv3 许可并公开开发。阅读源码、报告问题、提出功能建议或提交 pull request —— 每一份贡献都让启动器更好。",
+			"stars": "星标",
+			"forks": "复刻",
+			"downloads": "下载量",
+			"viewRepo": "查看仓库",
+			"reportIssue": "报告问题",
+			"contribute": "参与贡献"
+		},
+		"finalCta": {
+			"title": "准备好铸造你的故事了吗？",
+			"description": "加入成千上万使用 Story Forge 管理模组、世界和服务器的 Vintage Story 玩家。",
+			"download": "立即下载",
+			"explore": "探索整合包",
+			"discord": "加入 Discord"
+		}
+	},
+	"auth": {
+		"docTitleSignIn": "登录 — Story Forge",
+		"docTitleAccount": "你的账户 — Story Forge",
+		"welcomeBack": "欢迎回来",
+		"createAccount": "创建账户",
+		"yourAccount": "你的账户",
+		"signInDescription": "使用你的 Story Forge 账户登录。",
+		"signUpDescription": "一个账户，用于启动器、整合包等。",
+		"accountDescription": "你已登录 Story Forge。",
+		"checkingSession": "正在检查会话…",
+		"or": "或",
+		"continueWith": "使用 {{provider}} 继续",
+		"name": "名称",
+		"namePlaceholder": "你的名字",
+		"email": "邮箱",
+		"password": "密码",
+		"passwordPlaceholder": "你的密码",
+		"passwordNewPlaceholder": "至少 8 个字符",
+		"submitSignIn": "登录",
+		"submitSignUp": "创建账户",
+		"submitting": "请稍候…",
+		"noAccount": "第一次使用 Story Forge？",
+		"hasAccount": "已经有账户？",
+		"createOne": "创建一个",
+		"signedInAs": "已登录你的 Story Forge 账户",
+		"ownsModpacks": "你拥有的整合包会在浏览器中标记",
+		"signOut": "退出登录",
+		"errors": {
+			"nameRequired": "请输入你的名字。",
+			"invalidEmail": "请输入有效的邮箱地址。",
+			"passwordMin": "密码至少需要 8 个字符。",
+			"signUpFailed": "无法创建你的账户。",
+			"signInFailed": "无法登录。",
+			"unexpected": "出了点问题，请重试。"
+		}
+	}
+}

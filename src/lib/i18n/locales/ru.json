@@ -1,0 +1,177 @@
+{
+	"common": {
+		"tagline": "Лаунчер Vintage Story",
+		"language": "Язык",
+		"backToTop": "Наверх",
+		"github": "Репозиторий на GitHub",
+		"discord": "Присоединиться к Discord",
+		"switchToLight": "Переключить на светлую тему",
+		"switchToDark": "Переключить на тёмную тему"
+	},
+	"nav": {
+		"home": "Главная",
+		"modpacks": "Модпаки",
+		"mods": "Моды",
+		"map": "Карта мира",
+		"guides": "Руководства",
+		"faq": "FAQ"
+	},
+	"account": {
+		"menu": "Меню аккаунта",
+		"browse": "Обзор модпаков",
+		"account": "Аккаунт",
+		"settings": "Настройки аккаунта",
+		"signIn": "Войти",
+		"signOut": "Выйти",
+		"signedInAs": "Вы вошли как",
+		"toggleMenu": "Открыть меню"
+	},
+	"footer": {
+		"blurb": "Лаунчер и менеджер модов с открытым исходным кодом для Vintage Story — создан сообществом для сообщества.",
+		"product": "Продукт",
+		"resources": "Ресурсы",
+		"latestRelease": "Последний релиз",
+		"fetchingRelease": "Загрузка релиза…",
+		"releaseNotes": "Примечания к релизу",
+		"allReleases": "Все релизы",
+		"download": "Скачать",
+		"modBrowser": "Браузер модов",
+		"mapViewer": "Карта мира",
+		"guides": "Руководства",
+		"faq": "FAQ",
+		"contributing": "Как помочь",
+		"reportIssue": "Сообщить о проблеме",
+		"reddit": "Читайте наш пост на r/VintageStory",
+		"copyright": "© {{year}} Story Forge · Открытый код под лицензией GPLv3",
+		"disclaimer": "Не связан с <anego>Anego Studios</anego> или <vintage>Vintage Story</vintage> и не одобрен ими."
+	},
+	"home": {
+		"hero": {
+			"badge": "Открытый код · GPLv3 · {{version}}",
+			"title": "Создайте своё следующее приключение в <gradient>Vintage Story</gradient>.",
+			"description": "Story Forge — быстрый лаунчер и менеджер модов с открытым исходным кодом для Vintage Story: профили, моды, модпаки, карты миров и хостинг серверов в одном месте.",
+			"downloadFor": "Скачать для {{platform}}",
+			"browse": "Обзор модпаков",
+			"stars": "звёзд на GitHub",
+			"downloads": "загрузок",
+			"modpacks": "модпаков",
+			"chipMods": "Моды обновляются в один клик",
+			"chipHosting": "Хостинг серверов встроен",
+			"screenshotAlt": "Экран профилей Story Forge"
+		},
+		"features": {
+			"eyebrow": "Почему Story Forge",
+			"title": "Всё, чем лаунчер должен был быть",
+			"description": "Создан для игроков Vintage Story, которые предпочитают играть, а не чинить папку с модами.",
+			"profiles": {
+				"title": "Профили без беспорядка",
+				"description": "Отдельные наборы модов и миры для каждого сервера или прохождения. Клонирование, переименование, экспорт и импорт за секунды."
+			},
+			"mods": {
+				"title": "Моды без хаоса",
+				"description": "Просматривайте всю ModDB Vintage Story, фильтруйте по версии и тегам и обновляйте всё одним кликом."
+			},
+			"modpacks": {
+				"title": "Модпаки сообщества",
+				"description": "Публикуйте, находите и устанавливайте модпаки сообщества. Story Forge сам подберёт все моды и настройки."
+			},
+			"versions": {
+				"title": "Любая версия игры",
+				"description": "Устанавливайте любую версию Vintage Story прямо с официального CDN — и подключайте уже установленные."
+			},
+			"maps": {
+				"title": "Просмотр карт мира",
+				"description": "Открывайте сохранения миров как интерактивную карту и делитесь ею с друзьями."
+			},
+			"hosting": {
+				"title": "Хостинг серверов",
+				"description": "Запустите выделенный сервер Vintage Story с тем же профилем — без командной строки."
+			}
+		},
+		"showcase": {
+			"eyebrow": "Заглянем внутрь",
+			"title": "Сделано как инструмент, а не игрушка",
+			"description": "Чёткий, быстрый и удобный для клавиатуры интерфейс, которого ждали опытные пользователи.",
+			"profiles": "Профили",
+			"mods": "Моды",
+			"modConfigs": "Конфиги модов",
+			"servers": "Серверы",
+			"versions": "Версии",
+			"worlds": "Миры",
+			"captionProfiles": "Профили для каждого прохождения",
+			"captionMods": "Вся ModDB с обновлением в один клик",
+			"captionModConfigs": "Редактируйте конфиги модов, не выходя из приложения",
+			"captionServers": "Добавляйте серверы в избранное и подключайтесь",
+			"captionVersions": "Любая версия игры в один клик",
+			"captionWorlds": "Исследуйте свои миры как карту"
+		},
+		"modpacks": {
+			"eyebrow": "Модпаки",
+			"title": "Модпаки сообщества, готовые к игре",
+			"description": "Подборки, опубликованные сообществом. Устанавливайте прямо из Story Forge и играйте.",
+			"browseAll": "Все модпаки"
+		},
+		"download": {
+			"eyebrow": "Начало работы",
+			"title": "Скачать Story Forge",
+			"description": "Бесплатно и с открытым кодом для Windows, macOS и Linux.",
+			"descriptionWithVersion": "Последний релиз {{version}} — бесплатно и с открытым кодом для Windows, macOS и Linux.",
+			"loading": "Загрузка релиза…",
+			"recommended": "Рекомендуется",
+			"releaseNotes": "Примечания к релизу и все платформы"
+		},
+		"openSource": {
+			"title": "Разработка открыта",
+			"description": "Story Forge распространяется под GPLv3 и разрабатывается публично. Читайте код, сообщайте об ошибках, предлагайте функции или отправляйте pull request — каждый вклад делает лаунчер лучше.",
+			"stars": "Звёзды",
+			"forks": "Форки",
+			"downloads": "Загрузки",
+			"viewRepo": "Открыть репозиторий",
+			"reportIssue": "Сообщить о проблеме",
+			"contribute": "Внести вклад"
+		},
+		"finalCta": {
+			"title": "Готовы создать свою историю?",
+			"description": "Присоединяйтесь к тысячам игроков Vintage Story, которые управляют модами, мирами и серверами со Story Forge.",
+			"download": "Скачать сейчас",
+			"explore": "Смотреть модпаки",
+			"discord": "Присоединиться к Discord"
+		}
+	},
+	"auth": {
+		"docTitleSignIn": "Вход — Story Forge",
+		"docTitleAccount": "Ваш аккаунт — Story Forge",
+		"welcomeBack": "С возвращением",
+		"createAccount": "Создайте аккаунт",
+		"yourAccount": "Ваш аккаунт",
+		"signInDescription": "Войдите в свой аккаунт Story Forge.",
+		"signUpDescription": "Один аккаунт для лаунчера, модпаков и многого другого.",
+		"accountDescription": "Вы вошли в Story Forge.",
+		"checkingSession": "Проверка сессии…",
+		"or": "или",
+		"continueWith": "Продолжить через {{provider}}",
+		"name": "Имя",
+		"namePlaceholder": "Ваше имя",
+		"email": "Эл. почта",
+		"password": "Пароль",
+		"passwordPlaceholder": "Ваш пароль",
+		"passwordNewPlaceholder": "Не менее 8 символов",
+		"submitSignIn": "Войти",
+		"submitSignUp": "Создать аккаунт",
+		"submitting": "Подождите…",
+		"noAccount": "Впервые в Story Forge?",
+		"hasAccount": "Уже есть аккаунт?",
+		"createOne": "Создайте",
+		"signedInAs": "Вы вошли в свой аккаунт Story Forge",
+		"ownsModpacks": "Ваши модпаки отмечены в браузере",
+		"signOut": "Выйти",
+		"errors": {
+			"nameRequired": "Введите имя.",
+			"invalidEmail": "Введите корректный адрес эл. почты.",
+			"passwordMin": "Пароль должен содержать не менее 8 символов.",
+			"signUpFailed": "Не удалось создать аккаунт.",
+			"signInFailed": "Не удалось войти.",
+			"unexpected": "Что-то пошло не так. Попробуйте ещё раз."
+		}
+	}
+}
