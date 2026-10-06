@@ -14,6 +14,7 @@ export type ModpackVersion = {
 	gameVersion: string;
 	modConfigsUrl: string | null;
 	modsString: string | null;
+	changelog?: string | null;
 	downloads: number;
 	modpack: string;
 	createdAt: string | number;

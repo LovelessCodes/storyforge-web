@@ -39,6 +39,11 @@ export function ModpackVersionCard({ slug, version }: ModpackVersionCardProps) {
 					<span className="text-muted-foreground text-[10px] tabular-nums">
 						{modCount} mod{modCount === 1 ? "" : "s"} · {formatCount(version.downloads)} downloads
 					</span>
+					{version.changelog ? (
+						<p className="text-muted-foreground/80 line-clamp-3 text-[11px]/relaxed whitespace-pre-wrap">
+							{version.changelog}
+						</p>
+					) : null}
 				</div>
 
 				{version.modConfigsUrl ? (

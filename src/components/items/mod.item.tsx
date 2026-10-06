@@ -1,13 +1,18 @@
 import { Download, MessageSquare, Star } from "lucide-react";
 
+import { Button } from "@/components/ui/button";
 import type { Mod } from "@/hooks/useMods";
 import { formatCount } from "@/lib/modpacks";
-import { useModsFilters } from "@/stores/mod-filters";
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 
-export const ModItem = ({ mod }: { mod: Mod }) => {
-	const { setAuthor } = useModsFilters();
+interface ModItemProps {
+	mod: Mod;
+	/** Called when the author name is clicked; the page turns it into a filter. */
+	onFilterAuthor?: (author: string) => void;
+}
+
+export const ModItem = ({ mod, onFilterAuthor }: ModItemProps) => {
 	const url = `https://mods.vintagestory.at/${mod.urlalias ?? `show/mod/${mod.assetid}`}`;
 
 	return (
@@ -38,7 +43,7 @@ export const ModItem = ({ mod }: { mod: Mod }) => {
 									render={
 										<button
 											className="text-accent-amber/80 hover:text-accent-amber text-[10px] transition-colors"
-											onClick={() => setAuthor(mod.author)}
+											onClick={() => onFilterAuthor?.(mod.author)}
 											type="button"
 										/>
 									}
@@ -53,19 +58,30 @@ export const ModItem = ({ mod }: { mod: Mod }) => {
 				</div>
 			</div>
 
-			<div className="text-muted-foreground hidden shrink-0 items-center gap-3 text-[10px] tabular-nums sm:flex">
-				<span className="flex items-center gap-1">
-					<Download className="size-3" />
-					{formatCount(mod.downloads)}
-				</span>
-				<span className="flex items-center gap-1">
-					<Star className="size-3" />
-					{formatCount(mod.follows)}
-				</span>
-				<span className="flex items-center gap-1">
-					<MessageSquare className="size-3" />
-					{formatCount(mod.comments)}
-				</span>
+			<div className="flex shrink-0 items-center gap-2">
+				<div className="text-muted-foreground hidden shrink-0 items-center gap-3 text-[10px] tabular-nums sm:flex">
+					<span className="flex items-center gap-1">
+						<Download className="size-3" />
+						{formatCount(mod.downloads)}
+					</span>
+					<span className="flex items-center gap-1">
+						<Star className="size-3" />
+						{formatCount(mod.follows)}
+					</span>
+					<span className="flex items-center gap-1">
+						<MessageSquare className="size-3" />
+						{formatCount(mod.comments)}
+					</span>
+				</div>
+				<Button
+					aria-label={`Install ${mod.name} in Story Forge`}
+					render={<a href={`storyforge://install?mod=${mod.modid}`} />}
+					size="icon-sm"
+					title="Install in Story Forge"
+					variant="outline"
+				>
+					<img alt="" className="size-3.5" src="/StoryForge.svg" />
+				</Button>
 			</div>
 		</div>
 	);

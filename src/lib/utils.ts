@@ -55,3 +55,17 @@ export function compareSemverAsc(a: string, b: string) {
 	if (mi !== mj) return mi - mj;
 	return pa - pb;
 }
+
+/** Parse a comma-separated search param (e.g. `?versions=1.20.4,1.21.0`) into a list. */
+export function splitSearchList(value: string | undefined): string[] {
+	if (!value) return [];
+	return value
+		.split(",")
+		.map((entry) => entry.trim())
+		.filter((entry) => entry.length > 0);
+}
+
+/** Inverse of {@link splitSearchList} — `undefined` when empty so the param drops out. */
+export function joinSearchList(values: string[]): string | undefined {
+	return values.length > 0 ? values.join(",") : undefined;
+}

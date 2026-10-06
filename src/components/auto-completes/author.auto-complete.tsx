@@ -11,7 +11,12 @@ import {
 } from "@/components/ui/auto-complete";
 import { useMods } from "@/hooks/useMods";
 
-export const AuthorAutocomplete = (props: React.InputHTMLAttributes<HTMLInputElement>) => {
+type AuthorAutocompleteProps = React.InputHTMLAttributes<HTMLInputElement> & {
+	/** Current game-version filter, so author suggestions follow the visible list. */
+	versions?: string[];
+};
+
+export const AuthorAutocomplete = ({ versions = [], ...props }: AuthorAutocompleteProps) => {
 	const { contains } = AutocompletePrimitive.useFilter({
 		sensitivity: "base",
 		usage: "search",
@@ -27,7 +32,7 @@ export const AuthorAutocomplete = (props: React.InputHTMLAttributes<HTMLInputEle
 		} as React.ChangeEvent<HTMLInputElement>);
 	};
 
-	const { data: mods } = useMods();
+	const { data: mods } = useMods(versions);
 	const modAuthors = useMemo(
 		() =>
 			mods?.reduce(
