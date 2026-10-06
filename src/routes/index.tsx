@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
+import { JsonLdSoftwareVersion } from "@/components/JsonLdSoftwareVersion";
 import { DownloadSection } from "@/components/sections/DownloadSection";
 import { Features } from "@/components/sections/Features";
 import { FinalCta } from "@/components/sections/FinalCta";
@@ -15,6 +16,7 @@ export const Route = createFileRoute("/")({
 function Home() {
 	return (
 		<main className="flex-1">
+			<JsonLdSoftwareVersion />
 			<Hero />
 			<Features />
 			<Showcase />

@@ -2,6 +2,7 @@ import { getRouteApi } from "@tanstack/react-router";
 import { measureElement, useVirtualizer } from "@tanstack/react-virtual";
 import { useCallback, useRef } from "react";
 
+import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useMods } from "@/hooks/useMods";
 import { splitSearchList } from "@/lib/utils";
@@ -23,7 +24,7 @@ export const ModList = () => {
 	const sortBy = search.sort ?? "trending";
 	const order = search.order ?? "asc";
 
-	const { data: mods } = useMods(selectedGameVersions);
+	const { data: mods, error, isPending, refetch } = useMods(selectedGameVersions);
 
 	const viewportRef = useRef<HTMLDivElement>(null);
 
@@ -93,30 +94,44 @@ export const ModList = () => {
 			scrollFade
 			viewportRef={viewportRef}
 		>
-			{modsList && modsList.length === 0 ? (
+			{error ? (
+				<div className="grid h-full place-items-center p-10 text-center">
+					<div className="grid justify-items-center gap-3">
+						<p className="text-destructive text-xs">Could not load mods: {error.message}</p>
+						<Button onClick={() => void refetch()} size="sm" variant="outline">
+							Try again
+						</Button>
+					</div>
+				</div>
+			) : !modsList ? (
+				<div className="grid h-full place-items-center p-10 text-center">
+					<p className="text-muted-foreground text-xs">
+						{isPending ? "Loading mods…" : "No mods to show."}
+					</p>
+				</div>
+			) : modsList.length === 0 ? (
 				<div className="grid h-full place-items-center p-10 text-center">
 					<p className="text-muted-foreground text-xs">No mods match your filters.</p>
 				</div>
 			) : (
 				<div className="relative" style={{ height: totalSize }}>
-					{modsList &&
-						items.map((item) => {
-							const mod = modsList[item.index];
-							return (
-								<div
-									className="border-border/60 absolute top-0 left-0 flex w-full border-b"
-									data-index={item.index}
-									key={mod.modid}
-									ref={rowVirtualizer.measureElement}
-									style={{
-										transform: `translateY(${item.start}px)`,
-										willChange: "transform",
-									}}
-								>
-									<ModItem mod={mod} onFilterAuthor={filterByAuthor} />
-								</div>
-							);
-						})}
+					{items.map((item) => {
+						const mod = modsList[item.index];
+						return (
+							<div
+								className="border-border/60 absolute top-0 left-0 flex w-full border-b"
+								data-index={item.index}
+								key={mod.modid}
+								ref={rowVirtualizer.measureElement}
+								style={{
+									transform: `translateY(${item.start}px)`,
+									willChange: "transform",
+								}}
+							>
+								<ModItem mod={mod} onFilterAuthor={filterByAuthor} />
+							</div>
+						);
+					})}
 				</div>
 			)}
 		</ScrollArea>

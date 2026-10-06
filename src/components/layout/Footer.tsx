@@ -1,23 +1,46 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import { ArrowUpRight, Github } from "lucide-react";
 import { Trans, useTranslation } from "react-i18next";
 
 import { DiscordIcon, RedditIcon } from "@/components/icons";
+import { usePageScroll } from "@/components/layout/PageScroll";
 import { useLatestReleaseQuery } from "@/hooks/use-latest-release";
 import { RELEASES_URL } from "@/lib/utils";
 
 const currentYear = new Date().getFullYear();
 
 const productLinks = [
-	{ key: "footer.download", to: "/" },
-	{ key: "nav.modpacks", to: "/modpacks" },
-	{ key: "footer.modBrowser", to: "/mods" },
-	{ key: "footer.mapViewer", to: "/map" },
+	{ key: "footer.download", scrollTo: "download", to: "/" as const },
+	{ key: "nav.modpacks", to: "/modpacks" as const },
+	{ key: "footer.modBrowser", to: "/mods" as const },
+	{ key: "footer.mapViewer", to: "/map" as const },
 ] as const;
 
 export function Footer() {
 	const { t } = useTranslation();
 	const { data: release } = useLatestReleaseQuery();
+	const { scrollToId } = usePageScroll();
+	const navigate = useNavigate();
+	const pathname = useLocation({ select: (s) => s.pathname });
+
+	const goToDownload = () => {
+		if (pathname === "/") {
+			scrollToId("download");
+			return;
+		}
+		void navigate({ to: "/" }).then(() => {
+			// The home route is code-split: wait for the section to mount, after
+			// the route transition's scroll-to-top reset has settled.
+			const tryScroll = (attempt: number) => {
+				if (document.getElementById("download")) {
+					scrollToId("download");
+					return;
+				}
+				if (attempt < 40) window.setTimeout(() => tryScroll(attempt + 1), 25);
+			};
+			window.setTimeout(() => tryScroll(0), 250);
+		});
+	};
 
 	return (
 		<footer className="border-border bg-surface/40 border-t">
@@ -87,12 +110,22 @@ export function Footer() {
 					<ul className="grid gap-2">
 						{productLinks.map((link) => (
 							<li key={link.key}>
-								<Link
-									className="text-muted-foreground hover:text-foreground text-xs transition-colors"
-									to={link.to}
-								>
-									{t(link.key)}
-								</Link>
+								{"scrollTo" in link ? (
+									<button
+										className="text-muted-foreground hover:text-foreground text-xs transition-colors"
+										onClick={goToDownload}
+										type="button"
+									>
+										{t(link.key)}
+									</button>
+								) : (
+									<Link
+										className="text-muted-foreground hover:text-foreground text-xs transition-colors"
+										to={link.to}
+									>
+										{t(link.key)}
+									</Link>
+								)}
 							</li>
 						))}
 					</ul>

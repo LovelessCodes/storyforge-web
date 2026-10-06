@@ -6,6 +6,7 @@ import { AnimatedOutlet, AnimatedOutletWrapper } from "@/components/AnimatedOutl
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { PageScroll } from "@/components/layout/PageScroll";
+import { RouteError, RouteNotFound } from "@/components/layout/RouteFallbacks";
 
 const RootLayout = () => (
 	<MotionConfig reducedMotion="user">
@@ -32,4 +33,8 @@ const RootLayout = () => (
 	</MotionConfig>
 );
 
-export const Route = createRootRoute({ component: RootLayout });
+export const Route = createRootRoute({
+	component: RootLayout,
+	errorComponent: RouteError,
+	notFoundComponent: RouteNotFound,
+});
